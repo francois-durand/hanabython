@@ -16,7 +16,7 @@ Hanabython
 
 
 
-A Python implementation of Hanabi, a game by Antoine Bauza
+A Python implementation of Hanabi, a game by S.A.S. Antoine Bauza
 
 
 * Free software: GNU General Public License v3
