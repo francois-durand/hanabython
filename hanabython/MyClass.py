@@ -43,7 +43,7 @@ class MyClass:
     >>> my_object = MyClass(a=5, b=3)
     """
 
-    def __init__(self, a, b):
+    def __init__(self, a, b: int):
         if a < 0:
             raise ValueError('Expected nonnegative a, got: ', a)
         self.a = a
