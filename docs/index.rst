@@ -8,6 +8,7 @@ Welcome to Hanabython's documentation!
    readme
    installation
    usage
+   reference
    modules
    contributing
    authors
