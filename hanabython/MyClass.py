@@ -43,14 +43,14 @@ class MyClass:
     >>> my_object = MyClass(a=5, b=3)
     """
 
-    def __init__(self, a, b: int):
+    def __init__(self, a, b):
         if a < 0:
             raise ValueError('Expected nonnegative a, got: ', a)
         self.a = a
         self.b = b
         self.my_string = 'a = %s and b = %s' % (a, b)
 
-    def divide_a_by_c(self, c):
+    def divide_a_by_c(self, c: int):
         """
         Divide :attr:`a` by something
 
