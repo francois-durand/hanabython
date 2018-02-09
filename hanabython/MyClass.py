@@ -49,16 +49,18 @@ class MyClass:
         self.b = b
         self.my_string = 'a = %s and b = %s' % (a, b)
 
-    def divide_a_by_c(self, c):
+    def divide_a_by_c(self, c, d):
         """
-        Divide :attr:`a` by something
+        Divide :attr:`a` by something and add something else
 
-        :param my favorite type c: a non-zero number. If you want to say many
+        :param Number c: a non-zero number. If you want to say many
             things about this parameter, it is good practice to indent the
             following lines, like this.
+        :param d: a beautiful number.
+        :type d: a type specified differently.
 
-        :return: :attr:`a` / :attr:`c`.
-        :retype: Number
+        :return: :attr:`a` / :attr:`c` + :attr:`d`.
+        :rtype: Number
 
         :raise ZeroDivisionError: if :attr:`c` = 0.
 
@@ -69,7 +71,7 @@ class MyClass:
         >>> my_object.divide_a_by_c(c=2)
         2.5
         """
-        return self.a / c
+        return self.a / c + d
 
     def addition(self):
         """
