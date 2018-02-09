@@ -49,7 +49,7 @@ class MyClass:
         self.b = b
         self.my_string = 'a = %s and b = %s' % (a, b)
 
-    def divide_a_by_c(self, c, d):
+    def divide_a_by_c_and_add_d(self, c, d):
         """
         Divide :attr:`a` by something and add something else
 
