@@ -33,7 +33,8 @@ class MyClass:
     appear in the documentation.
 
     A hyperlink to a method: :meth:`add_a_and_c`.
-    A hyperlink to an attribute: :attr:`a`.
+
+    A hyperlink to an attribute: :attr:`a` and :attr:`w`.
 
     >>> my_object = MyClass(a = 4, b = 3)
     """
