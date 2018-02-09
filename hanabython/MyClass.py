@@ -32,7 +32,7 @@ class MyClass:
     itself, because the docstring of the py:meth:``__init__`` method does not
     appear in the documentation.
 
-    A hyperlink: :meth:``add_a_and_c``.
+    A hyperlink: :meth:`add_a_and_c`.
 
     >>> my_object = MyClass(a = 4, b = 3)
     """
