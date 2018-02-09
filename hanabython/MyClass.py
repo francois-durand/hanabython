@@ -57,7 +57,8 @@ class MyClass:
             things about this parameter, it is good practice to indent the
             following lines, like this.
 
-        :return Number: :attr:`a` / :attr:`c`.
+        :return: :attr:`a` / :attr:`c`.
+        :retype: Number
 
         :raise ZeroDivisionError: if :attr:`c` = 0.
 
@@ -74,7 +75,8 @@ class MyClass:
         """
         Add :attr:`a` and :attr:`b`
 
-        :return Number: :attr:`a` + :attr:`b`.
+        :return: :attr:`a` + :attr:`b`.
+        :rtype: Number
 
         >>> my_object = MyClass(a=5, b=3)
         >>> my_object.addition()
@@ -86,7 +88,8 @@ class MyClass:
         """
         Give :attr:`b`
 
-        :return Number: :attr:`b`.
+        :return: :attr:`b`.
+        :rtype: Number
 
         Since the name of this function starts with _, it does not appear in
         the Sphinx documentation.
