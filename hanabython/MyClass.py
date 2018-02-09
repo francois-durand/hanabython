@@ -26,8 +26,7 @@ class MyClass:
     :param Number a: the `a` of the system. Must be nonnegative.
     :param int|float b: the `b` of the system.
 
-    :var my_string: a nice string.
-    :vartype my_string: str
+    :var str my_string: a nice string.
 
     :raise ValueError: if :attr:`a` is negative.
 
@@ -54,13 +53,11 @@ class MyClass:
         """
         Divide :attr:`a` by something
 
-        :param c: a non-zero number. If you want to say many things about this
-            parameter, it is good practice to indent the following lines, like
-            this.
-        :type c: number
+        :param my favorite type c: a non-zero number. If you want to say many
+            things about this parameter, it is good practice to indent the
+            following lines, like this.
 
-        :return: :attr:`a` / :attr:`c`.
-        :rtype: number.
+        :return Number: :attr:`a` / :attr:`c`.
 
         :raise ZeroDivisionError: if :attr:`c` = 0.
 
@@ -77,8 +74,7 @@ class MyClass:
         """
         Add :attr:`a` and :attr:`b`
 
-        :return: :attr:`a` + :attr:`b`.
-        :rtype: Number
+        :return Number: :attr:`a` + :attr:`b`.
 
         >>> my_object = MyClass(a=5, b=3)
         >>> my_object.addition()
@@ -90,8 +86,7 @@ class MyClass:
         """
         Give :attr:`b`
 
-        :return: :attr:`b`.
-        :rtype: a number.
+        :return Number: :attr:`b`.
 
         Since the name of this function starts with _, it does not appear in
         the Sphinx documentation.
