@@ -21,26 +21,25 @@ This file is part of Hanabython.
 
 
 class MyClass2:
+    """A whatever-you-are-doing.
+
+    :ivar a: something that can be added, subtracted, etc.
+        It is the `a` of the system.
+    :ivar b: something that can be added, subtracted, etc.
+        It is the `b` of the system.
+
+    >>> my_object = MyClass2(a = 4, b = 3)
+    """
 
     def __init__(self, a, b):
-        """A whatever-you-are-doing.
-
-        :param a: something that can be added, subtracted, etc.
-            It is the ``a`` of the system.
-        :param b: something that can be added, subtracted, etc.
-            It is the ``b`` of the system.
-
-        >>> my_object = MyClass2(a = 4, b = 3)
-        """
         self.a = a
         self.b = b
 
     def addition(self):
         """
-        Add ``a`` and ``b``
+        Add :attr:`a` and :attr:`b`
 
-        :return: The sum of :attr:`~hanabython.MyClass.a` and
-            :attr:`~hanabython.MyClass.b`.
+        :return: the sum.
 
         >>> my_object = MyClass2(a = 4, b = 3)
         >>> my_object.addition()
@@ -50,10 +49,9 @@ class MyClass2:
 
     def subtraction(self):
         """
-        Subtract ``b`` from ``a``
+        Subtract :attr:`b` from :attr:`a`
 
-        :return: The subtraction :attr:`~hanabython.MyClass.a` minus
-            :attr:`~hanabython.MyClass.b`.
+        :return: the difference.
 
         >>> my_object = MyClass2(a = 4, b = 3)
         >>> my_object.subtraction()
@@ -63,10 +61,9 @@ class MyClass2:
 
     def multiplication(self):
         """
-        Subtract ``b`` from ``a``
+        Multiply :attr:`a` and :attr:`b`
 
-        :return: The subtraction :attr:`~hanabython.MyClass.a` minus
-            :attr:`~hanabython.MyClass.b`.
+        :return: the multiplication.
 
         >>> my_object = MyClass2(a = 4, b = 3)
         >>> my_object.multiplication()
@@ -76,10 +73,9 @@ class MyClass2:
 
     def _auxiliary_function(self):
         """
-        Divide ``a`` by ``b``
+        Divide :attr:`a` by :attr:`b`
 
-        :return: The division of :attr:`~hanabython.MyClass.a` by
-            :attr:`~hanabython.MyClass.b`.
+        :return: the division.
 
         >>> my_object = MyClass2(a = 6, b = 3)
         >>> # noinspection PyProtectedMember
