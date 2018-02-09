@@ -28,11 +28,12 @@ class MyClass:
     :ivar b: something that can be added, subtracted, etc.
         It is the `b` of the system.
 
-    Note: document the py:meth:``__init__`` method in the docstring of the class
-    itself, because the docstring of the py:meth:``__init__`` method does not
+    Note: document the :meth:`__init__` method in the docstring of the class
+    itself, because the docstring of the :meth:`__init__` method does not
     appear in the documentation.
 
-    A hyperlink: :meth:`add_a_and_c`.
+    A hyperlink to a method: :meth:`add_a_and_c`.
+    A hyperlink to an attribute: :attr:`a`.
 
     >>> my_object = MyClass(a = 4, b = 3)
     """
