@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use Hanabython in a nice project::
+To use Hanabython in a wonderful project::
 
     import hanabython
