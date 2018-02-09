@@ -23,12 +23,11 @@ This file is part of Hanabython.
 class MyClass:
     """A whatever-you-are-doing.
 
-    :param a: the `a` of the system. Must be >= 0.
+    :param a: the `a` of the system. Must be nonnegative.
     :param b: the `b` of the system.
-    :type a, b: number.
 
     :var my_string: a nice string.
-    :vartype my_string: str.
+    :vartype my_string: str
 
     :raise ValueError: if :attr:`a` is negative.
 
@@ -44,7 +43,7 @@ class MyClass:
     >>> my_object = MyClass(a=5, b=3)
     """
 
-    def __init__(self, a, b):
+    def __init__(self, a: Number, b: Number):
         if a < 0:
             raise ValueError('Expected nonnegative a, got: ', a)
         self.a = a
@@ -55,15 +54,15 @@ class MyClass:
         """
         Divide :attr:`a` by something
 
-        :param c: a number != 0. If you want to say many things about this
+        :param c: a non-zero number. If you want to say many things about this
             parameter, it is good practice to indent the following lines, like
             this.
-        :type c: number.
+        :type c: number
 
         :return: :attr:`a` / :attr:`c`.
         :rtype: number.
 
-        :raise ZeroDivisionError: if :attr:`c` == 0.
+        :raise ZeroDivisionError: if :attr:`c` = 0.
 
         This function gives an example of Sphinx documentation with typical
         features.
@@ -72,14 +71,14 @@ class MyClass:
         >>> my_object.divide_a_by_c(c=2)
         2.5
         """
-        return self.a / self.c
+        return self.a / c
 
     def addition(self):
         """
         Add :attr:`a` and :attr:`b`
 
         :return: :attr:`a` + :attr:`b`.
-        :rtype: number.
+        :rtype: Number
 
         >>> my_object = MyClass(a=5, b=3)
         >>> my_object.addition()
