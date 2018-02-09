@@ -34,7 +34,9 @@ class MyClass:
 
     Refer to a class this way: :class:`MyClass2`.
 
-    Refer to a method this way: :meth:`add_a_and_c`.
+    Refer to a method this way: :meth:`addition`.
+
+    Refer to a method in another class: :meth:`MyClass2.addition`.
 
     Refer to an attribute this way: :attr:`a`.
 
@@ -44,10 +46,11 @@ class MyClass:
     def __init__(self, a, b):
         self.a = a
         self.b = b
+        self.my_string = 'My string'
 
     def addition(self):
         """
-        Add :attr:`~hanabython.MyClass.a` and :attr:`~hanabython.MyClass.b`
+        Add :attr:`a` and :attr:`b`
 
         :return: the sum.
 
@@ -72,11 +75,11 @@ class MyClass:
 
     def add_a_and_c(self, c):
         """
-        Subtract :attr:`~hanabython.MyClass.a` and something
+        Add :attr:`~hanabython.MyClass.a` and something
 
         :param c: something that can be added.
 
-        :return: py:attr:`~hanabython.MyClass.a` + :param:`c`
+        :return: :attr:`~hanabython.MyClass.a` + :param:`c`
 
         >>> my_object = MyClass(a = 4, b = 3)
         >>> my_object.add_a_and_c(c = 2)
