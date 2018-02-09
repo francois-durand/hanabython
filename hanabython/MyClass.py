@@ -23,6 +23,25 @@ This file is part of Hanabython.
 class MyClass:
     """A whatever-you-are-doing.
 
+    :param my_param: a param.
+    :parameter my_parameter: a parameter.
+    :arg my_arg: an arg.
+    :argument my_argument: an argument.
+    :key my_key: a key.
+    :keyword keyword: a keyword.
+    :type my_parameter: integer or None.
+    :raises ValueError: if the message_body exceeds 160 characters (example).
+    :raise ValueError: if the message_body exceeds 160 characters (example).
+    :except ValueError: if the message_body exceeds 160 characters (example).
+    :exception ValueError: if the message_body exceeds 160 characters (example).
+    :var my_var: a variable.
+    :ivar my_ivar: an instance variable.
+    :cvar my_cvar: a class variable.
+    :vartype my_var: str.
+    :return: something
+    :returns: something
+    :rtype: str.
+
     :ivar a: something that can be added, subtracted, etc.
         It is the `a` of the system.
     :ivar b: something that can be added, subtracted, etc.
@@ -86,6 +105,34 @@ class MyClass:
         6
         """
         return self.a + c
+
+    def stupid_function(self):
+        """
+        A stupid function
+
+        :param my_param: a param.
+        :parameter my_parameter: a parameter.
+        :arg my_arg: an arg.
+        :argument my_argument: an argument.
+        :key my_key: a key.
+        :keyword keyword: a keyword.
+        :type my_parameter: integer or None.
+        :raises ValueError: if the message_body exceeds 160 characters (example).
+        :raise ValueError: if the message_body exceeds 160 characters (example).
+        :except ValueError: if the message_body exceeds 160 characters (example).
+        :exception ValueError: if the message_body exceeds 160 characters (example).
+        :var my_var: a variable.
+        :ivar my_ivar: an instance variable.
+        :cvar my_cvar: a class variable.
+        :vartype my_var: str.
+        :return: something
+        :returns: something
+        :rtype: str.
+        """
+        return self.a
+
+    def _secret_function(self):
+        return self.b
 
 
 if __name__ == '__main__':
