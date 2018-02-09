@@ -23,115 +23,84 @@ This file is part of Hanabython.
 class MyClass:
     """A whatever-you-are-doing.
 
-    :param my_param: a param.
-    :parameter my_parameter: a parameter.
-    :arg my_arg: an arg.
-    :argument my_argument: an argument.
-    :key my_key: a key.
-    :keyword keyword: a keyword.
-    :type my_parameter: integer or None.
-    :raises ValueError: if the message_body exceeds 160 characters (example).
-    :raise ValueError: if the message_body exceeds 160 characters (example).
-    :except ValueError: if the message_body exceeds 160 characters (example).
-    :exception ValueError: if the message_body exceeds 160 characters (example).
-    :var my_var: a variable.
-    :ivar my_ivar: an instance variable.
-    :cvar my_cvar: a class variable.
-    :vartype my_var: str.
-    :return: something
-    :returns: something
-    :rtype: str.
+    :param a: the `a` of the system. Must be >= 0.
+    :param b: the `b` of the system.
+    :type a, b: number.
 
-    :ivar a: something that can be added, subtracted, etc.
-        It is the `a` of the system.
-    :ivar b: something that can be added, subtracted, etc.
-        It is the `b` of the system.
-    :attr my_string: a nice string.
+    :var my_string: a nice string.
+    :vartype my_string: str.
+
+    :raise ValueError: if :attr:`a` is negative.
 
     Note: document the :meth:`__init__` method in the docstring of the class
     itself, because the docstring of the :meth:`__init__` method does not
     appear in the documentation.
 
-    Refer to a class this way: :class:`MyClass2`.
+    * Refer to a class this way: :class:`MyClass2`.
+    * Refer to a method this way: :meth:`addition`.
+    * Refer to a method in another class: :meth:`MyClass2.addition`.
+    * Refer to an parameter or variable this way: :attr:`a`.
 
-    Refer to a method this way: :meth:`addition`.
-
-    Refer to a method in another class: :meth:`MyClass2.addition`.
-
-    Refer to an attribute this way: :attr:`a`.
-
-    >>> my_object = MyClass(a = 4, b = 3)
+    >>> my_object = MyClass(a=5, b=3)
     """
 
     def __init__(self, a, b):
+        if a < 0:
+            raise ValueError('Expected nonnegative a, got: ', a)
         self.a = a
         self.b = b
-        self.my_string = 'My string'
+        self.my_string = 'a = %s and b = %s' % (a, b)
+
+    def divide_a_by_c(self, c):
+        """
+        Divide :attr:`a` by something
+
+        :param c: a number != 0. If you want to say many things about this
+            parameter, it is good practice to indent the following lines, like
+            this.
+        :type c: number.
+
+        :return: :attr:`a` / :attr:`c`.
+        :rtype: number.
+
+        :raise ZeroDivisionError: if :attr:`c` == 0.
+
+        This function gives an example of Sphinx documentation with typical
+        features.
+
+        >>> my_object = MyClass(a=5, b=3)
+        >>> my_object.divide_a_by_c(c=2)
+        2.5
+        """
+        return self.a / self.c
 
     def addition(self):
         """
         Add :attr:`a` and :attr:`b`
 
-        :return: the sum.
+        :return: :attr:`a` + :attr:`b`.
+        :rtype: number.
 
-        >>> my_object = MyClass(a = 4, b = 3)
+        >>> my_object = MyClass(a=5, b=3)
         >>> my_object.addition()
-        7
+        8
         """
         return self.a + self.b
 
-    def subtraction(self):
-        """
-        Subtract :attr:`b` from :attr:`a`
-
-        :return: the difference.
-
-        >>> my_object = MyClass(a = 4, b = 3)
-        >>> my_object.subtraction()
-        1
-        """
-        return self.a - self.b
-
-    def add_a_and_c(self, c):
-        """
-        Add :attr:`a` and something
-
-        :param c: something that can be added.
-
-        :return: :attr:`a` + :data:`c`.
-
-        >>> my_object = MyClass(a = 4, b = 3)
-        >>> my_object.add_a_and_c(c = 2)
-        6
-        """
-        return self.a + c
-
-    def stupid_function(self):
-        """
-        A stupid function
-
-        :param my_param: a param.
-        :parameter my_parameter: a parameter.
-        :arg my_arg: an arg.
-        :argument my_argument: an argument.
-        :key my_key: a key.
-        :keyword keyword: a keyword.
-        :type my_parameter: integer or None.
-        :raises ValueError: if the message_body exceeds 160 characters (example).
-        :raise ValueError: if the message_body exceeds 160 characters (example).
-        :except ValueError: if the message_body exceeds 160 characters (example).
-        :exception ValueError: if the message_body exceeds 160 characters (example).
-        :var my_var: a variable.
-        :ivar my_ivar: an instance variable.
-        :cvar my_cvar: a class variable.
-        :vartype my_var: str.
-        :return: something
-        :returns: something
-        :rtype: str.
-        """
-        return self.a
-
     def _secret_function(self):
+        """
+        Give :attr:`b`
+
+        :return: :attr:`b`.
+        :rtype: a number.
+
+        Since the name of this function starts with _, it does not appear in
+        the Sphinx documentation.
+
+        >>> my_object = MyClass(a=5, b=3)
+        >>> my_object._secret_function()
+        3
+        """
         return self.b
 
 
