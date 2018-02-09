@@ -21,17 +21,21 @@ This file is part of Hanabython.
 
 
 class MyClass:
+    """A whatever-you-are-doing.
+
+    :param a: something that can be added, subtracted, etc.
+        It is the ``a`` of the system.
+    :param b: something that can be added, subtracted, etc.
+        It is the ``b`` of the system.
+
+    Note: document the __init__ method in the docstring of the class itself,
+    because the docstring of the __init__ method does not appear in the
+    documentation.
+
+    >>> my_object = MyClass(a = 4, b = 3)
+    """
 
     def __init__(self, a, b):
-        """A whatever-you-are-doing.
-
-        :param a: something that can be added, subtracted, etc.
-            It is the ``a`` of the system.
-        :param b: something that can be added, subtracted, etc.
-            It is the ``b`` of the system.
-
-        >>> my_object = MyClass(a = 4, b = 3)
-        """
         self.a = a
         self.b = b
 
