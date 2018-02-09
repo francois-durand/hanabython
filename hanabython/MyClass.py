@@ -23,14 +23,16 @@ This file is part of Hanabython.
 class MyClass:
     """A whatever-you-are-doing.
 
-    :param a: something that can be added, subtracted, etc.
-        It is the ``a`` of the system.
-    :param b: something that can be added, subtracted, etc.
-        It is the ``b`` of the system.
+    :ivar a: something that can be added, subtracted, etc.
+        It is the `a` of the system.
+    :ivar b: something that can be added, subtracted, etc.
+        It is the `b` of the system.
 
-    Note: document the `__init__` method in the docstring of the class itself,
-    because the docstring of the ``__init__`` method does not appear in the
-    documentation.
+    Note: document the py:meth:``__init__`` method in the docstring of the class
+    itself, because the docstring of the py:meth:``__init__`` method does not
+    appear in the documentation.
+
+    A hyperlink: py:meth:``add_a_and_c``.
 
     >>> my_object = MyClass(a = 4, b = 3)
     """
@@ -41,10 +43,9 @@ class MyClass:
 
     def addition(self):
         """
-        Add ``a`` and ``b``
+        Add :attr:`~hanabython.MyClass.a` and :attr:`~hanabython.MyClass.b`
 
-        :return: The sum of :attr:`~hanabython.MyClass.a` and
-            :attr:`~hanabython.MyClass.b`.
+        :return: the sum.
 
         >>> my_object = MyClass(a = 4, b = 3)
         >>> my_object.addition()
@@ -54,16 +55,30 @@ class MyClass:
 
     def subtraction(self):
         """
-        Subtract ``b`` from ``a``
+        Subtract :attr:`~hanabython.MyClass.b` from
+        :attr:`~hanabython.MyClass.a`
 
-        :return: The subtraction :attr:`~hanabython.MyClass.a` minus
-            :attr:`~hanabython.MyClass.b`.
+        :return: the difference.
 
         >>> my_object = MyClass(a = 4, b = 3)
         >>> my_object.subtraction()
         1
         """
         return self.a - self.b
+
+    def add_a_and_c(self, c):
+        """
+        Subtract :attr:`~hanabython.MyClass.a` and something
+
+        :param c: something that can be added.
+
+        :return: py:attr:`~hanabython.MyClass.a` + :param:`c`
+
+        >>> my_object = MyClass(a = 4, b = 3)
+        >>> my_object.add_a_and_c(c = 2)
+        6
+        """
+        return self.a + c
 
 
 if __name__ == '__main__':
