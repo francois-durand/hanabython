@@ -28,8 +28,8 @@ class MyClass:
     :param b: something that can be added, subtracted, etc.
         It is the ``b`` of the system.
 
-    Note: document the __init__ method in the docstring of the class itself,
-    because the docstring of the __init__ method does not appear in the
+    Note: document the `__init__` method in the docstring of the class itself,
+    because the docstring of the ``__init__`` method does not appear in the
     documentation.
 
     >>> my_object = MyClass(a = 4, b = 3)
