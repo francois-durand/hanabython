@@ -79,7 +79,7 @@ class MyClass:
 
         :param c: something that can be added.
 
-        :return: :attr:`a` + :param:`c`
+        :return: :attr:`a` + :data:`c`
 
         >>> my_object = MyClass(a = 4, b = 3)
         >>> my_object.add_a_and_c(c = 2)
