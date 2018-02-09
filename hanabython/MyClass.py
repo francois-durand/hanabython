@@ -32,9 +32,11 @@ class MyClass:
     itself, because the docstring of the :meth:`__init__` method does not
     appear in the documentation.
 
-    A hyperlink to a method: :meth:`add_a_and_c`.
+    Refer to a class this way: :class:`MyClass2`.
 
-    A hyperlink to an attribute: :attr:`a` and :attr:`w`.
+    Refer to a method this way: :meth:`add_a_and_c`.
+
+    Refer to an attribute this way: :attr:`a`.
 
     >>> my_object = MyClass(a = 4, b = 3)
     """
