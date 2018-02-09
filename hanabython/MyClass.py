@@ -23,8 +23,8 @@ This file is part of Hanabython.
 class MyClass:
     """A whatever-you-are-doing.
 
-    :param a: the `a` of the system. Must be nonnegative.
-    :param b: the `b` of the system.
+    :param Number a: the `a` of the system. Must be nonnegative.
+    :param int|float b: the `b` of the system.
 
     :var my_string: a nice string.
     :vartype my_string: str
@@ -50,7 +50,7 @@ class MyClass:
         self.b = b
         self.my_string = 'a = %s and b = %s' % (a, b)
 
-    def divide_a_by_c(self, c: int):
+    def divide_a_by_c(self, c):
         """
         Divide :attr:`a` by something
 
