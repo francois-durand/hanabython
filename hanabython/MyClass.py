@@ -25,6 +25,8 @@ class MyClass:
 
     :param a: the `a` of the system. Must be nonnegative.
     :param b: the `b` of the system.
+    :type a: Number
+    :type b: int
 
     :var my_string: a nice string.
     :vartype my_string: str
@@ -43,7 +45,7 @@ class MyClass:
     >>> my_object = MyClass(a=5, b=3)
     """
 
-    def __init__(self, a: Number, b: Number):
+    def __init__(self, a, b):
         if a < 0:
             raise ValueError('Expected nonnegative a, got: ', a)
         self.a = a
