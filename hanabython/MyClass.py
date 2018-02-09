@@ -27,6 +27,7 @@ class MyClass:
         It is the `a` of the system.
     :ivar b: something that can be added, subtracted, etc.
         It is the `b` of the system.
+    :attr my_string: a nice string.
 
     Note: document the :meth:`__init__` method in the docstring of the class
     itself, because the docstring of the :meth:`__init__` method does not
@@ -62,8 +63,7 @@ class MyClass:
 
     def subtraction(self):
         """
-        Subtract :attr:`~hanabython.MyClass.b` from
-        :attr:`~hanabython.MyClass.a`
+        Subtract :attr:`b` from :attr:`a`
 
         :return: the difference.
 
@@ -75,11 +75,11 @@ class MyClass:
 
     def add_a_and_c(self, c):
         """
-        Add :attr:`~hanabython.MyClass.a` and something
+        Add :attr:`a` and something
 
         :param c: something that can be added.
 
-        :return: :attr:`~hanabython.MyClass.a` + :param:`c`
+        :return: :attr:`a` + :param:`c`
 
         >>> my_object = MyClass(a = 4, b = 3)
         >>> my_object.add_a_and_c(c = 2)
@@ -89,6 +89,8 @@ class MyClass:
 
 
 if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
     print('Do some little tests here')
     test = MyClass(a=42, b=51)
     print(test.addition())
