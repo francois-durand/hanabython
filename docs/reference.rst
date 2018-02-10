@@ -1,6 +1,8 @@
 Reference
 =========
 
+Here is the reference.
+
 .. autoclass:: hanabython.MyClass
     :members:
 
