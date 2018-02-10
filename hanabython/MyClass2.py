@@ -23,12 +23,10 @@ This file is part of Hanabython.
 class MyClass2:
     """A whatever-you-are-doing.
 
-    :ivar a: something that can be added, subtracted, etc.
-        It is the `a` of the system.
-    :ivar b: something that can be added, subtracted, etc.
-        It is the `b` of the system.
+    :param Number a: the `a` of the system.
+    :param int|float b: the `b` of the system.
 
-    >>> my_object = MyClass2(a = 4, b = 3)
+    >>> my_object = MyClass2(a = 5, b = 3)
     """
 
     def __init__(self, a, b):
@@ -39,50 +37,14 @@ class MyClass2:
         """
         Add :attr:`a` and :attr:`b`
 
-        :return: the sum.
+        :return: :attr:`a` + :attr:`b`.
+        :rtype: Number
 
-        >>> my_object = MyClass2(a = 4, b = 3)
+        >>> my_object = MyClass2(a=5, b=3)
         >>> my_object.addition()
-        7
+        8
         """
         return self.a + self.b
-
-    def subtraction(self):
-        """
-        Subtract :attr:`b` from :attr:`a`
-
-        :return: the difference.
-
-        >>> my_object = MyClass2(a = 4, b = 3)
-        >>> my_object.subtraction()
-        1
-        """
-        return self.a - self.b
-
-    def multiplication(self):
-        """
-        Multiply :attr:`a` and :attr:`b`
-
-        :return: the multiplication.
-
-        >>> my_object = MyClass2(a = 4, b = 3)
-        >>> my_object.multiplication()
-        12
-        """
-        return self.a * self.b
-
-    def _auxiliary_function(self):
-        """
-        Divide :attr:`a` by :attr:`b`
-
-        :return: the division.
-
-        >>> my_object = MyClass2(a = 6, b = 3)
-        >>> # noinspection PyProtectedMember
-        >>> my_object._auxiliary_function()
-        2
-        """
-        return self.a // self.b
 
 
 if __name__ == '__main__':
