@@ -68,8 +68,8 @@ class MyClass:
         features.
 
         >>> my_object = MyClass(a=5, b=3)
-        >>> my_object.divide_a_by_c(c=2)
-        2.5
+        >>> my_object.divide_a_by_c_and_add_d(c=2, d=10)
+        12.5
         """
         return self.a / c + d
 
