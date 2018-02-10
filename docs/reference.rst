@@ -10,6 +10,5 @@ My Section 1
 My Section 2
 ------------
 
-.. toctree::
-    :maxdepth: 3
-        MyClass2
+.. autoclass:: hanabython.MyClass2
+    :members:
