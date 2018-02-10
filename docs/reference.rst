@@ -2,7 +2,14 @@
 Reference
 =========
 
-Here is the reference.
+A Nice Section
+--------------
 
-Toto
-----
+.. autoclass:: hanabython.MyClass
+    :members:
+
+Another Nice Section
+--------------------
+
+.. autoclass:: hanabython.MyClass2
+    :members:
