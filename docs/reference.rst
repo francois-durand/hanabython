@@ -7,7 +7,7 @@ My Section 1
 .. toctree::
    :maxdepth: 3
 
-   MySection1/MyClass
+   MyClass
 
 My Section 2
 ------------
@@ -15,4 +15,4 @@ My Section 2
 .. toctree::
    :maxdepth: 3
 
-   MySection2/MyClass2
+   MyClass2
