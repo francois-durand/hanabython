@@ -75,7 +75,7 @@ class Color:
         >>> Color.BLUE.color_repr('42')
         "\x1b[0;94m'42'\x1b[0;0m"
         """
-        return self.print_color + repr(o) + PrintColor.RESET
+        return 'rep' + self.print_color + repr(o) + PrintColor.RESET
 
     def color_str(self, o):
         r"""
@@ -92,7 +92,7 @@ class Color:
         >>> Color.BLUE.color_str('42')
         '\x1b[0;94m42\x1b[0;0m'
         """
-        return self.print_color + str(o) + PrintColor.RESET
+        return 'str' + self.print_color + str(o) + PrintColor.RESET
 
     def __repr__(self):
         return self.color_str(
