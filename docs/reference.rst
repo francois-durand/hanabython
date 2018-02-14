@@ -12,7 +12,8 @@ Color
     :members:
 
 .. autoclass:: hanabython.ColorClueBehavior
-    :members: NORMAL MULTICOLOR SHADOW
+    :members:
+    :undoc-members:
 
 .. autoclass:: hanabython.Card
     :members:
