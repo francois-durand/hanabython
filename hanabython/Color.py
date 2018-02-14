@@ -18,8 +18,8 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from hanabython.Modules.PrintColor import PrintColor
-from hanabython.Modules.ColorClueBehavior import ColorClueBehavior
+from PrintColor import PrintColor
+from ColorClueBehavior import ColorClueBehavior
 
 
 class Color:
