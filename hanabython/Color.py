@@ -26,7 +26,7 @@ class Color:
     A color
 
     :param str name: The full name of the color.
-    :param str symbol: The short name of the color.
+    :param str symbol: The short name of the color (1 character only).
     :param str print_color: an ANSI escape code that modifies the printing
         color. See :class:`PrintColor`.
 
