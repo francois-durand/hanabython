@@ -23,16 +23,6 @@ This file is part of Hanabython.
 class PrintColor:
     """
     An ANSI escape code that modifies the printing color
-
-    :attr RESET:
-    :attr BLUE:     blue.
-    :attr CYAN:     cyan.
-    :attr GREEN:    green.
-    :attr MAGENTA:  magenta.
-    :attr RED:      red.
-    :attr WHITE:    white (actually it's white on black background, and black
-        on white background).
-    :attr YELLOW:   yellow.
     """
 
     #: ANSI code used to return to the default color.
