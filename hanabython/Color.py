@@ -100,7 +100,10 @@ class Color:
     MULTICOLOR = None
     #: Use this for the sixth color (the actual color might change in future
     #: implementations).
-    SIXTH_COLOR = None
+    SIXTH = None
+    #: Use this for the seventh color (the actual color might change in future
+    #: implementations).
+    SEVENTH = None
 
 
 Color.BLUE = Color(name='Blue', symbol='B', print_color=PrintColor.BLUE)
@@ -108,19 +111,23 @@ Color.GREEN = Color(name='Green', symbol='G', print_color=PrintColor.GREEN)
 Color.RED = Color(name='Red', symbol='R', print_color=PrintColor.RED)
 Color.WHITE = Color(name='White', symbol='W', print_color=PrintColor.WHITE)
 Color.YELLOW = Color(name='Yellow', symbol='Y', print_color=PrintColor.YELLOW)
-Color.MULTICOLOR = Color(name='Multi', symbol='M', print_color=PrintColor.CYAN)
-Color.SIXTH_COLOR = Color(
-    name='Magenta', symbol='Ma', print_color=PrintColor.MAGENTA)
+Color.MULTICOLOR = Color(
+    name='Multicolor', symbol='M', print_color=PrintColor.CYAN)
+Color.SIXTH = Color(
+    name='Pink', symbol='P', print_color=PrintColor.MAGENTA)
+Color.SEVENTH = Color(
+    name='Dark', symbol='D', print_color=PrintColor.BROWN)
 
 
 if __name__ == '__main__':
     print(Color.BLUE)
+    print(Color.SEVENTH)
     print(Color.GREEN)
+    print(Color.SIXTH)
     print(Color.RED)
     print(Color.WHITE)
     print(Color.YELLOW)
     print(Color.MULTICOLOR)
-    print(Color.SIXTH_COLOR)
     print([Color.BLUE, Color.GREEN])
 
     import doctest
