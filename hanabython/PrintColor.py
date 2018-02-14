@@ -23,6 +23,9 @@ This file is part of Hanabython.
 class PrintColor:
     """
     An ANSI escape code that modifies the printing color
+
+    Please note that the constant :attr:`RESET` is special: it contains the
+    ANSI escape code used to return to the default color.
     """
 
     #: ANSI code used to return to the default color.
