@@ -18,6 +18,8 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+
 class ColorClueBehavior:
     """
     A type of behavior regarding color clues.
@@ -32,3 +34,10 @@ class ColorClueBehavior:
     #: Colorless behavior (you cannot clue this color, and the card catches the
     #: clues of no color).
     COLORLESS = 2
+
+
+if __name__ == '__main__':
+    for k in ColorClueBehavior.__dict__.keys():
+        if not k.startswith('_'):
+            print('ColorClueBehavior.%s = %s'
+                  % (k, ColorClueBehavior.__dict__[k]))

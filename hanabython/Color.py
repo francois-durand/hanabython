@@ -53,6 +53,15 @@ class Color:
         self.print_color = print_color
         self.clue_behavior = clue_behavior
 
+    def __repr__(self):
+        return (
+            'Color(name=%r, symbol=%r, print_color=%r, clue_behavior=%r)'
+            % (self.name, self.symbol, self.print_color, self.clue_behavior)
+        )
+
+    def __str__(self):
+        return self.color_str('%s (%s)' % (self.name, self.symbol))
+
     def color_repr(self, o):
         r"""
         Convert an object to a colored representation
@@ -112,13 +121,6 @@ class Color:
             return False
         return self == clue_color
 
-    def __repr__(self):
-        return 'Color(name=%r, symbol=%r, print_color=%r)' % (
-            self.name, self.symbol, self.print_color)
-
-    def __str__(self):
-        return self.color_str('%s (%s)' % (self.name, self.symbol))
-
     # The actual definitions of the following constants are outside the class.
     #:
     BLUE = None
@@ -148,11 +150,11 @@ Color.WHITE = Color(name='White', symbol='W', print_color=PrintColor.WHITE)
 Color.YELLOW = Color(name='Yellow', symbol='Y', print_color=PrintColor.YELLOW)
 Color.SIXTH = Color(name='Pink', symbol='P', print_color=PrintColor.MAGENTA)
 Color.MULTICOLOR = Color(
-    name='Multicolor', symbol='M', print_color=PrintColor.CYAN,
+    name='Multicolor', symbol='M', print_color=PrintColor.CYAN_BOLD,
     clue_behavior=ColorClueBehavior.MULTICOLOR
 )
 Color.COLORLESS = Color(
-    name='Colorless', symbol='C', print_color=PrintColor.BROWN,
+    name='Colorless', symbol='C', print_color=PrintColor.BROWN_BOLD,
     clue_behavior=ColorClueBehavior.COLORLESS
 )
 
@@ -160,13 +162,13 @@ Color.COLORLESS = Color(
 if __name__ == '__main__':
     print(Color.BLUE)
     print(Color.GREEN)
-    print(Color.SIXTH)
     print(Color.RED)
     print(Color.WHITE)
     print(Color.YELLOW)
+    print(Color.SIXTH)
     print(Color.MULTICOLOR)
     print(Color.COLORLESS)
-    print([Color.BLUE, Color.GREEN])
+    print(repr(Color.BLUE))
 
     import doctest
     doctest.testmod()

@@ -48,7 +48,9 @@ class PrintColor:
     #:
     YELLOW = YELLOW_BRIGHT
     #:
-    BROWN = "\033[1;33m"
+    BROWN = "\033[0;33m"
+    #:
+    BROWN_BOLD = "\033[1;33m"
 
     BLUE_NOT_BRIGHT = "\033[0;34m"
     BLUE_BRIGHT = "\033[0;94m"
@@ -60,10 +62,14 @@ class PrintColor:
     #:
     MAGENTA = MAGENTA_NOT_BRIGHT
 
-    CYAN_NOT_BRIGHT = "\033[1;36m"
-    CYAN_BRIGHT = "\033[1;96m"
+    CYAN_NOT_BRIGHT = "\033[0;36m"
+    CYAN_BRIGHT = "\033[0;96m"
     #:
     CYAN = CYAN_BRIGHT
+    CYAN_NOT_BRIGHT_BOLD = "\033[1;36m"
+    CYAN_BRIGHT_BOLD = "\033[1;96m"
+    #:
+    CYAN_BOLD = "\033[1;96m"
 
 
 if __name__ == '__main__':
