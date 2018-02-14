@@ -9,3 +9,4 @@ __version__ = '0.1.0'
 from Color import Color
 from ColorClueBehavior import ColorClueBehavior
 from PrintColor import PrintColor
+from Card import Card
