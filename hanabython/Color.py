@@ -103,12 +103,12 @@ class Color:
         False
         >>> Color.MULTICOLOR.match(clue_color=Color.BLUE)
         True
-        >>> Color.SHADOW.match(clue_color=Color.BLUE)
+        >>> Color.COLORLESS.match(clue_color=Color.BLUE)
         False
         """
         if self.clue_behavior == ColorClueBehavior.MULTICOLOR:
             return True
-        if self.clue_behavior == ColorClueBehavior.SHADOW:
+        if self.clue_behavior == ColorClueBehavior.COLORLESS:
             return False
         return self == clue_color
 
@@ -130,15 +130,15 @@ class Color:
     WHITE = None
     #:
     YELLOW = None
-    #: Use this for the sixth color (the actual color might change in future
+    #: Use this for the sixth color (the display color might change in future
     #: implementations).
     SIXTH = None
-    #: Use this for multicolor cards (the actual color might change in future
+    #: Use this for multicolor cards (the display color might change in future
     #: implementations).
     MULTICOLOR = None
-    #: Use this for the shadow cards (the actual color might change in future
-    #: implementations).
-    SHADOW = None
+    #: Use this for the colorless cards (the display color might change in
+    #: future implementations).
+    COLORLESS = None
 
 
 Color.BLUE = Color(name='Blue', symbol='B', print_color=PrintColor.BLUE)
@@ -151,9 +151,9 @@ Color.MULTICOLOR = Color(
     name='Multicolor', symbol='M', print_color=PrintColor.CYAN,
     clue_behavior=ColorClueBehavior.MULTICOLOR
 )
-Color.SHADOW = Color(
-    name='Shadow', symbol='S', print_color=PrintColor.BROWN,
-    clue_behavior=ColorClueBehavior.SHADOW
+Color.COLORLESS = Color(
+    name='Colorless', symbol='C', print_color=PrintColor.BROWN,
+    clue_behavior=ColorClueBehavior.COLORLESS
 )
 
 
@@ -165,7 +165,7 @@ if __name__ == '__main__':
     print(Color.WHITE)
     print(Color.YELLOW)
     print(Color.MULTICOLOR)
-    print(Color.SHADOW)
+    print(Color.COLORLESS)
     print([Color.BLUE, Color.GREEN])
 
     import doctest

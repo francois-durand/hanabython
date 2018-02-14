@@ -29,6 +29,6 @@ class ColorClueBehavior:
     #: Multicolor behavior (you cannot clue this color, and the card catches the
     #: clues of all colors).
     MULTICOLOR = 1
-    #: Shadow behavior (you cannot clue this color, and the card catches the
+    #: Colorless behavior (you cannot clue this color, and the card catches the
     #: clues of no color).
-    SHADOW = 2
+    COLORLESS = 2

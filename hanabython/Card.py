@@ -60,8 +60,8 @@ class Card:
         >>> card_multi = Card(color=Color.MULTICOLOR, value=3)
         >>> card_multi.match_color(Color.BLUE)
         True
-        >>> card_shadow = Card(color=Color.SHADOW, value=3)
-        >>> card_shadow.match_color(Color.BLUE)
+        >>> card_colorless = Card(color=Color.COLORLESS, value=3)
+        >>> card_colorless.match_color(Color.BLUE)
         False
         """
         return self.color.match(clue_color)
