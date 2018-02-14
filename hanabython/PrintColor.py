@@ -30,17 +30,17 @@ class PrintColor:
 
     #:
     RESET = "\033[0;0m"
-    #: ANSI code for blue
+    #:
     BLUE = "\033[0;94m"
-    #: ANSI code for cyan
+    #:
     CYAN = "\033[1;96m"
-    #: ANSI code for green
+    #:
     GREEN = "\033[0;32m"
-    #: ANSI code for magenta
+    #:
     MAGENTA = "\033[0;35m"
-    #: ANSI code for red
+    #:
     RED = "\033[0;31m"
-    #: ANSI code for white
+    #:
     WHITE = "\033[0;30m"
-    #: ANSI code for yellow
+    #:
     YELLOW = "\033[0;93m"
