@@ -38,20 +38,6 @@ class Color:
     '\x1b[0;94m'
     """
 
-    # The actual definitions of the following constants are outside the class.
-    #: use this for blue cards.
-    BLUE = None
-    #: use this for green cards.
-    GREEN = None
-    #: use this for red cards.
-    RED = None
-    #: use this for white cards.
-    WHITE = None
-    #: use this for yellow cards.
-    YELLOW = None
-    #: use this for multicolor cards.
-    MULTI = None
-
     def __init__(self, name, symbol, print_color):
         self.name = name
         self.symbol = symbol
@@ -97,6 +83,22 @@ class Color:
     def __str__(self):
         return self.color_str('%s (%s)' % (self.name, self.symbol))
 
+    # The actual definitions of the following constants are outside the class.
+    #: use this for blue cards.
+    BLUE = None
+    #: use this for green cards.
+    GREEN = None
+    #: use this for red cards.
+    RED = None
+    #: use this for white cards.
+    WHITE = None
+    #: use this for yellow cards.
+    YELLOW = None
+    #: use this for multicolor cards.
+    MULTI = None
+    #: use this for magenta cards.
+    MAGENTA = None
+
 
 Color.BLUE = Color(name='Blue', symbol='B', print_color=PrintColor.BLUE)
 Color.GREEN = Color(name='Green', symbol='G', print_color=PrintColor.GREEN)
@@ -104,6 +106,8 @@ Color.RED = Color(name='Red', symbol='R', print_color=PrintColor.RED)
 Color.WHITE = Color(name='White', symbol='W', print_color=PrintColor.WHITE)
 Color.YELLOW = Color(name='Yellow', symbol='Y', print_color=PrintColor.YELLOW)
 Color.MULTI = Color(name='Multi', symbol='M', print_color=PrintColor.CYAN)
+Color.MAGENTA = Color(
+    name='Magenta', symbol='Ma', print_color=PrintColor.MAGENTA)
 
 
 if __name__ == '__main__':
