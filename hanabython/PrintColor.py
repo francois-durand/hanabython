@@ -28,7 +28,7 @@ class PrintColor:
     ANSI escape code used to return to the default color.
     """
 
-    #: ANSI code used to return to the default color.
+    #:
     RESET = "\033[0;0m"
     #: ANSI code for blue
     BLUE = "\033[0;94m"
