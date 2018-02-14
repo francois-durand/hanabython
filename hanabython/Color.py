@@ -30,13 +30,6 @@ class Color:
     :param str print_color: an ANSI escape code that modifies the printing
         color. See the constants in module PrintColor.
 
-    :attr BLUE:     use this for blue cards.
-    :attr GREEN:    use this for green cards.
-    :attr RED:      use this for red cards.
-    :attr WHITE:    use this for white cards.
-    :attr YELLOW:   use this for yellow cards.
-    :attr MULTI:    use this for multicolor cards.
-
     >>> Color.BLUE.name
     'Blue'
     >>> Color.BLUE.symbol
@@ -45,8 +38,7 @@ class Color:
     '\x1b[0;94m'
     """
 
-    # The below declarations are not really necessary, they are here to please
-    # PyCharm's syntax checker.
+    # The actual definitions of the following constants are outside the class.
     #: use this for blue cards.
     BLUE = None
     #: use this for green cards.
