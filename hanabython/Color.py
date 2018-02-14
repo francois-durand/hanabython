@@ -78,7 +78,8 @@ class Color:
         return self.print_color + str(o) + PrintColor.RESET
 
     def __repr__(self):
-        return '%s (%s)' % (self.name, self.symbol)
+        return 'Color(name=%r, symbol=%r, print_color=%r)' % (
+            self.name, self.symbol, self.print_color)
 
     def __str__(self):
         return self.color_str('%s (%s)' % (self.name, self.symbol))
