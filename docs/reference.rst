@@ -2,14 +2,8 @@
 Reference
 =========
 
-A Nice Section
---------------
+Color
+-----
 
-.. autoclass:: hanabython.MyClass
-    :members:
-
-Another Nice Section
---------------------
-
-.. autoclass:: hanabython.MyClass2
+.. autoclass:: hanabython.Color
     :members:

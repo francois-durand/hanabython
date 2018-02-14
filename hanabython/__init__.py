@@ -8,3 +8,5 @@ __version__ = '0.1.0'
 
 from MyClass import MyClass
 from MyClass2 import MyClass2
+import PrintColor
+from Color import Color

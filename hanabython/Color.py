@@ -30,11 +30,11 @@ class Color:
     :param str print_color: an ANSI escape code that modifies the printing
         color. See the constants in module PrintColor.
 
-    >>> BLUE.name
+    >>> Color.BLUE.name
     'Blue'
-    >>> BLUE.symbol
+    >>> Color.BLUE.symbol
     'B'
-    >>> BLUE.print_color
+    >>> Color.BLUE.print_color
     '\x1b[0;94m'
     """
 
@@ -52,9 +52,9 @@ class Color:
         :return: the ``__repr__`` of this object, with an ANSI color-modifying
             escape code at the beginning and its cancellation at the end.
 
-        >>> BLUE.color_repr('some text')
+        >>> Color.BLUE.color_repr('some text')
         "\x1b[0;94m'some text'\x1b[0;0m"
-        >>> BLUE.color_repr('42')
+        >>> Color.BLUE.color_repr('42')
         "\x1b[0;94m'42'\x1b[0;0m"
         """
         return self.print_color + repr(o) + PrintColor.RESET
@@ -68,9 +68,9 @@ class Color:
         :return: the ``__str__`` of this object, with an ANSI color-modifying
             escape code at the beginning and its cancellation at the end.
 
-        >>> BLUE.color_str('some text')
+        >>> Color.BLUE.color_str('some text')
         '\x1b[0;94msome text\x1b[0;0m'
-        >>> BLUE.color_str('42')
+        >>> Color.BLUE.color_str('42')
         '\x1b[0;94m42\x1b[0;0m'
         """
         return self.print_color + str(o) + PrintColor.RESET
@@ -89,23 +89,32 @@ class Color:
         return self.color_str(
             '%s (%s)' % (self.name, self.symbol))
 
+    # The below declarations are not really necessary, they are here to please
+    # PyCharm's syntax checker.
+    BLUE = None
+    GREEN = None
+    RED = None
+    WHITE = None
+    YELLOW = None
+    MULTI = None
 
-BLUE = Color(name='Blue', symbol='B', print_color=PrintColor.BLUE)
-GREEN = Color(name='Green', symbol='G', print_color=PrintColor.GREEN)
-RED = Color(name='Red', symbol='R', print_color=PrintColor.RED)
-WHITE = Color(name='White', symbol='W', print_color=PrintColor.WHITE)
-YELLOW = Color(name='Yellow', symbol='Y', print_color=PrintColor.YELLOW)
-MULTI = Color(name='Multi', symbol='M', print_color=PrintColor.CYAN)
+
+Color.BLUE = Color(name='Blue', symbol='B', print_color=PrintColor.BLUE)
+Color.GREEN = Color(name='Green', symbol='G', print_color=PrintColor.GREEN)
+Color.RED = Color(name='Red', symbol='R', print_color=PrintColor.RED)
+Color.WHITE = Color(name='White', symbol='W', print_color=PrintColor.WHITE)
+Color.YELLOW = Color(name='Yellow', symbol='Y', print_color=PrintColor.YELLOW)
+Color.MULTI = Color(name='Multi', symbol='M', print_color=PrintColor.CYAN)
 
 
 if __name__ == '__main__':
-    print(BLUE)
-    print(GREEN)
-    print(RED)
-    print(WHITE)
-    print(YELLOW)
-    print(MULTI)
-    print([BLUE, GREEN])
+    print(Color.BLUE)
+    print(Color.GREEN)
+    print(Color.RED)
+    print(Color.WHITE)
+    print(Color.YELLOW)
+    print(Color.MULTI)
+    print([Color.BLUE, Color.GREEN])
 
     import doctest
     doctest.testmod()
