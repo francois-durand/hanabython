@@ -38,12 +38,12 @@ class Color:
     '\x1b[0;94m'
     """
 
-    def __init__(self, name: str, symbol: str, print_color: str):
+    def __init__(self, name, symbol, print_color):
         self.name = name
         self.symbol = symbol
         self.print_color = print_color
 
-    def color_repr(self, o: object) -> str:
+    def color_repr(self, o):
         r"""
         Convert an object to a colored representation
 
@@ -51,6 +51,7 @@ class Color:
 
         :return: the ``__repr__`` of this object, with an ANSI color-modifying
             escape code at the beginning and its cancellation at the end.
+        :rtype: str
 
         >>> Color.BLUE.color_repr('some text')
         "\x1b[0;94m'some text'\x1b[0;0m"
@@ -59,7 +60,7 @@ class Color:
         """
         return self.print_color + repr(o) + PrintColor.RESET
 
-    def color_str(self, o: object) -> str:
+    def color_str(self, o):
         r"""
         Convert an object to a colored string
 
@@ -67,6 +68,7 @@ class Color:
 
         :return: the ``__str__`` of this object, with an ANSI color-modifying
             escape code at the beginning and its cancellation at the end.
+        :rtype: str
 
         >>> Color.BLUE.color_str('some text')
         '\x1b[0;94msome text\x1b[0;0m'
@@ -75,17 +77,15 @@ class Color:
         """
         return self.print_color + str(o) + PrintColor.RESET
 
-    def print(self, o: object) -> None:
+    def print(self, o):
         r"""
         Print an object in color
 
         :param object o: any object.
-
-        :return: None. Prints the object in color.
         """
         print(self.color_str(o))
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return self.color_str(
             '%s (%s)' % (self.name, self.symbol))
 
