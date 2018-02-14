@@ -11,5 +11,5 @@ Color
 .. autoclass:: hanabython.PrintColor
     :members:
 
-.. autoclass:: hanabython.Card
+.. autoclass:: hanabython.ColorClueBehavior
     :members:
