@@ -18,10 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from enum import Enum
-
-
-class ColorClueBehavior(Enum):
+class ColorClueBehavior:
     """
     A type of behavior regarding color clues.
     """
