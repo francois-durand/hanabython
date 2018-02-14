@@ -13,7 +13,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'Click>=6.0',
-    'enum>=0.4',
+    'enum',
     # TODO: Put package requirements here
 ]
 
