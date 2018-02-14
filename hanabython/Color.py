@@ -49,6 +49,7 @@ class Color:
     # PyCharm's syntax checker.
     #: use this for blue cards.
     BLUE = None
+    #: use this for green cards.
     GREEN = None
     RED = None
     WHITE = None
