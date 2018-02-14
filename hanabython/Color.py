@@ -18,7 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-import PrintColor
+from PrintColor import PrintColor
 
 
 class Color:
@@ -30,6 +30,13 @@ class Color:
     :param str print_color: an ANSI escape code that modifies the printing
         color. See the constants in module PrintColor.
 
+    :attr BLUE:     use this for blue cards.
+    :attr GREEN:    use this for green cards.
+    :attr RED:      use this for red cards.
+    :attr WHITE:    use this for white cards.
+    :attr YELLOW:   use this for yellow cards.
+    :attr MULTI:    use this for multicolor cards.
+
     >>> Color.BLUE.name
     'Blue'
     >>> Color.BLUE.symbol
@@ -37,6 +44,15 @@ class Color:
     >>> Color.BLUE.print_color
     '\x1b[0;94m'
     """
+
+    # The below declarations are not really necessary, they are here to please
+    # PyCharm's syntax checker.
+    BLUE = None
+    GREEN = None
+    RED = None
+    WHITE = None
+    YELLOW = None
+    MULTI = None
 
     def __init__(self, name, symbol, print_color):
         self.name = name
@@ -80,15 +96,6 @@ class Color:
     def __repr__(self):
         return self.color_str(
             '%s (%s)' % (self.name, self.symbol))
-
-    # The below declarations are not really necessary, they are here to please
-    # PyCharm's syntax checker.
-    BLUE = None
-    GREEN = None
-    RED = None
-    WHITE = None
-    YELLOW = None
-    MULTI = None
 
 
 Color.BLUE = Color(name='Blue', symbol='B', print_color=PrintColor.BLUE)

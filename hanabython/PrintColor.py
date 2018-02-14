@@ -19,11 +19,27 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-RESET = "\033[0;0m"
-WHITE = "\033[0;30m"
-RED = "\033[0;31m"
-GREEN = "\033[0;32m"
-YELLOW = "\033[0;93m"
-BLUE = "\033[0;94m"
-MAGENTA = "\033[0;35m"
-CYAN = "\033[1;96m"
+
+class PrintColor:
+    """
+    An ANSI escape code that modifies the printing color
+
+    :attr RESET:    ANSI code to return to the default color.
+    :attr BLUE:     blue.
+    :attr CYAN:     cyan.
+    :attr GREEN:    green.
+    :attr MAGENTA:  magenta.
+    :attr RED:      red.
+    :attr WHITE:    white (actually it's white on black background, and black
+        on white background).
+    :attr YELLOW:   yellow.
+    """
+
+    RESET = "\033[0;0m"
+    BLUE = "\033[0;94m"
+    CYAN = "\033[1;96m"
+    GREEN = "\033[0;32m"
+    MAGENTA = "\033[0;35m"
+    RED = "\033[0;31m"
+    WHITE = "\033[0;30m"
+    YELLOW = "\033[0;93m"
