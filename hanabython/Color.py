@@ -47,6 +47,7 @@ class Color:
 
     # The below declarations are not really necessary, they are here to please
     # PyCharm's syntax checker.
+    #: use this for blue cards.
     BLUE = None
     GREEN = None
     RED = None
