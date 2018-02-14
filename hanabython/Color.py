@@ -23,12 +23,12 @@ from PrintColor import PrintColor
 
 class Color:
     r"""
-    A Color.
+    A color
 
     :param str name: The full name of the color.
     :param str symbol: The short name of the color.
     :param str print_color: an ANSI escape code that modifies the printing
-        color. See the constants in module PrintColor.
+        color. See :class:`PrintColor`.
 
     >>> Color.BLUE.name
     'Blue'
@@ -68,11 +68,11 @@ class Color:
         :rtype: str
 
         >>> Color.BLUE.color_repr('some text')
-        "rep\x1b[0;94m'some text'\x1b[0;0m"
+        "\x1b[0;94m'some text'\x1b[0;0m"
         >>> Color.BLUE.color_repr('42')
-        "rep\x1b[0;94m'42'\x1b[0;0m"
+        "\x1b[0;94m'42'\x1b[0;0m"
         """
-        return 'rep' + self.print_color + repr(o) + PrintColor.RESET
+        return self.print_color + repr(o) + PrintColor.RESET
 
     def color_str(self, o):
         r"""
@@ -85,15 +85,17 @@ class Color:
         :rtype: str
 
         >>> Color.BLUE.color_str('some text')
-        'str\x1b[0;94msome text\x1b[0;0m'
+        '\x1b[0;94msome text\x1b[0;0m'
         >>> Color.BLUE.color_str('42')
-        'str\x1b[0;94m42\x1b[0;0m'
+        '\x1b[0;94m42\x1b[0;0m'
         """
-        return 'str' + self.print_color + str(o) + PrintColor.RESET
+        return self.print_color + str(o) + PrintColor.RESET
 
     def __repr__(self):
-        return self.color_str(
-            '%s (%s)' % (self.name, self.symbol))
+        return '%s (%s)' % (self.name, self.symbol)
+
+    def __str__(self):
+        return self.color_str('%s (%s)' % (self.name, self.symbol))
 
 
 Color.BLUE = Color(name='Blue', symbol='B', print_color=PrintColor.BLUE)
