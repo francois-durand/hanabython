@@ -13,3 +13,6 @@ Color
 
 .. autoclass:: hanabython.ColorClueBehavior
     :members:
+
+.. autoclass:: hanabython.Card
+    :members:
