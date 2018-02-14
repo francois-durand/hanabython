@@ -22,7 +22,7 @@ This file is part of Hanabython.
 
 class PrintColor:
     """
-    An ANSI escape code that modifies the printing color
+    An ANSI escape code that modifies the printing color.
     """
 
     #: This escape code is special: it is used to return to the default color.

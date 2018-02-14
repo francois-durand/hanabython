@@ -10,3 +10,5 @@ from MyClass import MyClass
 from MyClass2 import MyClass2
 from PrintColor import PrintColor
 from Color import Color
+from ColorClueBehavior import ColorClueBehavior
+from Card import Card
