@@ -77,14 +77,6 @@ class Color:
         """
         return self.print_color + str(o) + PrintColor.RESET
 
-    def print(self, o):
-        r"""
-        Print an object in color
-
-        :param object o: any object.
-        """
-        print(self.color_str(o))
-
     def __repr__(self):
         return self.color_str(
             '%s (%s)' % (self.name, self.symbol))
