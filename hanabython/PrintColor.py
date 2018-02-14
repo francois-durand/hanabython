@@ -23,24 +23,43 @@ This file is part of Hanabython.
 class PrintColor:
     """
     An ANSI escape code that modifies the printing color
-
-    Please note that the constant :attr:`RESET` is special: it contains the
-    ANSI escape code used to return to the default color.
     """
 
-    #:
+    #: This escape code is special: it is used to return to the default color.
     RESET = "\033[0;0m"
+
+    #: This should be white on black background, and vice-versa.
+    WHITE_NOT_BRIGHT = "\033[0;30m"
+    WHITE_BRIGHT = "\033[0;90m"
+    WHITE = WHITE_NOT_BRIGHT
     #:
-    BLUE = "\033[0;94m"
+    RED_NOT_BRIGHT = "\033[0;31m"
+    RED_BRIGHT = "\033[0;91m"
+    RED = RED_NOT_BRIGHT
     #:
-    CYAN = "\033[1;96m"
+    GREEN_NOT_BRIGHT = "\033[0;32m"
+    GREEN_BRIGHT = "\033[0;92m"
+    GREEN = GREEN_NOT_BRIGHT
     #:
-    GREEN = "\033[0;32m"
+    YELLOW_NOT_BRIGHT = "\033[0;33m"
+    YELLOW_BRIGHT = "\033[0;93m"
+    YELLOW = YELLOW_BRIGHT
+    BROWN = YELLOW_NOT_BRIGHT
     #:
-    MAGENTA = "\033[0;35m"
+    BLUE_NOT_BRIGHT = "\033[0;34m"
+    BLUE_BRIGHT = "\033[0;94m"
+    BLUE = BLUE_BRIGHT
     #:
-    RED = "\033[0;31m"
+    MAGENTA_NOT_BRIGHT = "\033[0;35m"
+    MAGENTA_BRIGHT = "\033[0;95m"
+    MAGENTA = MAGENTA_NOT_BRIGHT
     #:
-    WHITE = "\033[0;30m"
-    #:
-    YELLOW = "\033[0;93m"
+    CYAN_NOT_BRIGHT = "\033[1;36m"
+    CYAN_BRIGHT = "\033[1;96m"
+    CYAN = CYAN_BRIGHT
+
+
+if __name__ == '__main__':
+    for k in PrintColor.__dict__.keys():
+        if not k.startswith('_'):
+            print(PrintColor.__dict__[k] + k + PrintColor.RESET)

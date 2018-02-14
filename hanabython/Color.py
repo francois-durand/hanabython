@@ -95,11 +95,11 @@ class Color:
     WHITE = None
     #:
     YELLOW = None
-    #: Use this for multicolor cards (the actual color might change in the
-    #: future).
+    #: Use this for multicolor cards (the actual color might change in future
+    #: implementations).
     MULTICOLOR = None
-    #: Use this for the sixth color (the actual color might change in the
-    #: future).
+    #: Use this for the sixth color (the actual color might change in future
+    #: implementations).
     SIXTH_COLOR = None
 
 
