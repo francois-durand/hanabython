@@ -51,9 +51,13 @@ class Color:
     BLUE = None
     #: use this for green cards.
     GREEN = None
+    #: use this for red cards.
     RED = None
+    #: use this for white cards.
     WHITE = None
+    #: use this for yellow cards.
     YELLOW = None
+    #: use this for multicolor cards.
     MULTI = None
 
     def __init__(self, name, symbol, print_color):
