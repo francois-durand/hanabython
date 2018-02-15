@@ -115,20 +115,20 @@ class Configuration:
     #: Five colors of the base game. Default for :attr:`colors`.
     COLORS_STANDARD = [
         Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW]
-    #: Five colors + sixth normal color
+    #: Five colors + sixth normal color.
     COLORS_W_SIXTH = [
         Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW,
         Color.SIXTH
     ]
-    #: Five colors + Multicolor
+    #: Five colors + Multicolor.
     COLORS_W_MULTI = [
         Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW,
         Color.MULTICOLOR
     ]
 
-    #: Standard contents of a color (1 1 1 2 2 3 3 4 5)
+    #: Standard contents of a color (1 1 1 2 2 3 3 4 5).
     COLOR_DECK_STANDARD = [3, 2, 2, 2, 1]
-    #: Contents of a "short" color (1 2 3 4 5)
+    #: Contents of a "short" color (1 2 3 4 5).
     COLOR_DECK_SHORT = [1, 1, 1, 1, 1]
 
     #: Normal deck (5 colors of 10 cards). Default for :attr:`deck`.
@@ -139,23 +139,23 @@ class Configuration:
         Color.WHITE:    COLOR_DECK_STANDARD,
         Color.YELLOW:   COLOR_DECK_STANDARD,
     }
-    #: Deck with long sixth color (6 colors of 10 cards)
+    #: Deck with long sixth color (6 colors of 10 cards).
     DECK_SIXTH_LONG = DECK_STANDARD.copy()
     DECK_SIXTH_LONG[Color.SIXTH] = COLOR_DECK_STANDARD
-    #: Deck with short sixth color (5 colors of 10 cards + 1 color of 5 cards)
+    #: Deck with short sixth color (5 colors of 10 cards + 1 color of 5 cards).
     DECK_SIXTH_SHORT = DECK_STANDARD.copy()
     DECK_SIXTH_SHORT[Color.SIXTH] = COLOR_DECK_SHORT
-    #: Deck with long multicolor (5 colors of 10 cards + 1 multi of 10 cards)
+    #: Deck with long multicolor (5 colors of 10 cards + 1 multi of 10 cards).
     DECK_MULTICOLOR_LONG = DECK_STANDARD.copy()
     DECK_MULTICOLOR_LONG[Color.MULTICOLOR] = COLOR_DECK_STANDARD
-    #: Deck with short multicolor (5 colors of 10 cards + 1 multi of 5 cards)
+    #: Deck with short multicolor (5 colors of 10 cards + 1 multi of 5 cards).
     DECK_MULTICOLOR_SHORT = DECK_STANDARD.copy()
     DECK_MULTICOLOR_SHORT[Color.MULTICOLOR] = COLOR_DECK_SHORT
 
     #: Normal rule for hand size (5 for 3- players, 4 for 4+ players).
     #: Default for :attr:`hand_size`.
     HAND_SIZE_NORMAL_RULE = lambda n: 5 if n <= 3 else 4
-    #: Variant for hand size (6 for 2p, 5 for 3p, 4 for 4p, 3 for 5+ players)
+    #: Variant for hand size (6 for 2p, 5 for 3p, 4 for 4p, 3 for 5+ players).
     HAND_SIZE_VARIANT_63 = lambda n: 3 if n >= 5 else 8 - n
 
     def __init__(self, colors=COLORS_STANDARD, deck=DECK_STANDARD,
