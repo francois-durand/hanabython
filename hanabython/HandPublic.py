@@ -39,7 +39,7 @@ class HandPublic(list):
     :param int n_cards: the number of cards in the hand. N.B.: this parameter
         is mostly used for examples and tests. In contrast, at the beginning of
         a game, the hand should be initialized with 0 cards, because cards will
-        be given to the players during the initial dealing of hands. 
+        be given to the players during the initial dealing of hands.
 
     >>> from Configuration import Configuration
     >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
