@@ -258,7 +258,7 @@ class Configuration:
         """
         return self.colors[i]
 
-    def v_from_i(self, i: int) -> int:
+    def v_from_i(self, i):
         """
         Finds value from an index (for example in :attr:`deck_array`).
 
