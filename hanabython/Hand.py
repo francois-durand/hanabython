@@ -32,6 +32,7 @@ class Hand(list):
 
     Basically, a Hand is a list of Card objects. It can be constructed as such,
     or using a list of strings which will be automatically converted to cards.
+
     >>> hand = Hand([Card('Y3'), Card('M1'), Card('B2'), Card('R4')])
     >>> print(hand)
     [Y3, M1, B2, R4]

@@ -26,9 +26,9 @@ class Card:
     A card of Hanabi.
 
     :param Color color: the color of the card.
-    :param int value: the value of the card (usually between 1 and 5)
+    :param int value: the value of the card (usually between 1 and 5).
     :param str s: a short string representing the card. Must use one of the
-        standard colors, cf. :meth:`Color.from_string`.
+        standard colors, cf. :meth:`Color.from_symbol`.
 
     You can provide either :attr:`color` and :attr:`value`, or :attr:`s`.
     The constructor accepts several types of syntax, as illustrated below.
@@ -55,7 +55,8 @@ class Card:
     >>> print(my_card)
     B3
 
-    Note: the string input works even if the value has several digits.
+    N.B.: the string input works even if the value has several digits.
+
     >>> my_card = Card('B42')
     >>> print(my_card)
     B42
