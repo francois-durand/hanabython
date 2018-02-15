@@ -27,8 +27,10 @@ class Color:
     A color.
 
     :param str name: The full name of the color.
-    :param str symbol: The short name of the color (should be 1 character for
-        visualization purposes, but can have more characters for other uses).
+    :param str symbol: The short name of the color. For standard colors
+        (defined as constants in this class), it must be 1 character, and two
+        standard colors cannot have the same symbol. For other colors, it is
+        better to do the same, but it is not mandatory.
     :param str print_color: an ANSI escape code that modifies the printing
         color. See :class:`PrintColor`.
     :param ColorClueBehavior clue_behavior: how this color behaves regarding
@@ -53,6 +55,30 @@ class Color:
         self.print_color = print_color
         self.clue_behavior = clue_behavior
 
+    @classmethod
+    def from_symbol(self, s):
+        """
+        Finds one of the standard colors from its symbol
+
+        :param str s: the symbol of the color.
+
+        :return: the corresponding color. It must be one of the constants
+            defined in the class Color, e.g. BLUE, MULTI, etc.
+        :rtype: Color
+
+        >>> my_color = Color.from_symbol('B')
+        >>> print(my_color)
+        Blue (B)
+        """
+        for k in Color.__dict__.keys():
+            try:
+                symbol = Color.__dict__[k].symbol
+            except AttributeError:
+                continue
+            if symbol == s:
+                return Color.__dict__[k]
+        raise ValueError('Could not find color with symbol: ', s)
+
     def __repr__(self):
         return (
             'Color(name=%r, symbol=%r, print_color=%r, clue_behavior=%r)'
@@ -60,7 +86,17 @@ class Color:
         )
 
     def __str__(self):
-        return self.color_str('%s (%s)' % (self.name, self.symbol))
+        return '%s (%s)' % (self.name, self.symbol)
+
+    def colored(self):
+        """
+        Colored version of :meth:`__str__`
+
+        :return: the same string as :meth:`__str__`, but with ANSI escape codes
+            to add colors where relevant.
+        :rtype: str
+        """
+        return self.color_str(str(self))
 
     def color_repr(self, o):
         r"""
@@ -160,17 +196,28 @@ Color.COLORLESS = Color(
 
 
 if __name__ == '__main__':
-    print(Color.BLUE)
-    print(Color.GREEN)
-    print(Color.RED)
-    print(Color.WHITE)
-    print(Color.YELLOW)
-    print(Color.SIXTH)
-    print(Color.MULTICOLOR)
-    print(Color.COLORLESS)
-    print(repr(Color.BLUE))
+    print('repr: ', repr(Color.BLUE))
+    print('str: ', Color.BLUE)
+    print('colored: ', Color.BLUE.colored())
+
+    my_color = Color.from_symbol('B')
+    print('\n' + my_color.colored())
+    try:
+        my_color = Color.from_symbol('Z')
+        print(my_color.colored())
+    except ValueError as e:
+        print(e)
+
+    print('\n' + Color.BLUE.colored())
+    print(Color.GREEN.colored())
+    print(Color.RED.colored())
+    print(Color.WHITE.colored())
+    print(Color.YELLOW.colored())
+    print(Color.SIXTH.colored())
+    print(Color.MULTICOLOR.colored())
+    print(Color.COLORLESS.colored())
+
+    print(Color.__doc__)
 
     import doctest
     doctest.testmod()
-
-    print(Color.__doc__)
