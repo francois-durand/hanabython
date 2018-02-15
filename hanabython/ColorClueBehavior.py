@@ -22,17 +22,17 @@ This file is part of Hanabython.
 
 class ColorClueBehavior:
     """
-    A type of behavior regarding c clues.
+    A type of behavior regarding color clues.
     """
 
-    #: Normal behavior (you can clue this c, and the card catches only the
-    #: clues of its own c).
+    #: Normal behavior (you can clue this color, and the card catches only the
+    #: clues of its own color).
     NORMAL = 0
-    #: Multicolor behavior (you cannot clue this c, and the card catches the
+    #: Multicolor behavior (you cannot clue this color, and the card catches the
     #: clues of all colors).
     MULTICOLOR = 1
-    #: Colorless behavior (you cannot clue this c, and the card catches the
-    #: clues of no c).
+    #: Colorless behavior (you cannot clue this color, and the card catches the
+    #: clues of no color).
     COLORLESS = 2
 
 

@@ -113,7 +113,8 @@ class CardPublic:
         Updates the internal variables of the card.
 
         >>> from Configuration import Configuration
-        >>> card = CardPublic(Configuration.CONFIG_EIGHT)
+        >>> cfg = Configuration.CONFIG_EIGHT
+        >>> card = CardPublic(cfg)
         >>> print(card)
         BGRWYPMC 12345
         >>> card.match_c(clue_c=Color.RED, b=False)
@@ -123,6 +124,9 @@ class CardPublic:
         >>> print(card)
         B        12345
 
+        Let us try with the clues in the opposite order:
+
+        >>> from Configuration import Configuration
         >>> card = CardPublic(Configuration.CONFIG_EIGHT)
         >>> print(card)
         BGRWYPMC 12345
@@ -170,42 +174,41 @@ class CardPublic:
 
 
 if __name__ == '__main__':
-    cfg = Configuration.CONFIG_EIGHT
-    card = CardPublic(cfg)
-    print('repr: ', repr(card))
-    print('str:', card)
-    print('colored: ', card.colored())
+    my_card = CardPublic(Configuration.CONFIG_EIGHT)
+    print('repr: ', repr(my_card))
+    print('str:', my_card)
+    print('colored: ', my_card.colored())
 
     print('\nIt is not red, then it is blue:')
-    print(card.colored())
-    card.match_c(clue_c=Color.RED, b=False)
-    print(card.colored())
-    card.match_c(clue_c=Color.BLUE, b=True)
-    print(card.colored())
+    print(my_card.colored())
+    my_card.match_c(clue_c=Color.RED, b=False)
+    print(my_card.colored())
+    my_card.match_c(clue_c=Color.BLUE, b=True)
+    print(my_card.colored())
 
     print('\nIt is blue, then it is not red:')
-    card = CardPublic(cfg)
-    print(card.colored())
-    card.match_c(clue_c=Color.BLUE, b=True)
-    print(card.colored())
-    card.match_c(clue_c=Color.RED, b=False)
-    print(card.colored())
+    my_card = CardPublic(Configuration.CONFIG_EIGHT)
+    print(my_card.colored())
+    my_card.match_c(clue_c=Color.BLUE, b=True)
+    print(my_card.colored())
+    my_card.match_c(clue_c=Color.RED, b=False)
+    print(my_card.colored())
 
     print('\nIt is not 3, then it is 5:')
-    card = CardPublic(cfg)
-    print(card.colored())
-    card.match_v(clue_v=3, b=False)
-    print(card.colored())
-    card.match_v(clue_v=5, b=True)
-    print(card.colored())
+    my_card = CardPublic(Configuration.CONFIG_EIGHT)
+    print(my_card.colored())
+    my_card.match_v(clue_v=3, b=False)
+    print(my_card.colored())
+    my_card.match_v(clue_v=5, b=True)
+    print(my_card.colored())
 
     print('\nIt is 5, then it is not 3:')
-    card = CardPublic(cfg)
-    print(card.colored())
-    card.match_v(clue_v=5, b=True)
-    print(card.colored())
-    card.match_v(clue_v=3, b=False)
-    print(card.colored())
+    my_card = CardPublic(Configuration.CONFIG_EIGHT)
+    print(my_card.colored())
+    my_card.match_v(clue_v=5, b=True)
+    print(my_card.colored())
+    my_card.match_v(clue_v=3, b=False)
+    print(my_card.colored())
 
     import doctest
     doctest.testmod()

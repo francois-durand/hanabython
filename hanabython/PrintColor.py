@@ -22,10 +22,10 @@ This file is part of Hanabython.
 
 class PrintColor:
     """
-    An ANSI escape code that modifies the printing c.
+    An ANSI escape code that modifies the printing color.
     """
 
-    #: This escape code is special: it is used to return to the default c.
+    #: This escape code is special: it is used to return to the default color.
     RESET = "\033[0;0m"
 
     WHITE_NOT_BRIGHT = "\033[0;30m"
