@@ -137,7 +137,7 @@ class Configuration:
         Color.GREEN:    COLOR_DECK_STANDARD,
         Color.RED:      COLOR_DECK_STANDARD,
         Color.WHITE:    COLOR_DECK_STANDARD,
-        Color.YELLOW:   COLOR_DECK_STANDARD,
+        Color.YELLOW:   COLOR_DECK_STANDARD
     }
     #: Deck with long sixth color (6 colors of 10 cards).
     DECK_SIXTH_LONG = DECK_STANDARD.copy()
