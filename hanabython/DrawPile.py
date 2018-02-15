@@ -87,7 +87,7 @@ class DrawPile(list):
         >>> type(card)
         <class 'Card.Card'>
         >>> while draw_pile.n_cards >= 1:
-        ...     card = draw_pile.give()
+        ...     _ = draw_pile.give()
         >>> print(draw_pile.give())
         None
         """
