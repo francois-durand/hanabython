@@ -80,10 +80,11 @@ class Color:
         raise ValueError('Could not find color with symbol: ', s)
 
     def __repr__(self):
-        return (
-            'Color(name=%r, symbol=%r, print_color=%r, clue_behavior=%r)'
-            % (self.name, self.symbol, self.print_color, self.clue_behavior)
-        )
+        # return (
+        #     'Color(name=%r, symbol=%r, print_color=%r, clue_behavior=%r)'
+        #     % (self.name, self.symbol, self.print_color, self.clue_behavior)
+        # )
+        return '<Color: %s>' % self.symbol
 
     def __str__(self):
         return '%s (%s)' % (self.name, self.symbol)

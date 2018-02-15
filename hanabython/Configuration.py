@@ -120,7 +120,6 @@ class Configuration:
     #: Five colors of the base game
     COLORS_STANDARD = [
         Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW]
-    COLORS_STANDARD.__repr__ = lambda self: 'Configuration.COLORS_STANDARD'
     #: Five colors + sixth normal color
     COLORS_W_SIXTH = [
         Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW,
