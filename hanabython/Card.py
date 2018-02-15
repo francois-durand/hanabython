@@ -69,14 +69,14 @@ class Card:
         if len(args) == 1:
             s = args[0]
         elif len(args) == 2:
-            if type(args[0]) == Color:
-                self.c = args[0]
-                self.v = args[1]
-            elif type(args[1]) == Color:
+            if type(args[0]) == int:
                 self.v = args[0]
                 self.c = args[1]
+            elif type(args[1]) == int:
+                self.c = args[0]
+                self.v = args[1]
             else:
-                raise ValueError('One argument should be a Color.')
+                raise ValueError('One argument should be an integer.')
         elif 's' in kwargs.keys():
             s = kwargs['s']
         else:
@@ -94,7 +94,7 @@ class Card:
                     raise ValueError('Could not interpret as a card: ', s)
 
     def __repr__(self):
-        return 'Card(c=%r, v=%r)' % (self.c, self.v)
+        return '<Card: %s>' % self
 
     def __str__(self):
         return self.c.symbol + '' + str(self.v)
