@@ -145,7 +145,8 @@ class Configuration:
         Color.YELLOW:   COLOR_DECK_STANDARD,
     }
     #: Deck with long sixth color (6 colors of 10 cards)
-    DECK_SIXTH_LONG = {**DECK_STANDARD, Color.SIXTH: COLOR_DECK_STANDARD}
+    DECK_SIXTH_LONG = DECK_STANDARD.copy()
+    DECK_SIXTH_LONG[Color.SIXTH] = COLOR_DECK_STANDARD
     #: Deck with short sixth color (5 colors of 10 cards + 1 color of 5 cards)
     DECK_SIXTH_SHORT = {**DECK_STANDARD, Color.SIXTH: COLOR_DECK_SHORT}
     #: Deck with long multicolor (5 colors of 10 cards + 1 multi of 10 cards)
