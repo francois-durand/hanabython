@@ -121,7 +121,10 @@ class Configuration:
     COLORS_STANDARD = [
         Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW]
     #: Five colors + sixth normal color
-    COLORS_W_SIXTH = [*COLORS_STANDARD, Color.SIXTH]
+    COLORS_W_SIXTH = [
+        Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW,
+        Color.SIXTH
+    ]
     #: Five colors + Multicolor
     COLORS_W_MULTI = [*COLORS_STANDARD, Color.MULTICOLOR]
 
