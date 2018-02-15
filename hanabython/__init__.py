@@ -14,3 +14,4 @@ from Hand import Hand
 from Configuration import Configuration
 from CardPublic import CardPublic
 from HandPublic import HandPublic
+from DrawPile import DrawPile

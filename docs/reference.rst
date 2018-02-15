@@ -32,6 +32,12 @@ Hands
 .. autoclass:: hanabython.HandPublic
     :members:
 
+Draw Pile
+---------
+
+.. autoclass:: hanabython.DrawPile
+    :members:
+
 Configuration
 -------------
 
