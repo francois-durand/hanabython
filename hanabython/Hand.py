@@ -61,7 +61,7 @@ class Hand(list):
         """
         return '[' + ', '.join(card.colored() for card in self) + ']'
 
-    def receive(self, card: Card):
+    def receive(self, card):
         """
         Receive a card
 
@@ -78,7 +78,7 @@ class Hand(list):
         """
         self.insert(0, card)
 
-    def give(self, i: int):
+    def give(self, i):
         """
         Give a card
 
