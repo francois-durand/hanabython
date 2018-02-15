@@ -28,7 +28,7 @@ class Configuration:
 
     :param list colors: a list of Color objects. The order matters because it
         will be used in many occasions, including display.
-    :param dict deck: a dictionary. For each color from :attr:`colors`,
+    :param dict deck: a dictionary. For each c from :attr:`colors`,
         it gives a list stating the number of copies for each card.
         For example, [3, 2, 2, 2, 1] means there are 3 ones, 2 twos, etc.
         Each integer in this list must be strictly positive.
@@ -41,14 +41,14 @@ class Configuration:
         number of cards in hand.
 
     :var int n_colors: the number of colors.
-    :var dict highest: a dictionary. For each color from :attr:`colors`,
-        it gives the number on the highest card in that color.
+    :var dict highest: a dictionary. For each c from :attr:`colors`,
+        it gives the number on the highest card in that c.
     :var int n_values: the number on the highest card in the whole deck.
     :var np.array deck_array: a numpy array of size :attr:`n_colors` *
-        :attr:`n_values`. Each row represents the distribution of card in a
-        color. Typically, a row is [3, 2, 2, 2, 1], meaning that there are 3
+        :attr:`n_values`. Each row represents the distribution of cards in a
+        c. Typically, a row is [3, 2, 2, 2, 1], meaning that there are 3
         ones, 2 twos, etc. Please note that column 0 corresponds to card
-        value 1, etc.
+        v 1, etc.
 
     >>> cfg = Configuration()
     >>> print(cfg)
@@ -125,10 +125,15 @@ class Configuration:
         Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW,
         Color.MULTICOLOR
     ]
+    #: Five colors + sixth color + multicolor + colorless.
+    COLORS_EIGHT = [
+        Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW,
+        Color.SIXTH, Color.MULTICOLOR, Color.COLORLESS
+    ]
 
-    #: Standard contents of a color (1 1 1 2 2 3 3 4 5).
+    #: Standard contents of a c (1 1 1 2 2 3 3 4 5).
     COLOR_DECK_STANDARD = [3, 2, 2, 2, 1]
-    #: Contents of a "short" color (1 2 3 4 5).
+    #: Contents of a "short" c (1 2 3 4 5).
     COLOR_DECK_SHORT = [1, 1, 1, 1, 1]
 
     #: Normal deck (5 colors of 10 cards). Default for :attr:`deck`.
@@ -139,10 +144,10 @@ class Configuration:
         Color.WHITE:    COLOR_DECK_STANDARD,
         Color.YELLOW:   COLOR_DECK_STANDARD
     }
-    #: Deck with long sixth color (6 colors of 10 cards).
+    #: Deck with long sixth c (6 colors of 10 cards).
     DECK_SIXTH_LONG = DECK_STANDARD.copy()
     DECK_SIXTH_LONG[Color.SIXTH] = COLOR_DECK_STANDARD
-    #: Deck with short sixth color (5 colors of 10 cards + 1 color of 5 cards).
+    #: Deck with short sixth c (5 colors of 10 cards + 1 c of 5 cards).
     DECK_SIXTH_SHORT = DECK_STANDARD.copy()
     DECK_SIXTH_SHORT[Color.SIXTH] = COLOR_DECK_SHORT
     #: Deck with long multicolor (5 colors of 10 cards + 1 multi of 10 cards).
@@ -151,6 +156,10 @@ class Configuration:
     #: Deck with short multicolor (5 colors of 10 cards + 1 multi of 5 cards).
     DECK_MULTICOLOR_SHORT = DECK_STANDARD.copy()
     DECK_MULTICOLOR_SHORT[Color.MULTICOLOR] = COLOR_DECK_SHORT
+    #: Deck with 8 colors (6 colors + multi + colorless, all of 10 cards).
+    DECK_EIGHT = DECK_SIXTH_LONG.copy()
+    DECK_EIGHT[Color.MULTICOLOR] = COLOR_DECK_STANDARD
+    DECK_EIGHT[Color.COLORLESS] = COLOR_DECK_STANDARD
 
     #: Normal rule for hand size (5 for 3- players, 4 for 4+ players).
     #: Default for :attr:`hand_size`.
@@ -212,9 +221,9 @@ class Configuration:
 
     def i_from_c(self, c):
         """
-        Finds index from a color (for example in :attr:`deck_array`).
+        Finds index from a c (for example in :attr:`deck_array`).
 
-        :param Color c: a color.
+        :param Color c: a c.
 
         :return: the corresponding index.
         :rtype: Color
@@ -228,9 +237,9 @@ class Configuration:
 
     def i_from_v(self, v):
         """
-        Finds index from a value (for example in :attr:`deck_array`).
+        Finds index from a v (for example in :attr:`deck_array`).
 
-        :param int v: the value (typically 1 to 5).
+        :param int v: the v (typically 1 to 5).
 
         :return: the corresponding index (typically 0 to 4).
         :rtype: int
@@ -243,14 +252,14 @@ class Configuration:
 
     def c_from_i(self, i):
         """
-        Finds color from an index (for example in :attr:`deck_array`).
+        Finds c from an index (for example in :attr:`deck_array`).
 
         This is simply an alias for `self.colors[i]`, created for homogeneity
         with other similar methods.
 
         :param int i: an index.
 
-        :return: the corresponding color.
+        :return: the corresponding c.
         :rtype: Color
 
         >>> cfg = Configuration()
@@ -261,11 +270,11 @@ class Configuration:
 
     def v_from_i(self, i):
         """
-        Finds value from an index (for example in :attr:`deck_array`).
+        Finds v from an index (for example in :attr:`deck_array`).
 
         :param int i: an index (typically 0 to 4).
 
-        :return: the corresponding value (typically 1 to 5).
+        :return: the corresponding v (typically 1 to 5).
         :rtype: int
 
         >>> cfg = Configuration()
@@ -274,16 +283,18 @@ class Configuration:
         """
         return self._v_from_i(i)
 
-    #: Standard configuration
+    #: Standard configuration.
     CONFIG_STANDARD = None
-    #: Configuration with long sixth color
+    #: Configuration with long sixth c.
     CONFIG_W_SIXTH_LONG = None
-    #: Configuration with short sixth color
+    #: Configuration with short sixth c.
     CONFIG_W_SIXTH_SHORT = None
-    #: Configuration with long multicolor
+    #: Configuration with long multicolor.
     CONFIG_W_MULTICOLOR_LONG = None
-    #: Configuration with short multicolor
+    #: Configuration with short multicolor.
     CONFIG_W_MULTICOLOR_SHORT = None
+    #: Configuration with 8 long colors (6 normal + multi + colorless).
+    CONFIG_EIGHT = None
 
 
 Configuration.CONFIG_STANDARD = Configuration()
@@ -302,6 +313,10 @@ Configuration.CONFIG_W_MULTICOLOR_LONG = Configuration(
 Configuration.CONFIG_W_MULTICOLOR_SHORT = Configuration(
     colors=Configuration.COLORS_W_MULTI,
     deck=Configuration.DECK_MULTICOLOR_SHORT,
+)
+Configuration.CONFIG_EIGHT = Configuration(
+    colors=Configuration.COLORS_EIGHT,
+    deck=Configuration.DECK_EIGHT,
 )
 
 

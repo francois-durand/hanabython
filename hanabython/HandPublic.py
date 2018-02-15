@@ -18,26 +18,16 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from Configuration import Configuration
 
 
-class ColorClueBehavior:
+class HandPublic:
     """
-    A type of behavior regarding c clues.
+    The "public" part of a hand
+
+    An object of this class represents what is known by all players, including
+    the owner of the hand.
     """
 
-    #: Normal behavior (you can clue this c, and the card catches only the
-    #: clues of its own c).
-    NORMAL = 0
-    #: Multicolor behavior (you cannot clue this c, and the card catches the
-    #: clues of all colors).
-    MULTICOLOR = 1
-    #: Colorless behavior (you cannot clue this c, and the card catches the
-    #: clues of no c).
-    COLORLESS = 2
-
-
-if __name__ == '__main__':
-    for k in ColorClueBehavior.__dict__.keys():
-        if not k.startswith('_'):
-            print('ColorClueBehavior.%s = %s'
-                  % (k, ColorClueBehavior.__dict__[k]))
+    def __init__(self, cfg):
+        pass

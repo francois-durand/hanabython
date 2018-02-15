@@ -95,43 +95,43 @@ class Hand(list):
         """
         return self.pop(i)
 
-    def match_color(self, clue_color):
+    def match_c(self, clue_c):
         """
-        React to a color clue
+        React to a clue by color
 
-        :param Color clue_color: the color of the clue.
+        :param Color clue_c: the color of the clue.
 
         :return: a list of booleans. The ``i``-th coefficient is ``True``
             iff the ``i``-th card of the hand matches the clue given.
         :rtype: list
 
         >>> hand = Hand(['G2', 'Y3', 'M1', 'B2', 'R4'])
-        >>> hand.match_color(Color.RED)
+        >>> hand.match_c(Color.RED)
         [False, False, True, False, True]
         """
-        return [card.match_color(clue_color) for card in self]
+        return [card.match_c(clue_c) for card in self]
 
-    def match_value(self, clue_value):
+    def match_v(self, clue_v):
         """
-        React to a value clue
+        React to a clue by value
 
-        :param int clue_value: the value of the clue.
+        :param int clue_v: the value of the clue.
 
         :return: a list of booleans. The ``i``-th coefficient is ``True``
             iff the ``i``-th card of the hand matches the clue given.
         :rtype: list
 
         >>> hand = Hand(['G2', 'Y3', 'M1', 'B2', 'R4'])
-        >>> hand.match_value(2)
+        >>> hand.match_v(2)
         [True, False, False, True, False]
         """
-        return [card.match_value(clue_value) for card in self]
+        return [card.match_v(clue_v) for card in self]
 
     # def match_clue(self, action: Action):
     #     if action.clue_type == Action.COLOR:
-    #         return self.match_color(action.clue)
+    #         return self.match_c(action.clue)
     #     else:
-    #         return self.match_value(action.clue)
+    #         return self.match_v(action.clue)
 
 
 if __name__ == '__main__':
@@ -150,10 +150,10 @@ if __name__ == '__main__':
     print(hand.colored())
 
     print('\nMatch red clue:')
-    print(hand.match_color(Color.RED))
+    print(hand.match_c(Color.RED))
 
     print('\nMatch clue 2:')
-    print(hand.match_value(2))
+    print(hand.match_v(2))
     # print(hand.bool_list_from_clue(Action(
     #     category=Action.INFORM, clue_type=Action.VALUE, clue=2
     # )))

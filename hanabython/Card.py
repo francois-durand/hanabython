@@ -25,15 +25,15 @@ class Card:
     """
     A card of Hanabi.
 
-    :param Color color: the color of the card.
-    :param int value: the value of the card (usually between 1 and 5).
+    :param Color c: the color of the card.
+    :param int v: the value of the card (usually between 1 and 5).
     :param str s: a short string representing the card. Must use one of the
         standard colors, cf. :meth:`Color.from_symbol`.
 
-    You can provide either :attr:`color` and :attr:`value`, or :attr:`s`.
+    You can provide either :attr:`c` and :attr:`v`, or :attr:`s`.
     The constructor accepts several types of syntax, as illustrated below.
 
-    >>> my_card = Card(color=Color.BLUE, value=3)
+    >>> my_card = Card(c=Color.BLUE, v=3)
     >>> print(my_card)
     B3
     >>> my_card = Card(Color.BLUE, 3)
@@ -55,7 +55,7 @@ class Card:
     >>> print(my_card)
     B3
 
-    N.B.: the string input works even if the value has several digits.
+    N.B.: the string input works even if the v has several digits.
 
     >>> my_card = Card('B42')
     >>> print(my_card)
@@ -70,34 +70,34 @@ class Card:
             s = args[0]
         elif len(args) == 2:
             if type(args[0]) == Color:
-                self.color = args[0]
-                self.value = args[1]
+                self.c = args[0]
+                self.v = args[1]
             elif type(args[1]) == Color:
-                self.value = args[0]
-                self.color = args[1]
+                self.v = args[0]
+                self.c = args[1]
             else:
                 raise ValueError('One argument should be a Color.')
         elif 's' in kwargs.keys():
             s = kwargs['s']
         else:
-            self.color = kwargs['color']
-            self.value = kwargs['value']
+            self.c = kwargs['c']
+            self.v = kwargs['v']
         if s is not None:
             try:
-                self.value = int(s[1:])
-                self.color = Color.from_symbol(s[0])
+                self.v = int(s[1:])
+                self.c = Color.from_symbol(s[0])
             except ValueError:
                 try:
-                    self.value = int(s[:-1])
-                    self.color = Color.from_symbol(s[-1])
+                    self.v = int(s[:-1])
+                    self.c = Color.from_symbol(s[-1])
                 except ValueError:
                     raise ValueError('Could not interpret as a card: ', s)
 
     def __repr__(self):
-        return 'Card(color=%r, value=%r)' % (self.color, self.value)
+        return 'Card(c=%r, v=%r)' % (self.c, self.v)
 
     def __str__(self):
-        return self.color.symbol + '' + str(self.value)
+        return self.c.symbol + '' + str(self.v)
 
     def colored(self):
         """
@@ -107,60 +107,60 @@ class Card:
             to add colors where relevant.
         :rtype: str
         """
-        return self.color.color_str(str(self))
+        return self.c.color_str(str(self))
 
-    def match_color(self, clue_color):
+    def match_c(self, clue_c):
         """
-        React to a color clue
+        React to a clue by color
 
-        :param Color clue_color: the color of the clue.
+        :param Color clue_c: the color of the clue.
 
         :return: whether the card should react to a clue of color
-            :attr:`clue_color`.
+            :attr:`clue_c`.
         :rtype: bool
 
         >>> from Color import Color
         >>> card_blue = Card('B3')
-        >>> card_blue.match_color(Color.BLUE)
+        >>> card_blue.match_c(Color.BLUE)
         True
-        >>> card_blue.match_color(Color.RED)
+        >>> card_blue.match_c(Color.RED)
         False
         >>> card_multi = Card('M3')
-        >>> card_multi.match_color(Color.BLUE)
+        >>> card_multi.match_c(Color.BLUE)
         True
         >>> card_colorless = Card('C3')
-        >>> card_colorless.match_color(Color.BLUE)
+        >>> card_colorless.match_c(Color.BLUE)
         False
         """
-        return self.color.match(clue_color)
+        return self.c.match(clue_c)
 
-    def match_value(self, clue_value):
+    def match_v(self, clue_v):
         """
-        React to a value clue
+        React to a clue by value
 
-        :param int clue_value: the value of the clue.
+        :param int clue_v: the value of the clue.
 
         :return: whether the card should react to a clue of value
-            :attr:`clue_value`.
+            :attr:`clue_v`.
         :rtype: bool
 
         >>> card = Card('B3')
-        >>> card.match_value(3)
+        >>> card.match_v(3)
         True
-        >>> card.match_value(4)
+        >>> card.match_v(4)
         False
         """
-        return self.value == clue_value
+        return self.v == clue_v
 
 
 if __name__ == '__main__':
-    card = Card(color=Color.BLUE, value=3)
+    card = Card(c=Color.BLUE, v=3)
     print('repr: ', repr(card))
     print('str: ', card)
     print('colored: ', card.colored())
 
-    print('\nIs is blue?', card.match_color(Color.BLUE))
-    print('Is it a 4?', card.match_value(4))
+    print('\nIs is blue?', card.match_c(Color.BLUE))
+    print('Is it a 4?', card.match_v(4))
 
     import doctest
     doctest.testmod()

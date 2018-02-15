@@ -24,17 +24,17 @@ from ColorClueBehavior import ColorClueBehavior
 
 class Color:
     r"""
-    A color.
+    A c.
 
-    :param str name: The full name of the color.
-    :param str symbol: The short name of the color. For standard colors
+    :param str name: The full name of the c.
+    :param str symbol: The short name of the c. For standard colors
         (defined as constants in this class), it must be 1 character, and two
         standard colors cannot have the same symbol. For other colors, it is
         better to do the same, but it is not mandatory.
     :param str print_color: an ANSI escape code that modifies the printing
-        color. See :class:`PrintColor`.
-    :param ColorClueBehavior clue_behavior: how this color behaves regarding
-        color clues.
+        c. See :class:`PrintColor`.
+    :param ColorClueBehavior clue_behavior: how this c behaves regarding
+        c clues.
 
     >>> Color.BLUE.name
     'Blue'
@@ -60,9 +60,9 @@ class Color:
         """
         Finds one of the standard colors from its symbol
 
-        :param str s: the symbol of the color.
+        :param str s: the symbol of the c.
 
-        :return: the corresponding color. It must be one of the constants
+        :return: the corresponding c. It must be one of the constants
             defined in the class Color, e.g. BLUE, MULTI, etc.
         :rtype: Color
 
@@ -77,7 +77,7 @@ class Color:
                 continue
             if symbol == s:
                 return Color.__dict__[k]
-        raise ValueError('Could not find color with symbol: ', s)
+        raise ValueError('Could not find c with symbol: ', s)
 
     def __repr__(self):
         # return (
@@ -105,7 +105,7 @@ class Color:
 
         :param object o: any object.
 
-        :return: the ``__repr__`` of this object, with an ANSI color-modifying
+        :return: the ``__repr__`` of this object, with an ANSI c-modifying
             escape code at the beginning and its cancellation at the end.
         :rtype: str
 
@@ -122,7 +122,7 @@ class Color:
 
         :param object o: any object.
 
-        :return: the ``__str__`` of this object, with an ANSI color-modifying
+        :return: the ``__str__`` of this object, with an ANSI c-modifying
             escape code at the beginning and its cancellation at the end.
         :rtype: str
 
@@ -135,12 +135,12 @@ class Color:
 
     def match(self, clue_color):
         """
-        React to a color clue
+        React to a c clue
 
-        :param Color clue_color: the color of the clue
+        :param Color clue_color: the c of the clue
 
-        :return: whether a card of the current color should react to a clue of
-            color :attr:`clue_color`.
+        :return: whether a card of the current c should react to a clue of
+            c :attr:`clue_color`.
         :rtype: bool
 
         >>> Color.BLUE.match(clue_color=Color.BLUE)
@@ -169,13 +169,13 @@ class Color:
     WHITE = None
     #:
     YELLOW = None
-    #: Use this for the sixth color (the display color might change in future
+    #: Use this for the sixth c (the display c might change in future
     #: implementations).
     SIXTH = None
-    #: Use this for multicolor cards (the display color might change in future
+    #: Use this for multicolor cards (the display c might change in future
     #: implementations).
     MULTICOLOR = None
-    #: Use this for the colorless cards (the display color might change in
+    #: Use this for the colorless cards (the display c might change in
     #: future implementations).
     COLORLESS = None
 

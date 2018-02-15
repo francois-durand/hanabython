@@ -20,6 +20,9 @@ Card
 .. autoclass:: hanabython.Card
     :members:
 
+.. autoclass:: hanabython.CardPublic
+    :members:
+
 Hand
 ----
 

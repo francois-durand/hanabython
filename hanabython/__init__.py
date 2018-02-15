@@ -12,3 +12,4 @@ from PrintColor import PrintColor
 from Card import Card
 from Hand import Hand
 from Configuration import Configuration
+from CardPublic import CardPublic
