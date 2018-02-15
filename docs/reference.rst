@@ -29,6 +29,9 @@ Hand
 .. autoclass:: hanabython.Hand
     :members:
 
+.. autoclass:: hanabython.HandPublic
+    :members:
+
 Configuration
 ----
 

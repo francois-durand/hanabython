@@ -68,8 +68,6 @@ class Hand(list):
 
         :param Card card: the card received.
 
-        :return: None.
-
         The card is added on the left, i.e. at the beginning of the list.
 
         >>> hand = Hand(['Y3', 'M1', 'B2', 'R4'])

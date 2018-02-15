@@ -13,3 +13,4 @@ from Card import Card
 from Hand import Hand
 from Configuration import Configuration
 from CardPublic import CardPublic
+from HandPublic import HandPublic
