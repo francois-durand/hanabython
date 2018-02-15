@@ -24,7 +24,7 @@ from CardPublic import CardPublic
 
 class HandPublic(list):
     """
-    The "public" part of a hand
+    The "public" part of a hand.
 
     An object of this class represents what is known by all players, including
     the owner of the hand.
@@ -36,13 +36,13 @@ class HandPublic(list):
     Basically, a HandPublic is a list of CardPublic objects.
 
     :param Configuration cfg: the configuration of the game.
-    :param int n_cards: the number of cards in the hand. N.B.: during a game,
-        initialize the hand with 0 cards, because the hand will receive cards
-        anyway when the initial cards are dealt. This parameter is mostly used
-        for examples and tests.
+    :param int n_cards: the number of cards in the hand. N.B.: this parameter
+        is mostly used for examples and tests. In contrast, at the beginning of
+        a game, the hand should be initialized with 0 cards, because cards will
+        be given to the players during the initial dealing of hands.
 
     >>> from Configuration import Configuration
-    >>> hand = HandPublic(cfg=Configuration(), n_cards=4)
+    >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
     >>> print(hand)
     [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
     """
@@ -75,7 +75,7 @@ class HandPublic(list):
         An unknown card is added on the left, i.e. at the beginning of the list.
 
         >>> from Configuration import Configuration
-        >>> hand = HandPublic(cfg=Configuration(), n_cards=4)
+        >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
         >>> hand.match_v(clue_v=5, bool_list=[True, True, False, False])
         >>> print(hand)
         [BGRWY     5, BGRWY     5, BGRWY 1234 , BGRWY 1234 ]
@@ -94,7 +94,7 @@ class HandPublic(list):
         The card is simply suppressed from the hand.
 
         >>> from Configuration import Configuration
-        >>> hand = HandPublic(cfg=Configuration(), n_cards=4)
+        >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
         >>> hand.match_v(clue_v=5, bool_list=[False, True, False, False])
         >>> hand.match_v(clue_v=4, bool_list=[True, False, False, False])
         >>> print(hand)
@@ -117,7 +117,7 @@ class HandPublic(list):
 
         >>> from Configuration import Configuration
         >>> from Color import Color
-        >>> hand = HandPublic(cfg=Configuration(), n_cards=4)
+        >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
         >>> hand.match_c(clue_c=Color.RED,
         ...              bool_list=[False, True, False, False])
         >>> print(hand)
@@ -137,7 +137,7 @@ class HandPublic(list):
         Updates the internal variables of the hand.
 
         >>> from Configuration import Configuration
-        >>> hand = HandPublic(cfg=Configuration(), n_cards=4)
+        >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
         >>> hand.match_v(clue_v=3, bool_list=[False, True, False, False])
         >>> print(hand)
         [BGRWY 12 45, BGRWY   3  , BGRWY 12 45, BGRWY 12 45]
