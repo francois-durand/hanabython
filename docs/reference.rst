@@ -2,8 +2,8 @@
 Reference
 =========
 
-Color
------
+Color (and PrintColor, ColorClueBehavior)
+-----------------------------------------
 
 .. autoclass:: hanabython.Color
     :members:
@@ -14,8 +14,8 @@ Color
 .. autoclass:: hanabython.ColorClueBehavior
     :members:
 
-Card
-----
+Card (and CardPublic)
+---------------------
 
 .. autoclass:: hanabython.Card
     :members:
@@ -23,8 +23,8 @@ Card
 .. autoclass:: hanabython.CardPublic
     :members:
 
-Hand
-----
+Hand (and HandPublic)
+---------------------
 
 .. autoclass:: hanabython.Hand
     :members:
@@ -33,7 +33,7 @@ Hand
     :members:
 
 Configuration
-----
+-------------
 
 .. autoclass:: hanabython.Configuration
     :members:
