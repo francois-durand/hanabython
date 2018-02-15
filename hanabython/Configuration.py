@@ -112,12 +112,7 @@ class Configuration:
     hand_size: {2: 3, 3: 3, 4: 2, 5: 2}
     """
 
-    #: Normal rule for hand size (5 for 3- players, 4 for 4+ players)
-    HAND_SIZE_NORMAL_RULE = lambda n: 5 if n <= 3 else 4
-    #: Variant for hand size (6 for 2p, 5 for 3p, 4 for 4p, 3 for 5+ players)
-    HAND_SIZE_VARIANT_63 = lambda n: 3 if n >= 5 else 8 - n
-
-    #: Five colors of the base game
+    #: Five colors of the base game. Default for :attr:`colors`.
     COLORS_STANDARD = [
         Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW]
     #: Five colors + sixth normal color
@@ -131,12 +126,12 @@ class Configuration:
         Color.MULTICOLOR
     ]
 
-    #: Standard deck of a color (1 1 1 2 2 3 3 4 5)
+    #: Standard contents of a color (1 1 1 2 2 3 3 4 5)
     COLOR_DECK_STANDARD = [3, 2, 2, 2, 1]
     #: Contents of a "short" color (1 2 3 4 5)
     COLOR_DECK_SHORT = [1, 1, 1, 1, 1]
 
-    #: Normal deck (5 colors of 10 cards)
+    #: Normal deck (5 colors of 10 cards). Default for :attr:`deck`.
     DECK_STANDARD = {
         Color.BLUE:     COLOR_DECK_STANDARD,
         Color.GREEN:    COLOR_DECK_STANDARD,
@@ -156,6 +151,12 @@ class Configuration:
     #: Deck with short multicolor (5 colors of 10 cards + 1 multi of 5 cards)
     DECK_MULTICOLOR_SHORT = DECK_STANDARD.copy()
     DECK_MULTICOLOR_SHORT[Color.MULTICOLOR] = COLOR_DECK_SHORT
+
+    #: Normal rule for hand size (5 for 3- players, 4 for 4+ players).
+    #: Default for :attr:`hand_size`.
+    HAND_SIZE_NORMAL_RULE = lambda n: 5 if n <= 3 else 4
+    #: Variant for hand size (6 for 2p, 5 for 3p, 4 for 4p, 3 for 5+ players)
+    HAND_SIZE_VARIANT_63 = lambda n: 3 if n >= 5 else 8 - n
 
     def __init__(self, colors=COLORS_STANDARD, deck=DECK_STANDARD,
                  n_clues=8, n_misfires=3,
