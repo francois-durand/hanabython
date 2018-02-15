@@ -38,6 +38,9 @@ Draw Pile
 .. autoclass:: hanabython.DrawPile
     :members:
 
+.. autoclass:: hanabython.DrawPilePublic
+    :members:
+
 Configuration
 -------------
 

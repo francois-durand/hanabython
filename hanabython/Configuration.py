@@ -49,6 +49,7 @@ class Configuration:
         color. Typically, a row is [3, 2, 2, 2, 1], meaning that there are 3
         ones, 2 twos, etc. Please note that column 0 corresponds to card
         v 1, etc.
+    :var int n_cards: the total number of cards in the deck.
 
     >>> cfg = Configuration()
     >>> print(cfg)
@@ -77,6 +78,8 @@ class Configuration:
      [3 2 2 2 1]
      [3 2 2 2 1]
      [3 2 2 2 1]]
+    >>> cfg.n_cards
+    50
 
     Use one of the standard configurations:
 
@@ -182,6 +185,7 @@ class Configuration:
         self.n_values = max(self.highest.values())
         self.deck_array = np.array([
             deck[c] + [0] * (self.n_values - len(deck[c])) for c in colors])
+        self.n_cards = np.sum(self.deck_array)
         # Conversions
         self._i_from_c = {colors[i]: i for i in range(len(colors))}
         self._i_from_v = lambda x: x - 1
