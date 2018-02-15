@@ -126,7 +126,10 @@ class Configuration:
         Color.SIXTH
     ]
     #: Five colors + Multicolor
-    COLORS_W_MULTI = [*COLORS_STANDARD, Color.MULTICOLOR]
+    COLORS_W_MULTI = [
+        Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW,
+        Color.MULTICOLOR
+    ]
 
     #: Standard deck of a color (1 1 1 2 2 3 3 4 5)
     COLOR_DECK_STANDARD = [3, 2, 2, 2, 1]
