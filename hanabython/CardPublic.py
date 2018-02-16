@@ -60,19 +60,11 @@ class CardPublic:
 
     def __str__(self):
         s = ''
-        for i in range(self.cfg.n_colors):
-            c = self.cfg.c_from_i(i)
-            if self.can_be_c[i]:
-                s += c.symbol
-            else:
-                s += ' '
+        for i, c in enumerate(self.cfg.colors):
+            s += c.symbol if self.can_be_c[i] else ' '
         s += ' '
-        for i in range(self.cfg.n_values):
-            v = self.cfg.v_from_i(i)
-            if self.can_be_v[i]:
-                s += str(v)
-            else:
-                s += ' '
+        for i, v in enumerate(self.cfg.values):
+            s += str(v) if self.can_be_v[i] else ' '
         return s
 
     def colored(self):
@@ -84,8 +76,7 @@ class CardPublic:
         :rtype: str
         """
         s = ''
-        for i in range(self.cfg.n_colors):
-            c = self.cfg.c_from_i(i)
+        for i, c in enumerate(self.cfg.colors):
             if self.yes_clued_c[i]:
                 s += "\033[7m" + c.color_str(c.symbol)
             elif self.can_be_c[i]:
@@ -93,8 +84,7 @@ class CardPublic:
             else:
                 s += ' '
         s += ' '
-        for i in range(self.cfg.n_values):
-            v = self.cfg.v_from_i(i)
+        for i, v in enumerate(self.cfg.values):
             if self.yes_clued_v[i]:
                 s += "\033[7m" + str(v) + PrintColor.RESET
             elif self.can_be_v[i]:

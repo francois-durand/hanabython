@@ -44,10 +44,8 @@ class DrawPile(list):
         super().__init__()
         self.cfg = cfg
         for i, c in enumerate(cfg.colors):
-            for j in range(cfg.n_values):
-                v = cfg.v_from_i(j)
-                n_copies = cfg.deck[c][j]
-                self.extend([Card(c, v)] * n_copies)
+            for j, v in enumerate(cfg.values):
+                self.extend([Card(c, v)] * cfg.deck[c][j])
         shuffle(self)
 
     def __repr__(self):
@@ -57,6 +55,13 @@ class DrawPile(list):
         return '[' + ', '.join([str(card) for card in self]) + ']'
 
     def colored(self):
+        """
+        Colored version of :meth:`__str__`
+
+        :return: the same string as :meth:`__str__`, but with ANSI escape codes
+            to add colors where relevant.
+        :rtype: str
+        """
         return '[' + ', '.join([card.colored() for card in self]) + ']'
 
     @property

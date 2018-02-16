@@ -16,3 +16,4 @@ from CardPublic import CardPublic
 from HandPublic import HandPublic
 from DrawPile import DrawPile
 from DrawPilePublic import DrawPilePublic
+from DiscardPile import DiscardPile

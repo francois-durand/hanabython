@@ -50,6 +50,7 @@ class Configuration:
         ones, 2 twos, etc. Please note that column 0 corresponds to card
         v 1, etc.
     :var int n_cards: the total number of cards in the deck.
+    :var list values: the list of possible values (from 1 to :attr:`n_values`).
 
     >>> cfg = Configuration()
     >>> print(cfg)
@@ -187,9 +188,8 @@ class Configuration:
             deck[c] + [0] * (self.n_values - len(deck[c])) for c in colors])
         self.n_cards = np.sum(self.deck_array)
         # Conversions
-        self._i_from_c = {colors[i]: i for i in range(len(colors))}
-        self._i_from_v = lambda x: x - 1
-        self._v_from_i = lambda x: x + 1
+        self.values = list(range(1, self.n_values + 1))
+        self._i_from_c = {c: i for i, c in enumerate(colors)}
 
     def __repr__(self):
         return (
@@ -239,6 +239,7 @@ class Configuration:
         """
         return self._i_from_c[c]
 
+    # noinspection PyMethodMayBeStatic
     def i_from_v(self, v):
         """
         Finds index from a v (for example in :attr:`deck_array`).
@@ -252,40 +253,40 @@ class Configuration:
         >>> cfg.i_from_v(1)
         0
         """
-        return self._i_from_v(v)
+        return v - 1
 
-    def c_from_i(self, i):
-        """
-        Finds color from an index (for example in :attr:`deck_array`).
+    # def c_from_i(self, i):
+    #     """
+    #     Finds color from an index (for example in :attr:`deck_array`).
+    #
+    #     This is simply an alias for `self.colors[i]`, created for homogeneity
+    #     with other similar methods.
+    #
+    #     :param int i: an index.
+    #
+    #     :return: the corresponding color.
+    #     :rtype: Color
+    #
+    #     >>> cfg = Configuration()
+    #     >>> print(cfg.c_from_i(0))
+    #     Blue (B)
+    #     """
+    #     return self.colors[i]
 
-        This is simply an alias for `self.colors[i]`, created for homogeneity
-        with other similar methods.
-
-        :param int i: an index.
-
-        :return: the corresponding color.
-        :rtype: Color
-
-        >>> cfg = Configuration()
-        >>> print(cfg.c_from_i(0))
-        Blue (B)
-        """
-        return self.colors[i]
-
-    def v_from_i(self, i):
-        """
-        Finds v from an index (for example in :attr:`deck_array`).
-
-        :param int i: an index (typically 0 to 4).
-
-        :return: the corresponding v (typically 1 to 5).
-        :rtype: int
-
-        >>> cfg = Configuration()
-        >>> cfg.v_from_i(0)
-        1
-        """
-        return self._v_from_i(i)
+    # def v_from_i(self, i):
+    #     """
+    #     Finds v from an index (for example in :attr:`deck_array`).
+    #
+    #     :param int i: an index (typically 0 to 4).
+    #
+    #     :return: the corresponding v (typically 1 to 5).
+    #     :rtype: int
+    #
+    #     >>> cfg = Configuration()
+    #     >>> cfg.v_from_i(0)
+    #     1
+    #     """
+    #     return self._v_from_i(i)
 
     #: Standard configuration.
     CONFIG_STANDARD = None

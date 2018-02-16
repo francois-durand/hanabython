@@ -41,6 +41,12 @@ Draw Pile
 .. autoclass:: hanabython.DrawPilePublic
     :members:
 
+Discard Pile
+------------
+
+.. autoclass:: hanabython.DiscardPile
+    :members:
+
 Configuration
 -------------
 
