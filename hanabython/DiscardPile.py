@@ -60,7 +60,9 @@ class DiscardPile:
         """
         Convert to nice string.
 
-        :return: a representation of the discard pile.
+        :return: a representation of the discard pile. As of now, it is the
+            one used for the standard method :meth:`__str__` (it might change
+            in the future).
         :rtype: str
 
         >>> from Configuration import Configuration
