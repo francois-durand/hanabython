@@ -18,3 +18,8 @@ from DrawPile import DrawPile
 from DrawPilePublic import DrawPilePublic
 from DiscardPile import DiscardPile
 from Board import Board
+from Action import Action
+from ActionPlay import ActionPlay
+from ActionClue import ActionClue
+from ActionDiscard import ActionDiscard
+from ActionForfeit import ActionForfeit

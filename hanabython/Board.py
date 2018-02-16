@@ -63,7 +63,7 @@ class Board:
 
     def str_compact(self):
         """
-        Convert to string in 'compact' layout
+        Convert to string in "compact" layout
 
         :return: a representation of the board.
         :rtype: str
@@ -97,7 +97,7 @@ class Board:
 
     def str_fixed_space(self):
         """
-        Convert to string in 'fixed-space' layout
+        Convert to string in "fixed-space" layout
 
         :return: a representation of the board.
         :rtype: str
@@ -131,7 +131,7 @@ class Board:
 
     def str_multi_line(self):
         """
-        Convert to string in 'multi-line' layout
+        Convert to string in "multi-line" layout
 
         :return: a representation of the board.
         :rtype: str
@@ -167,7 +167,7 @@ class Board:
 
     def str_multi_line_compact(self):
         """
-        Convert to string in 'compact multi-line' layout
+        Convert to string in "compact multi-line" layout
 
         :return: a representation of the board.
         :rtype: str

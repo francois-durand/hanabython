@@ -37,6 +37,7 @@ class PrintColor:
     RED_BRIGHT = "\033[0;91m"
     #:
     RED = RED_NOT_BRIGHT
+    RED_BOLD = "\033[1;31m"
 
     GREEN_NOT_BRIGHT = "\033[0;32m"
     GREEN_BRIGHT = "\033[0;92m"

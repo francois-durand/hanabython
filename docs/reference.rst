@@ -53,6 +53,24 @@ Board
 .. autoclass:: hanabython.Board
     :members:
 
+Actions
+-------
+
+.. autoclass:: hanabython.Action
+    :members:
+
+.. autoclass:: hanabython.ActionDiscard
+    :members:
+
+.. autoclass:: hanabython.ActionPlay
+    :members:
+
+.. autoclass:: hanabython.ActionClue
+    :members:
+
+.. autoclass:: hanabython.ActionForfeit
+    :members:
+
 Configuration
 -------------
 
