@@ -47,6 +47,12 @@ Discard Pile
 .. autoclass:: hanabython.DiscardPile
     :members:
 
+Board
+-----
+
+.. autoclass:: hanabython.Board
+    :members:
+
 Configuration
 -------------
 
