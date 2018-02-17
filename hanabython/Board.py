@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 import numpy as np
 from Configuration import Configuration
 from Color import Color
@@ -49,7 +50,7 @@ class Board:
         return '<Board: %s>' % self.str_compact()
 
     def __str__(self):
-        return self.str_fixed_space()
+        return uncolor(self.colored())
 
     def colored(self):
         """
@@ -75,11 +76,7 @@ class Board:
         >>> print(board.str_compact())
         G1 G2 Y1 Y2 Y3 Y4 Y5
         """
-        return ' '.join([
-            self._str_one_color(i, c)
-            for i, c in enumerate(self.cfg.colors)
-            if self.altitude[i] > 0
-        ])
+        return uncolor(self.colored_compact())
 
     def colored_compact(self):
         """
@@ -109,11 +106,7 @@ class Board:
         >>> print(board.str_fixed_space())
         B -         G 1 2       R -         W -         Y 1 2 3 4 5
         """
-        length = 1 + 2 * self.cfg.n_values
-        return ' '.join([
-            self._str_one_color_factorized(i, c).ljust(length)
-            for i, c in enumerate(self.cfg.colors)
-        ])
+        return uncolor(self.colored_fixed_space())
 
     def colored_fixed_space(self):
         """
@@ -147,10 +140,7 @@ class Board:
         -
         Y1 Y2 Y3 Y4 Y5
         """
-        return '\n'.join([
-            self._str_one_color(i, c)
-            for i, c in enumerate(self.cfg.colors)
-        ])
+        return uncolor(self.colored_multi_line())
 
     def colored_multi_line(self):
         """
@@ -180,11 +170,7 @@ class Board:
         G1 G2
         Y1 Y2 Y3 Y4 Y5
         """
-        return '\n'.join([
-            self._str_one_color(i, c)
-            for i, c in enumerate(self.cfg.colors)
-            if self.altitude[i] > 0
-        ])
+        return uncolor(self.colored_multi_line_compact())
 
     def colored_multi_line_compact(self):
         """
@@ -277,6 +263,24 @@ class Board:
             return True
         else:
             return False
+
+    @property
+    def score(self):
+        """
+        The current score.
+
+        :return: the sum of the altitudes reached in all colors.
+        :rtype: int
+
+        >>> from Configuration import Configuration
+        >>> cfg = Configuration.CONFIG_STANDARD
+        >>> board = Board(cfg)
+        >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
+        ...     _ = board.try_to_play(Card(s))
+        >>> print(board.score)
+        7
+        """
+        return np.sum(self.altitude)
 
 
 if __name__ == '__main__':

@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 from Card import Card
 from Color import Color
 
@@ -50,7 +51,7 @@ class Hand(list):
                     self.append(Card(item))
 
     def __str__(self):
-        return '[' + ', '.join(str(card) for card in self) + ']'
+        return uncolor(self.colored())
 
     def colored(self):
         """
@@ -93,43 +94,23 @@ class Hand(list):
         """
         return self.pop(i)
 
-    def match_c(self, clue_c):
+    def match(self, clue):
         """
-        React to a clue by color
+        React to a clue.
 
-        :param Color clue_c: the color of the clue.
+        :param int|Color clue: the clue (value or color).
 
         :return: a list of booleans. The ``i``-th coefficient is ``True``
             iff the ``i``-th card of the hand matches the clue given.
         :rtype: list
 
         >>> hand = Hand(['G2', 'Y3', 'M1', 'B2', 'R4'])
-        >>> hand.match_c(Color.RED)
+        >>> hand.match(Color.RED)
         [False, False, True, False, True]
-        """
-        return [card.match_c(clue_c) for card in self]
-
-    def match_v(self, clue_v):
-        """
-        React to a clue by value
-
-        :param int clue_v: the value of the clue.
-
-        :return: a list of booleans. The ``i``-th coefficient is ``True``
-            iff the ``i``-th card of the hand matches the clue given.
-        :rtype: list
-
-        >>> hand = Hand(['G2', 'Y3', 'M1', 'B2', 'R4'])
-        >>> hand.match_v(2)
+        >>> hand.match(2)
         [True, False, False, True, False]
         """
-        return [card.match_v(clue_v) for card in self]
-
-    # def match_clue(self, action: Action):
-    #     if action.clue_type == Action.COLOR:
-    #         return self.match_c(action.clue)
-    #     else:
-    #         return self.match_v(action.clue)
+        return [card.match(clue) for card in self]
 
 
 if __name__ == '__main__':
@@ -142,16 +123,16 @@ if __name__ == '__main__':
     print('\nCard given: ', my_card.colored())
     print(hand.colored())
 
-    my_card = Card(color=Color.GREEN, value=2)
+    my_card = Card('G2')
     hand.receive(my_card)
     print('\nCard received: ', my_card.colored())
     print(hand.colored())
 
     print('\nMatch red clue:')
-    print(hand.match_c(Color.RED))
+    print(hand.match(Color.RED))
 
     print('\nMatch clue 2:')
-    print(hand.match_v(2))
+    print(hand.match(2))
     # print(hand.bool_list_from_clue(Action(
     #     category=Action.INFORM, clue_type=Action.VALUE, clue=2
     # )))

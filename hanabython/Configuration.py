@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 import numpy as np
 from Color import Color
 
@@ -39,6 +40,9 @@ class Configuration:
         game).
     :param lambda hand_size: a function to maps the number of players to the
         number of cards in hand.
+    :param int end_rule: a rule for the end of game. Can be either
+        :attr:`Configuration.END_NORMAL` or
+        :attr:`Configuration.END_CROWNING_PIECE`.
 
     :var int n_colors: the number of colors.
     :var dict highest: a dictionary. For each color from :attr:`colors`,
@@ -50,6 +54,8 @@ class Configuration:
         ones, 2 twos, etc. Please note that column 0 corresponds to card
         v 1, etc.
     :var int n_cards: the total number of cards in the deck.
+    :var int max_score: the maximum possible score (25 in standard
+        configuration).
     :var list values: the list of possible values (from 1 to :attr:`n_values`).
 
     >>> cfg = Configuration()
@@ -61,7 +67,7 @@ class Configuration:
     Y [3 2 2 2 1]
     n_clues = 8
     n_misfires = 3
-    hand_size: {2: 5, 3: 5, 4: 4, 5: 4}
+    end_rule = Normal
     >>> c = cfg.colors[0]
     >>> print(c)
     Blue (B)
@@ -94,7 +100,7 @@ class Configuration:
     M [1 1 1 1 1]
     n_clues = 8
     n_misfires = 3
-    hand_size: {2: 5, 3: 5, 4: 4, 5: 4}
+    end_rule = Normal
 
     Design a configuration manually:
 
@@ -113,7 +119,7 @@ class Configuration:
     M [2 1 0 0]
     n_clues = 4
     n_misfires = 1
-    hand_size: {2: 3, 3: 3, 4: 2, 5: 2}
+    end_rule = Normal
     """
 
     #: Five colors of the base game. Default for :attr:`colors`.
@@ -171,15 +177,24 @@ class Configuration:
     #: Variant for hand size (6 for 2p, 5 for 3p, 4 for 4p, 3 for 5+ players).
     HAND_SIZE_VARIANT_63 = lambda n: 3 if n >= 5 else 8 - n
 
+    #: Default rule for the end of game. When a player draws the last card,
+    #: all players play one last time (her included).
+    END_NORMAL = 0
+    #: "Crowning piece" variant for the end of game. The game stops when a
+    # player starts her turn with no card in hand.
+    END_CROWNING_PIECE = 1
+
     def __init__(self, colors=COLORS_STANDARD, deck=DECK_STANDARD,
                  n_clues=8, n_misfires=3,
-                 hand_size=HAND_SIZE_NORMAL_RULE):
+                 hand_size=HAND_SIZE_NORMAL_RULE,
+                 end_rule=END_NORMAL):
         # Parameters
         self.colors = colors
         self.deck = deck
         self.n_clues = n_clues
         self.n_misfires = n_misfires
         self.hand_size = hand_size
+        self.end_rule = end_rule
         # Other attributes
         self.n_colors = len(colors)
         self.highest = {c: len(deck[c]) for c in colors}
@@ -187,6 +202,7 @@ class Configuration:
         self.deck_array = np.array([
             deck[c] + [0] * (self.n_values - len(deck[c])) for c in colors])
         self.n_cards = np.sum(self.deck_array)
+        self.max_score = sum(self.highest.values())
         # Conversions
         self.values = list(range(1, self.n_values + 1))
         self._i_from_c = {c: i for i, c in enumerate(colors)}
@@ -194,22 +210,13 @@ class Configuration:
     def __repr__(self):
         return (
             'Configuration(colors=%r, deck=%r, n_clues=%r, n_misfires=%r, '
-            'hand_size=%r)'
+            'hand_size=%r, end_rule=%s)'
             % (self.colors, self.deck, self.n_clues, self.n_misfires,
-               self.hand_size)
+               self.hand_size, self.end_rule)
         )
 
     def __str__(self):
-        s = ''
-        for i in range(self.n_colors):
-            s += (
-                '%s %s\n' % (
-                    self.colors[i].symbol, self.deck_array[i, :])
-            )
-        s += 'n_clues = %s\n' % self.n_clues
-        s += 'n_misfires = %s\n' % self.n_misfires
-        s += 'hand_size: ' + str({n: self.hand_size(n) for n in range(2, 6)})
-        return s
+        return uncolor(self.colored())
 
     def colored(self):
         s = ''
@@ -220,7 +227,12 @@ class Configuration:
             )
         s += 'n_clues = %s\n' % self.n_clues
         s += 'n_misfires = %s\n' % self.n_misfires
-        s += 'hand_size: ' + str({n: self.hand_size(n) for n in range(2, 6)})
+        # s += 'hand_size: %s\n' % str(
+        #     {n: self.hand_size(n) for n in range(2, 6)})
+        s += 'end_rule = %s' % {
+            Configuration.END_NORMAL: 'Normal',
+            Configuration.END_CROWNING_PIECE: 'Crowning Piece',
+        }[self.end_rule]
         return s
 
     def i_from_c(self, c):

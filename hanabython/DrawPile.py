@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 from random import shuffle
 from Configuration import Configuration
 from Card import Card
@@ -52,7 +53,7 @@ class DrawPile(list):
         return '<DrawPile: %s>' % str(self)
 
     def __str__(self):
-        return '[' + ', '.join([str(card) for card in self]) + ']'
+        return uncolor(self.colored())
 
     def colored(self):
         """

@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 from Color import Color
 
 
@@ -97,7 +98,7 @@ class Card:
         return '<Card: %s>' % self
 
     def __str__(self):
-        return self.c.symbol + '' + str(self.v)
+        return uncolor(self.colored())
 
     def colored(self):
         """
@@ -107,50 +108,38 @@ class Card:
             to add colors where relevant.
         :rtype: str
         """
-        return self.c.color_str(str(self))
+        return self.c.color_str(self.c.symbol + str(self.v))
 
-    def match_c(self, clue_c):
+    def match(self, clue):
         """
-        React to a clue by color
+        React to a clue.
 
-        :param Color clue_c: the color of the clue.
+        :param int|Color clue: the clue (value or color).
 
-        :return: whether the card should react to a clue of color
-            :attr:`clue_c`.
+        :return: whether the card should be pointed when giving this clue.
         :rtype: bool
 
         >>> from Color import Color
         >>> card_blue = Card('B3')
-        >>> card_blue.match_c(Color.BLUE)
+        >>> card_blue.match(Color.BLUE)
         True
-        >>> card_blue.match_c(Color.RED)
+        >>> card_blue.match(Color.RED)
+        False
+        >>> card_blue.match(3)
+        True
+        >>> card_blue.match(4)
         False
         >>> card_multi = Card('M3')
-        >>> card_multi.match_c(Color.BLUE)
+        >>> card_multi.match(Color.BLUE)
         True
         >>> card_colorless = Card('C3')
-        >>> card_colorless.match_c(Color.BLUE)
+        >>> card_colorless.match(Color.BLUE)
         False
         """
-        return self.c.match(clue_c)
-
-    def match_v(self, clue_v):
-        """
-        React to a clue by value
-
-        :param int clue_v: the value of the clue.
-
-        :return: whether the card should react to a clue of value
-            :attr:`clue_v`.
-        :rtype: bool
-
-        >>> card = Card('B3')
-        >>> card.match_v(3)
-        True
-        >>> card.match_v(4)
-        False
-        """
-        return self.v == clue_v
+        if type(clue) == int:
+            return self.v == clue
+        else:
+            return self.c.match(clue)
 
 
 if __name__ == '__main__':
@@ -159,8 +148,8 @@ if __name__ == '__main__':
     print('str: ', card)
     print('colored: ', card.colored())
 
-    print('\nIs is blue?', card.match_c(Color.BLUE))
-    print('Is it a 4?', card.match_v(4))
+    print('\nIs is blue?', card.match(Color.BLUE))
+    print('Is it a 4?', card.match(4))
 
     import doctest
     doctest.testmod()

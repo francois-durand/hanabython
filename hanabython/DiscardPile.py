@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 import numpy as np
 from Configuration import Configuration
 from Card import Card
@@ -44,7 +45,7 @@ class DiscardPile:
         return '<DiscardPile: %s>' % self.str_as_chronological()
 
     def __str__(self):
-        return self.str_fancy()
+        return uncolor(self.colored())
 
     def colored(self):
         """
@@ -74,17 +75,7 @@ class DiscardPile:
         B1 B3
         R4
         """
-        if len(self.chronological) == 0:
-            return 'No card discarded yet'
-        lines = []
-        for i, c in enumerate(self.cfg.colors):
-            if np.sum(self.array[i, :]) == 0:
-                continue
-            words = [str(Card(c, v))
-                     for j, v in enumerate(self.cfg.values)
-                     for _ in range(self.array[i, j])]
-            lines.append(' '.join(words))
-        return '\n'.join(lines)
+        return uncolor(self.colored_fancy())
 
     def colored_fancy(self):
         """
@@ -126,12 +117,7 @@ class DiscardPile:
         W [0 0 0 0 0]
         Y [0 0 0 0 0]
         """
-        to_join = [
-            '   ' + ' '.join([str(i + 1) for i in range(self.cfg.n_values)])
-        ]
-        for i, c in enumerate(self.cfg.colors):
-            to_join.append('%s %s' % (c.symbol, self.array[i, :]))
-        return '\n'.join(to_join)
+        return uncolor(self.colored_as_array())
 
     def colored_as_array(self):
         """
@@ -165,8 +151,7 @@ class DiscardPile:
         >>> print(discard_pile.str_as_list_ordered())
         [B1, B3, R4]
         """
-        ordered = self.list_reordered
-        return '[' + ', '.join([str(card) for card in ordered]) + ']'
+        return uncolor(self.colored_as_list_ordered())
 
     def colored_as_list_ordered(self):
         """
@@ -194,7 +179,7 @@ class DiscardPile:
         >>> print(discard_pile.str_as_chronological())
         [B3, R4, B1]
         """
-        return '[' + ', '.join([str(card) for card in self.chronological]) + ']'
+        return uncolor(self.colored_as_chronological())
 
     def colored_as_chronological(self):
         """

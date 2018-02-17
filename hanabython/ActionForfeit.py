@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 from Action import Action
 from PrintColor import PrintColor
 
@@ -40,7 +41,7 @@ class ActionForfeit(Action):
         return '<ActionForfeit>'
 
     def __str__(self):
-        return 'Forfeit'
+        return uncolor(self.colored())
 
     def colored(self):
         return PrintColor.RED_BOLD + 'Forfeit' + PrintColor.RESET

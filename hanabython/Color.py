@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 from PrintColor import PrintColor
 from ColorClueBehavior import ColorClueBehavior
 
@@ -87,7 +88,7 @@ class Color:
         return '<Color: %s>' % self.symbol
 
     def __str__(self):
-        return '%s (%s)' % (self.name, self.symbol)
+        return uncolor(self.colored())
 
     def colored(self):
         """
@@ -97,7 +98,7 @@ class Color:
             to add colors where relevant.
         :rtype: str
         """
-        return self.color_str(str(self))
+        return self.color_str('%s (%s)' % (self.name, self.symbol))
 
     def color_repr(self, o):
         r"""

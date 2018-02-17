@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 from Configuration import Configuration
 
 
@@ -44,14 +45,14 @@ class DrawPilePublic:
         return '<DrawPilePublic: %s>' % self
 
     def __str__(self):
+        return uncolor(self.colored())
+
+    def colored(self):
         if self.n_cards == 0:
             return 'No card left'
         if self.n_cards == 1:
             return '1 card left'
         return str(self.n_cards) + ' cards left'
-
-    def colored(self):
-        return str(self)
 
     def give(self):
         """

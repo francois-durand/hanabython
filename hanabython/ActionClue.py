@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 from Action import Action
 
 
@@ -29,27 +30,26 @@ class ActionClue(Action):
         relatively (i.e. 1 for next player, 2 for second next player, etc.).
     :param Color|int clue: a Color object or a card value.
 
-    >>> action = ActionClue(player_relative_position=1, clue=2)
+    >>> action = ActionClue(i=1, clue=2)
     >>> print(action)
     Clue 2 to player in relative position 1
     >>> from Color import Color
-    >>> action = ActionClue(player_relative_position=2, clue=Color.BLUE)
+    >>> action = ActionClue(i=2, clue=Color.BLUE)
     >>> print(action)
     Clue Blue (B) to player in relative position 2
     """
 
-    def __init__(self, player_relative_position, clue):
+    def __init__(self, i, clue):
         super().__init__(Action.CLUE)
-        self.player_relative_position = player_relative_position
+        self.i = i
         self.clue = clue
 
     def __repr__(self):
         return '<ActionClue: %s to player %s>' % (
-            self.clue, self.player_relative_position)
+            self.clue, self.i)
 
     def __str__(self):
-        return 'Clue %s to player in relative position %s' % (
-            self.clue, self.player_relative_position)
+        return uncolor(self.colored())
 
     def colored(self):
         """
@@ -60,20 +60,21 @@ class ActionClue(Action):
         :rtype: str
         """
         if type(self.clue) == int:
-            return str(self)
+            return 'Clue %s to player in relative position %s' % (
+                self.clue, self.i)
         else:
             return 'Clue %s to player in relative position %s' % (
-                self.clue.colored(), self.player_relative_position)
+                self.clue.colored(), self.i)
 
 
 if __name__ == '__main__':
-    my_action = ActionClue(player_relative_position=1, clue=3)
+    my_action = ActionClue(i=1, clue=3)
     print('repr: ', repr(my_action))
     print('str: ', str(my_action))
     print('colored: ', my_action.colored())
 
     from Color import Color
-    my_action = ActionClue(player_relative_position=1, clue=Color.BLUE)
+    my_action = ActionClue(i=1, clue=Color.BLUE)
     print('\nrepr: ', repr(my_action))
     print('str: ', str(my_action))
     print('colored: ', my_action.colored())

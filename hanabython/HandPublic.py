@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 from Configuration import Configuration
 from CardPublic import CardPublic
 
@@ -56,7 +57,7 @@ class HandPublic(list):
         return '<HandPublic: %s>' % str(self)
 
     def __str__(self):
-        return '[' + ', '.join([str(card) for card in self]) + ']'
+        return uncolor(self.colored())
 
     def colored(self):
         """
@@ -76,7 +77,7 @@ class HandPublic(list):
 
         >>> from Configuration import Configuration
         >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
-        >>> hand.match_v(clue_v=5, bool_list=[True, True, False, False])
+        >>> hand.match(clue=5, bool_list=[True, True, False, False])
         >>> print(hand)
         [BGRWY     5, BGRWY     5, BGRWY 1234 , BGRWY 1234 ]
         >>> hand.receive()
@@ -95,8 +96,8 @@ class HandPublic(list):
 
         >>> from Configuration import Configuration
         >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
-        >>> hand.match_v(clue_v=5, bool_list=[False, True, False, False])
-        >>> hand.match_v(clue_v=4, bool_list=[True, False, False, False])
+        >>> hand.match(clue=5, bool_list=[False, True, False, False])
+        >>> hand.match(clue=4, bool_list=[True, False, False, False])
         >>> print(hand)
         [BGRWY    4 , BGRWY     5, BGRWY 123  , BGRWY 123  ]
         >>> hand.give(1)
@@ -105,32 +106,11 @@ class HandPublic(list):
         """
         self.pop(i)
 
-    def match_c(self, clue_c, bool_list):
+    def match(self, clue, bool_list):
         """
-        React to a clue by color
+        React to a clue
 
-        :param Color clue_c: the color of the clue.
-        :param list bool_list: a list of booleans. The ``i``-th coefficient is
-            ``True`` iff the ``i``-th card of the hand matches the clue given.
-
-        Updates the internal variables of the hand.
-
-        >>> from Configuration import Configuration
-        >>> from Color import Color
-        >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
-        >>> hand.match_c(clue_c=Color.RED,
-        ...              bool_list=[False, True, False, False])
-        >>> print(hand)
-        [BG WY 12345,   R   12345, BG WY 12345, BG WY 12345]
-        """
-        for i, card in enumerate(self):
-            card.match_c(clue_c=clue_c, b=bool_list[i])
-
-    def match_v(self, clue_v, bool_list):
-        """
-        React to a clue by value
-
-        :param int clue_v: the value of the clue.
+        :param int|Color clue: the clue (value or Color).
         :param list bool_list: a list of booleans. The ``i``-th coefficient is
             ``True`` iff the ``i``-th card of the hand matches the clue given.
 
@@ -138,12 +118,16 @@ class HandPublic(list):
 
         >>> from Configuration import Configuration
         >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
-        >>> hand.match_v(clue_v=3, bool_list=[False, True, False, False])
+        >>> hand.match(clue=3, bool_list=[False, True, False, False])
         >>> print(hand)
         [BGRWY 12 45, BGRWY   3  , BGRWY 12 45, BGRWY 12 45]
+        >>> from Color import Color
+        >>> hand.match(clue=Color.RED, bool_list=[False, True, False, False])
+        >>> print(hand)
+        [BG WY 12 45,   R     3  , BG WY 12 45, BG WY 12 45]
         """
         for i, card in enumerate(self):
-            card.match_v(clue_v=clue_v, b=bool_list[i])
+            card.match(clue=clue, b=bool_list[i])
 
 
 if __name__ == '__main__':
@@ -155,14 +139,11 @@ if __name__ == '__main__':
     from Color import Color
     print("\nLet's give some clues: ")
     print(my_hand.colored())
-    my_hand.match_c(clue_c=Color.RED,
-                    bool_list=[True, False, True, False, False])
+    my_hand.match(clue=Color.RED, bool_list=[True, False, True, False, False])
     print(my_hand.colored())
-    my_hand.match_c(clue_c=Color.BLUE,
-                    bool_list=[False, True, False, False, False])
+    my_hand.match(clue=Color.BLUE, bool_list=[False, True, False, False, False])
     print(my_hand.colored())
-    my_hand.match_v(clue_v=3,
-                    bool_list=[True, False, False, True, False])
+    my_hand.match(clue=3, bool_list=[True, False, False, True, False])
     print(my_hand.colored())
 
     print("\nGive card in position 2: ")

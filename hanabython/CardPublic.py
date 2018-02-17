@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from StringUtils import uncolor
 import numpy as np
 from Configuration import Configuration
 from Color import Color
@@ -59,13 +60,7 @@ class CardPublic:
         return '<CardPublic: %s>' % self
 
     def __str__(self):
-        s = ''
-        for i, c in enumerate(self.cfg.colors):
-            s += c.symbol if self.can_be_c[i] else ' '
-        s += ' '
-        for i, v in enumerate(self.cfg.values):
-            s += str(v) if self.can_be_v[i] else ' '
-        return s
+        return uncolor(self.colored())
 
     def colored(self):
         """
@@ -93,11 +88,44 @@ class CardPublic:
                 s += ' '
         return s
 
-    def match_c(self, clue_c, b):
+    def _match_c(self, clue, b):
         """
         React to a clue by color.
 
-        :param Color clue_c: the color of the clue.
+        :param Color clue: the color of the clue.
+        :param bool b: whether the card matched the clue or not.
+
+        Updates the internal variables of the card.
+        """
+        for i, c in enumerate(self.cfg.colors):
+            if c.match(clue) != b:
+                self.can_be_c[i] = False
+                self.yes_clued_c[i] = False  # important for multicolor
+            if b and c.match(clue) and self.can_be_c[i]:
+                self.yes_clued_c[i] = True
+
+    def _match_v(self, clue, b):
+        """
+        React to a clue by value.
+
+        :param int clue: the value of the clue.
+        :param bool b: whether the card matched the clue or not.
+
+        Updates the internal variables of the card.
+        """
+        i = self.cfg.i_from_v(clue)
+        if b:
+            self.yes_clued_v[i] = True
+            self.can_be_v[:] = False
+            self.can_be_v[i] = True
+        else:
+            self.can_be_v[i] = False
+
+    def match(self, clue, b):
+        """
+        React to a clue.
+
+        :param int|Color clue: the clue (value or color).
         :param bool b: whether the card matched the clue or not.
 
         Updates the internal variables of the card.
@@ -107,10 +135,10 @@ class CardPublic:
         >>> card = CardPublic(cfg)
         >>> print(card)
         BGRWYPMC 12345
-        >>> card.match_c(clue_c=Color.RED, b=False)
+        >>> card.match(clue=Color.RED, b=False)
         >>> print(card)
         BG WYP C 12345
-        >>> card.match_c(clue_c=Color.BLUE, b=True)
+        >>> card.match(clue=Color.BLUE, b=True)
         >>> print(card)
         B        12345
 
@@ -120,47 +148,30 @@ class CardPublic:
         >>> card = CardPublic(Configuration.CONFIG_EIGHT)
         >>> print(card)
         BGRWYPMC 12345
-        >>> card.match_c(clue_c=Color.BLUE, b=True)
+        >>> card.match(clue=Color.BLUE, b=True)
         >>> print(card)
         B     M  12345
-        >>> card.match_c(clue_c=Color.RED, b=False)
+        >>> card.match(clue=Color.RED, b=False)
         >>> print(card)
         B        12345
-        """
-        for i, c in enumerate(self.cfg.colors):
-            if c.match(clue_c) != b:
-                self.can_be_c[i] = False
-                self.yes_clued_c[i] = False  # important for multicolor
-            if b and c.match(clue_c) and self.can_be_c[i]:
-                self.yes_clued_c[i] = True
 
-    def match_v(self, clue_v, b):
-        """
-        React to a clue by value.
-
-        :param int clue_v: the value of the clue.
-        :param bool b: whether the card matched the clue or not.
-
-        Updates the internal variables of the card.
+        Now with clues by value:
 
         >>> from Configuration import Configuration
         >>> card = CardPublic(Configuration.CONFIG_EIGHT)
         >>> print(card)
         BGRWYPMC 12345
-        >>> card.match_v(3, b=False)
+        >>> card.match(clue=3, b=False)
         >>> print(card)
         BGRWYPMC 12 45
-        >>> card.match_v(5, b=True)
+        >>> card.match(clue=5, b=True)
         >>> print(card)
         BGRWYPMC     5
         """
-        i = self.cfg.i_from_v(clue_v)
-        if b:
-            self.yes_clued_v[i] = True
-            self.can_be_v[:] = False
-            self.can_be_v[i] = True
+        if type(clue) == int:
+            self._match_v(clue, b)
         else:
-            self.can_be_v[i] = False
+            self._match_c(clue, b)
 
 
 if __name__ == '__main__':
@@ -171,33 +182,33 @@ if __name__ == '__main__':
 
     print('\nIt is not red, then it is blue:')
     print(my_card.colored())
-    my_card.match_c(clue_c=Color.RED, b=False)
+    my_card.match(clue=Color.RED, b=False)
     print(my_card.colored())
-    my_card.match_c(clue_c=Color.BLUE, b=True)
+    my_card.match(clue=Color.BLUE, b=True)
     print(my_card.colored())
 
     print('\nIt is blue, then it is not red:')
     my_card = CardPublic(Configuration.CONFIG_EIGHT)
     print(my_card.colored())
-    my_card.match_c(clue_c=Color.BLUE, b=True)
+    my_card.match(clue=Color.BLUE, b=True)
     print(my_card.colored())
-    my_card.match_c(clue_c=Color.RED, b=False)
+    my_card.match(clue=Color.RED, b=False)
     print(my_card.colored())
 
     print('\nIt is not 3, then it is 5:')
     my_card = CardPublic(Configuration.CONFIG_EIGHT)
     print(my_card.colored())
-    my_card.match_v(clue_v=3, b=False)
+    my_card.match(clue=3, b=False)
     print(my_card.colored())
-    my_card.match_v(clue_v=5, b=True)
+    my_card.match(clue=5, b=True)
     print(my_card.colored())
 
     print('\nIt is 5, then it is not 3:')
     my_card = CardPublic(Configuration.CONFIG_EIGHT)
     print(my_card.colored())
-    my_card.match_v(clue_v=5, b=True)
+    my_card.match(clue=5, b=True)
     print(my_card.colored())
-    my_card.match_v(clue_v=3, b=False)
+    my_card.match(clue=3, b=False)
     print(my_card.colored())
 
     import doctest
