@@ -2,13 +2,23 @@
 Reference
 =========
 
+Strings
+-------
+
+.. autoclass:: hanabython.PrintColor
+    :members:
+
+.. automodule:: hanabython.StringUtils
+    :members:
+
+.. automodule:: hanabython.Colored
+    :members:
+
+
 Colors
 ------
 
 .. autoclass:: hanabython.Color
-    :members:
-
-.. autoclass:: hanabython.PrintColor
     :members:
 
 .. autoclass:: hanabython.ColorClueBehavior
@@ -75,4 +85,34 @@ Configuration
 -------------
 
 .. autoclass:: hanabython.Configuration
+    :members:
+
+.. autoclass:: hanabython.ConfigurationColorContents
+    :members:
+
+.. autoclass:: hanabython.ConfigurationDeck
+    :members:
+
+.. autoclass:: hanabython.ConfigurationEndRule
+    :members:
+
+.. autoclass:: hanabython.ConfigurationHandSize
+    :members:
+
+Player
+------
+
+.. autoclass:: hanabython.Player
+    :members:
+
+.. autoclass:: hanabython.PlayerBase
+    :members:
+
+.. autoclass:: hanabython.PlayerHuman
+    :members:
+
+Game
+----
+
+.. autoclass:: hanabython.Game
     :members:
