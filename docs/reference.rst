@@ -9,10 +9,8 @@ Manipulation of strings
     :members:
 
 .. autofunction:: hanabython.uncolor
-    :members:
 
 .. autofunction:: hanabython.title
-    :members:
 
 .. autoclass:: hanabython.Colored
     :members:
