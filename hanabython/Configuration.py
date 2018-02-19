@@ -70,7 +70,7 @@ class Configuration:
     end_rule = Normal
     >>> c = cfg.colors[0]
     >>> print(c)
-    Blue (B)
+    B
     >>> cfg.deck[c]
     [3, 2, 2, 2, 1]
     >>> cfg.n_colors

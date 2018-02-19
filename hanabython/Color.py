@@ -18,12 +18,12 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor
+from Colored import Colored
 from PrintColor import PrintColor
 from ColorClueBehavior import ColorClueBehavior
 
 
-class Color:
+class Color(Colored):
     r"""
     A color.
 
@@ -68,8 +68,8 @@ class Color:
         :rtype: Color
 
         >>> my_color = Color.from_symbol('B')
-        >>> print(my_color)
-        Blue (B)
+        >>> print(my_color.name)
+        Blue
         """
         for k in Color.__dict__.keys():
             try:
@@ -80,25 +80,8 @@ class Color:
                 return Color.__dict__[k]
         raise ValueError('Could not find color with symbol: ', s)
 
-    def __repr__(self):
-        # return (
-        #     'Color(name=%r, symbol=%r, print_color=%r, clue_behavior=%r)'
-        #     % (self.name, self.symbol, self.print_color, self.clue_behavior)
-        # )
-        return '<Color: %s>' % self.symbol
-
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
-        return self.color_str('%s (%s)' % (self.name, self.symbol))
+        return self.color_str(self.symbol)
 
     def color_repr(self, o):
         r"""

@@ -36,7 +36,7 @@ class ActionClue(Action):
     >>> from Color import Color
     >>> action = ActionClue(i=2, clue=Color.BLUE)
     >>> print(action)
-    Clue Blue (B) to player in relative position 2
+    Clue B to player in relative position 2
     """
 
     def __init__(self, i, clue):
