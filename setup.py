@@ -14,6 +14,7 @@ with open('HISTORY.rst') as history_file:
 requirements = [
     'Click>=6.0',
     'numpy',
+    'IPython',
     # TODO: Put package requirements here
 ]
 
