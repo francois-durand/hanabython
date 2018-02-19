@@ -59,7 +59,7 @@ class ConfigurationDeck(Colored, OrderedDict):
     B normal, R [3, 2, 1]
     """
     def __init__(self, contents, name=None):
-        super().__init__(contents)
+        super(ConfigurationDeck, self).__init__(contents)
         self.name = name
 
     def colored(self):
