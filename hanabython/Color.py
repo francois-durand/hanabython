@@ -58,7 +58,7 @@ class Color(Colored):
         self.clue_behavior = clue_behavior
 
     @classmethod
-    def from_symbol(self, s):
+    def from_symbol(cls, s):
         """
         Finds one of the standard colors from its symbol
 
@@ -182,9 +182,7 @@ Color.COLORLESS = Color(
 
 
 if __name__ == '__main__':
-    print('repr: ', repr(Color.BLUE))
-    print('str: ', Color.BLUE)
-    print('colored: ', Color.BLUE.colored())
+    Color.BLUE.test_str()
 
     my_color = Color.from_symbol('B')
     print('\n' + my_color.colored())

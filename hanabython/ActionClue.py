@@ -18,7 +18,6 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor
 from Action import Action
 
 
@@ -26,8 +25,8 @@ class ActionClue(Action):
     """
     An action of a player: give a clue.
 
-    :param int player_relative_position: the position of the concerned player,
-        relatively (i.e. 1 for next player, 2 for second next player, etc.).
+    :param int i: the position of the concerned player, relatively
+        (i.e. 1 for next player, 2 for second next player, etc.).
     :param Color|int clue: a Color object or a card value.
 
     >>> action = ActionClue(i=1, clue=2)
@@ -44,21 +43,7 @@ class ActionClue(Action):
         self.i = i
         self.clue = clue
 
-    def __repr__(self):
-        return '<ActionClue: %s to player %s>' % (
-            self.clue, self.i)
-
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
         if type(self.clue) == int:
             return 'Clue %s to player in relative position %s' % (
                 self.clue, self.i)
@@ -69,15 +54,12 @@ class ActionClue(Action):
 
 if __name__ == '__main__':
     my_action = ActionClue(i=1, clue=3)
-    print('repr: ', repr(my_action))
-    print('str: ', str(my_action))
-    print('colored: ', my_action.colored())
+    my_action.test_str()
 
+    print()
     from Color import Color
     my_action = ActionClue(i=1, clue=Color.BLUE)
-    print('\nrepr: ', repr(my_action))
-    print('str: ', str(my_action))
-    print('colored: ', my_action.colored())
+    my_action.test_str()
 
     import doctest
     doctest.testmod()

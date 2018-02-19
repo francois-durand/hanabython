@@ -18,14 +18,14 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor
+from Colored import Colored
 import numpy as np
 from Configuration import Configuration
 from Color import Color
 from PrintColor import PrintColor
 
 
-class CardPublic:
+class CardPublic(Colored):
     """
     The "public" part of a card.
 
@@ -56,20 +56,7 @@ class CardPublic:
         self.yes_clued_c = np.zeros(cfg.n_colors, dtype=bool)
         self.yes_clued_v = np.zeros(cfg.n_values, dtype=bool)
 
-    def __repr__(self):
-        return '<CardPublic: %s>' % self
-
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
         s = ''
         for i, c in enumerate(self.cfg.colors):
             if self.yes_clued_c[i]:
@@ -176,9 +163,7 @@ class CardPublic:
 
 if __name__ == '__main__':
     my_card = CardPublic(Configuration.EIGHT_COLORS)
-    print('repr: ', repr(my_card))
-    print('str:', my_card)
-    print('colored: ', my_card.colored())
+    my_card.test_str()
 
     print('\nIt is not red, then it is blue:')
     print(my_card.colored())

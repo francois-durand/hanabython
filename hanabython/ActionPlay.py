@@ -31,8 +31,6 @@ class ActionPlay(Action):
         change in the future).
 
     >>> action = ActionPlay(k=2)
-    >>> print(repr(action))
-    <ActionPlay: 2>
     >>> print(action)
     Try to play card in position 3
     """
@@ -40,18 +38,13 @@ class ActionPlay(Action):
         super().__init__(Action.PLAY)
         self.k = k
 
-    def __repr__(self):
-        return '<ActionPlay: %s>' % self.k
-
-    def __str__(self):
+    def colored(self):
         return 'Try to play card in position %s' % (self.k + 1)
 
 
 if __name__ == '__main__':
     my_action = ActionPlay(k=2)
-    print('repr: ', repr(my_action))
-    print('str: ', str(my_action))
-    print('colored: ', my_action.colored())
+    my_action.test_str()
 
     import doctest
     doctest.testmod()

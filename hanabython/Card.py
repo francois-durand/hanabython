@@ -18,11 +18,11 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor
+from Colored import Colored
 from Color import Color
 
 
-class Card:
+class Card(Colored):
     """
     A card of Hanabi.
 
@@ -94,20 +94,7 @@ class Card:
                 except ValueError:
                     raise ValueError('Could not interpret as a card: ', s)
 
-    def __repr__(self):
-        return '<Card: %s>' % self
-
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
         return self.c.color_str(self.c.symbol + str(self.v))
 
     def match(self, clue):
@@ -144,9 +131,7 @@ class Card:
 
 if __name__ == '__main__':
     card = Card(c=Color.BLUE, v=3)
-    print('repr: ', repr(card))
-    print('str: ', card)
-    print('colored: ', card.colored())
+    card.test_str()
 
     print('\nIs is blue?', card.match(Color.BLUE))
     print('Is it a 4?', card.match(4))

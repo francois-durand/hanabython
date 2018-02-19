@@ -31,8 +31,6 @@ class ActionDiscard(Action):
         change in the future).
 
     >>> action = ActionDiscard(k=2)
-    >>> print(repr(action))
-    <ActionDiscard: 2>
     >>> print(action)
     Discard card in position 3
     """
@@ -40,18 +38,13 @@ class ActionDiscard(Action):
         super().__init__(Action.DISCARD)
         self.k = k
 
-    def __repr__(self):
-        return '<ActionDiscard: %s>' % self.k
-
-    def __str__(self):
+    def colored(self):
         return 'Discard card in position %s' % (self.k + 1)
 
 
 if __name__ == '__main__':
     my_action = ActionDiscard(k=2)
-    print('repr: ', repr(my_action))
-    print('str: ', str(my_action))
-    print('colored: ', my_action.colored())
+    my_action.test_str()
 
     import doctest
     doctest.testmod()

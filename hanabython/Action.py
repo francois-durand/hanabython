@@ -18,7 +18,10 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-class Action:
+from Colored import Colored
+
+
+class Action(Colored):
     """
     An action performed by a player (Discard, Play, Clue or Forfeit)
 
@@ -44,13 +47,3 @@ class Action:
         self.category = category
         if category not in Action.CATEGORIES:
             raise ValueError('Unknown action category: ', category)
-
-    def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
-        return str(self)

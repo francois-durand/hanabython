@@ -18,13 +18,13 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor
+from Colored import Colored
 from Configuration import Configuration
 from Action import Action
 from ActionForfeit import ActionForfeit
 
 
-class Player:
+class Player(Colored):
     """
     A player for Hanabi.
 
@@ -41,20 +41,7 @@ class Player:
     def __init__(self, name):
         self.name = name
 
-    def __repr__(self):
-        return '<Player: %s>' % self.name
-
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
         return self.name
 
     def receive_init(self, cfg, player_names):
@@ -211,9 +198,7 @@ class Player:
 
 if __name__ == '__main__':
     my_antoine = Player(name='Antoine')
-    print('repr :', repr(my_antoine))
-    print('str :', my_antoine)
-    print('colored: ', my_antoine.colored())
+    my_antoine.test_str()
 
     import doctest
     doctest.testmod()

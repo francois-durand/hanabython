@@ -18,13 +18,14 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from Colored import Colored
 from StringUtils import uncolor
 import numpy as np
 from Configuration import Configuration
 from Card import Card
 
 
-class DiscardPile:
+class DiscardPile(Colored):
     """
     The discard pile in a game of Hanabi.
 
@@ -44,17 +45,7 @@ class DiscardPile:
     def __repr__(self):
         return '<DiscardPile: %s>' % self.str_as_chronological()
 
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
         return self.colored_fancy()
 
     def str_fancy(self):
@@ -80,10 +71,6 @@ class DiscardPile:
     def colored_fancy(self):
         """
         Colored version of :meth:`str_fancy`
-
-        :return: the same string as :meth:`str_fancy`, but with ANSI escape
-            codes to add colors where relevant.
-        :rtype: str
         """
         if len(self.chronological) == 0:
             return 'No card discarded yet'
@@ -122,10 +109,6 @@ class DiscardPile:
     def colored_as_array(self):
         """
         Colored version of :meth:`str_as_array`
-
-        :return: the same string as :meth:`str_as_array`, but with ANSI escape
-            codes to add colors where relevant.
-        :rtype: str
         """
         to_join = [
             '   ' + ' '.join([str(i + 1) for i in range(self.cfg.n_values)])
@@ -156,10 +139,6 @@ class DiscardPile:
     def colored_as_list_ordered(self):
         """
         Colored version of :meth:`str_as_list_ordered`
-
-        :return: the same string as :meth:`str_as_list_ordered`, but with ANSI
-            escape codes to add colors where relevant.
-        :rtype: str
         """
         ordered = self.list_reordered
         return '[' + ', '.join([card.colored() for card in ordered]) + ']'
@@ -184,10 +163,6 @@ class DiscardPile:
     def colored_as_chronological(self):
         """
         Colored version of :meth:`str_as_chronological`
-
-        :return: the same string as :meth:`str_as_chronological`, but with ANSI
-            escape codes to add colors where relevant.
-        :rtype: str
         """
         return '[' + ', '.join([
             card.colored() for card in self.chronological
@@ -241,11 +216,7 @@ if __name__ == '__main__':
     my_discard_pile.receive(Card('M1'))
     my_discard_pile.receive(Card('B4'))
     my_discard_pile.receive(Card('B1'))
-    print('repr: ', repr(my_discard_pile))
-    print('str:')
-    print(my_discard_pile)
-    print('colored:')
-    print(my_discard_pile.colored())
+    my_discard_pile.test_str()
 
     print('\nAs an array: ')
     print(my_discard_pile.str_as_array())

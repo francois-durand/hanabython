@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from Colored import Colored
 from StringUtils import uncolor
 import numpy as np
 from Configuration import Configuration
@@ -25,7 +26,7 @@ from Color import Color
 from Card import Card
 
 
-class Board:
+class Board(Colored):
     """
     The board (cards successfully played) in a game of Hanabi.
 
@@ -49,17 +50,7 @@ class Board:
     def __repr__(self):
         return '<Board: %s>' % self.str_compact()
 
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
         return self.colored_fixed_space()
 
     def str_compact(self):
@@ -81,10 +72,6 @@ class Board:
     def colored_compact(self):
         """
         Colored version of :meth:`str_compact`
-
-        :return: the same string as :meth:`str_compact`, but with ANSI escape
-            codes to add colors where relevant.
-        :rtype: str
         """
         return ' '.join([
             c.color_str(self._str_one_color(i, c))
@@ -111,10 +98,6 @@ class Board:
     def colored_fixed_space(self):
         """
         Colored version of :meth:`str_fixed_space`
-
-        :return: the same string as :meth:`str_fixed_space`, but with ANSI
-            escape codes to add colors where relevant.
-        :rtype: str
         """
         length = 1 + 2 * self.cfg.n_values
         return ' '.join([
@@ -145,10 +128,6 @@ class Board:
     def colored_multi_line(self):
         """
         Colored version of :meth:`str_multi_line`
-
-        :return: the same string as :meth:`str_multi_line`, but with ANSI
-            escape codes to add colors where relevant.
-        :rtype: str
         """
         return '\n'.join([
             c.color_str(self._str_one_color(i, c))
@@ -175,10 +154,6 @@ class Board:
     def colored_multi_line_compact(self):
         """
         Colored version of :meth:`str_multi_line_compact`
-
-        :return: the same string as :meth:`str_multi_line_compact`, but with
-            ANSI escape codes to add colors where relevant.
-        :rtype: str
         """
         return '\n'.join([
             c.color_str(self._str_one_color(i, c))
@@ -287,28 +262,17 @@ if __name__ == '__main__':
     my_board = Board(Configuration.W_MULTICOLOR_SHORT)
     for s in ['B1', 'B2', 'M1', 'M3', 'B1']:
         print('Try to play %s: ' % s, my_board.try_to_play(Card(s)))
-    print('repr: ', repr(my_board))
-    print('str: \n' + str(my_board))
-    print('colored: \n' + my_board.colored())
+    print()
+    my_board.test_str()
 
-    print('\nAll layout styles (str)')
-    print('Compact: ')
-    print(my_board.str_compact())
-    print('Fixed space: ')
-    print(my_board.str_fixed_space())
-    print('Multi-line compact: ')
-    print(my_board.str_multi_line_compact())
-    print('Multi-line: ')
-    print(my_board.str_multi_line())
-
-    print('\nAll layout styles (colored)')
+    print('\nAll layout styles (colored version):')
     print('Compact: ')
     print(my_board.colored_compact())
-    print('Fixed space: ')
+    print('\nFixed space: ')
     print(my_board.colored_fixed_space())
-    print('Multi-line compact: ')
+    print('\nMulti-line compact: ')
     print(my_board.colored_multi_line_compact())
-    print('Multi-line: ')
+    print('\nMulti-line: ')
     print(my_board.colored_multi_line())
 
     import doctest

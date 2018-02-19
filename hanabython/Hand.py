@@ -18,12 +18,12 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor
+from Colored import Colored
 from Card import Card
 from Color import Color
 
 
-class Hand(list):
+class Hand(Colored, list):
     """
     The hand of a player.
 
@@ -50,17 +50,7 @@ class Hand(list):
                 else:
                     self.append(Card(item))
 
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
         return '[' + ', '.join(card.colored() for card in self) + ']'
 
     def receive(self, card):
@@ -114,25 +104,23 @@ class Hand(list):
 
 
 if __name__ == '__main__':
-    hand = Hand(['Y3', 'B1', 'M1', 'B2', 'R4'])
-    print('repr: ', repr(hand))
-    print('str: ', hand)
-    print('colored: ', hand.colored())
+    my_hand = Hand(['Y3', 'B1', 'M1', 'B2', 'R4'])
+    my_hand.test_str()
 
-    my_card = hand.give(1)
+    my_card = my_hand.give(1)
     print('\nCard given: ', my_card.colored())
-    print(hand.colored())
+    print(my_hand.colored())
 
     my_card = Card('G2')
-    hand.receive(my_card)
+    my_hand.receive(my_card)
     print('\nCard received: ', my_card.colored())
-    print(hand.colored())
+    print(my_hand.colored())
 
     print('\nMatch red clue:')
-    print(hand.match(Color.RED))
+    print(my_hand.match(Color.RED))
 
     print('\nMatch clue 2:')
-    print(hand.match(2))
+    print(my_hand.match(2))
     # print(hand.bool_list_from_clue(Action(
     #     category=Action.INFORM, clue_type=Action.VALUE, clue=2
     # )))

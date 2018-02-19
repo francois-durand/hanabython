@@ -105,17 +105,7 @@ class PlayerBase(Player):
         s += 'End PlayerBase>'
         return s
 
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
         if self.cfg is None:
             return super().colored()
         # noinspection PyListCreation

@@ -19,6 +19,7 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from copy import copy
+from Colored import Colored
 from Configuration import Configuration
 from ConfigurationEndRule import ConfigurationEndRule
 from PlayerHuman import PlayerHuman
@@ -29,7 +30,7 @@ from Hand import Hand
 from Action import Action
 
 
-class Game:
+class Game(Colored):
     """
     A game of Hanabi.
 
@@ -59,6 +60,9 @@ class Game:
             for i_p, p in enumerate(self.players):
                 self.draw(i_p)
         self.broadcast_end_dealing()
+
+    def colored(self):
+        return 'This is a game of Hanabi.'
 
     def broadcast_init(self):
         for i, p in enumerate(self.players):

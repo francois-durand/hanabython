@@ -89,6 +89,7 @@ class Configuration(Colored):
 
     Design a configuration manually:
 
+    >>> from ConfigurationDeck import ConfigurationDeck
     >>> from Color import Color
     >>> from ConfigurationColorContents import ConfigurationColorContents
     >>> cfg = Configuration(
@@ -144,10 +145,10 @@ class Configuration(Colored):
 
     def colored(self):
         return '\n'.join([
-            'Deck: %s.' % self.deck,
+            'Deck: %s.' % self.deck.colored(),
             'Number of clues: %s.' % self.n_clues,
             'Number of misfires: %s.' % self.n_misfires,
-            'End rule: %s.' % self.end_rule
+            'End rule: %s.' % self.end_rule.colored()
         ])
 
     def i_from_c(self, c):
@@ -210,19 +211,33 @@ Configuration.EIGHT_COLORS = Configuration(
 
 
 if __name__ == '__main__':
-    cfg = Configuration.EIGHT_COLORS
-    cfg.test_str()
+    my_cfg = Configuration.EIGHT_COLORS
+    my_cfg.test_str()
 
     print('\nAttributes: ')
-    for k in cfg.__dict__.keys():
+    for k in my_cfg.__dict__.keys():
         if not k.startswith('_'):
-            print(k + ': ', cfg.__dict__[k])
+            print(k + ': ', my_cfg.__dict__[k])
 
     print('\nOther standard configurations: ')
     print(Configuration.W_SIXTH.colored() + '\n')
     print(Configuration.W_SIXTH_SHORT.colored() + '\n')
     print(Configuration.W_MULTICOLOR.colored() + '\n')
     print(Configuration.W_MULTICOLOR_SHORT.colored() + '\n')
+
+    print('\nA manual configuration: ')
+    from ConfigurationColorContents import ConfigurationColorContents
+    my_cfg = Configuration(
+        deck=ConfigurationDeck(contents=[
+            (Color.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
+            (Color.RED, ConfigurationColorContents([2, 1])),
+        ]),
+        n_clues=4,
+        n_misfires=1,
+        hand_size_rule=ConfigurationHandSize.VARIANT_63,
+        end_rule=ConfigurationEndRule.CROWNING_PIECE
+    )
+    print(my_cfg.colored())
 
     import doctest
     doctest.testmod()

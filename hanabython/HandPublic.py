@@ -18,12 +18,12 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor
+from Color import Colored
 from Configuration import Configuration
 from CardPublic import CardPublic
 
 
-class HandPublic(list):
+class HandPublic(Colored, list):
     """
     The "public" part of a hand.
 
@@ -53,20 +53,7 @@ class HandPublic(list):
         for i in range(n_cards):
             self.receive()
 
-    def __repr__(self):
-        return '<HandPublic: %s>' % str(self)
-
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
         return '[' + ', '.join([card.colored() for card in self]) + ']'
 
     def receive(self):
@@ -132,9 +119,7 @@ class HandPublic(list):
 
 if __name__ == '__main__':
     my_hand = HandPublic(cfg=Configuration(), n_cards=4)
-    print('repr:', repr(my_hand))
-    print('str:', my_hand)
-    print('colored: ', my_hand.colored())
+    my_hand.test_str()
 
     from Color import Color
     print("\nLet's give some clues: ")

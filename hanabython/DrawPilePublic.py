@@ -18,11 +18,11 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor
+from Colored import Colored
 from Configuration import Configuration
 
 
-class DrawPilePublic:
+class DrawPilePublic(Colored):
     """
     The public part of a draw pile.
 
@@ -40,12 +40,6 @@ class DrawPilePublic:
     def __init__(self, cfg):
         self.cfg = cfg
         self.n_cards = cfg.n_cards
-
-    def __repr__(self):
-        return '<DrawPilePublic: %s>' % self
-
-    def __str__(self):
-        return uncolor(self.colored())
 
     def colored(self):
         if self.n_cards == 0:
@@ -78,9 +72,7 @@ class DrawPilePublic:
 
 if __name__ == '__main__':
     my_draw_pile = DrawPilePublic(Configuration.STANDARD)
-    print('repr: ', repr(my_draw_pile))
-    print('str: ', my_draw_pile)
-    print('colored: ', my_draw_pile.colored())
+    my_draw_pile.test_str()
 
     print('\nDraw a card: ')
     my_draw_pile.give()

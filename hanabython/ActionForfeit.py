@@ -18,7 +18,6 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor
 from Action import Action
 from PrintColor import PrintColor
 
@@ -28,8 +27,6 @@ class ActionForfeit(Action):
     An action of a player: forfeit (lose the game immediately).
 
     >>> action = ActionForfeit()
-    >>> print(repr(action))
-    <ActionForfeit>
     >>> print(action)
     Forfeit
     """
@@ -37,21 +34,13 @@ class ActionForfeit(Action):
     def __init__(self):
         super().__init__(Action.FORFEIT)
 
-    def __repr__(self):
-        return '<ActionForfeit>'
-
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
         return PrintColor.RED_BOLD + 'Forfeit' + PrintColor.RESET
 
 
 if __name__ == '__main__':
     my_action = ActionForfeit()
-    print('repr: ', repr(my_action))
-    print('str: ', str(my_action))
-    print('colored: ', my_action.colored())
+    my_action.test_str()
 
     import doctest
     doctest.testmod()

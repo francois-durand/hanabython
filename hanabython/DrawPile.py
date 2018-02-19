@@ -18,13 +18,13 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor
+from Colored import Colored
 from random import shuffle
 from Configuration import Configuration
 from Card import Card
 
 
-class DrawPile(list):
+class DrawPile(Colored, list):
     """
     The draw pile of a game of Hanabi.
 
@@ -49,20 +49,7 @@ class DrawPile(list):
                 self.extend([Card(c, v)] * cfg.deck[c][j])
         shuffle(self)
 
-    def __repr__(self):
-        return '<DrawPile: %s>' % str(self)
-
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        """
-        Colored version of :meth:`__str__`
-
-        :return: the same string as :meth:`__str__`, but with ANSI escape codes
-            to add colors where relevant.
-        :rtype: str
-        """
         return '[' + ', '.join([card.colored() for card in self]) + ']'
 
     @property
@@ -104,9 +91,7 @@ class DrawPile(list):
 
 if __name__ == '__main__':
     my_draw_pile = DrawPile(cfg=Configuration.W_MULTICOLOR_SHORT)
-    print('repr: ', repr(my_draw_pile))
-    print('str: ', my_draw_pile)
-    print('colored: ', my_draw_pile.colored())
+    my_draw_pile.test_str()
 
     print('\nDraw a card: ')
     print(my_draw_pile.colored())
