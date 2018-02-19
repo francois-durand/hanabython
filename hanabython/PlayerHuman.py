@@ -24,6 +24,8 @@ from ActionClue import ActionClue
 from ActionPlay import ActionPlay
 from ActionDiscard import ActionDiscard
 from ActionForfeit import ActionForfeit
+from IPython.display import clear_output
+from time import sleep
 
 
 class PlayerHuman(PlayerBase):
@@ -38,15 +40,19 @@ class PlayerHuman(PlayerBase):
         :return: the action chosen by the player.
         :rtype: Action
         """
-        print('\n' * 50)
+        print('\n' * 40)
+        # The "clear_output" is here for usage in Jupyter.
+        sleep(0.1) # Essential line to prevent strange behavior in Jupyter!
+        clear_output()
+        sleep(0.1) # Essential line to prevent strange behavior in Jupyter!
         input('%s is going to play (hit Enter).\n' % self.name)
         print(self.colored())
         while True:
             cat_str = input('\nWhat action? (C = Clue, P = Play, '
                             'D = Discard, F = Forfeit)\n')
             try:
-                cat = {'C': Action.CLUE, 'P':Action.PLAY,
-                       'D': Action.DISCARD, 'F':Action.FORFEIT}[
+                cat = {'C': Action.CLUE, 'P': Action.PLAY,
+                       'D': Action.DISCARD, 'F': Action.FORFEIT}[
                     cat_str[0].capitalize()
                 ]
                 break
@@ -96,6 +102,8 @@ class PlayerHuman(PlayerBase):
         Receive a message: the action of the player is finished.
         """
         print(self.recent_events)
+        if len(self.recent_events) > 0:
+            input("Your turn is over (hit Enter).\n")
         super().receive_action_finished()
 
     def receive_lose(self, score):
