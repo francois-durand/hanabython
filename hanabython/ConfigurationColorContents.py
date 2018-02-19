@@ -49,7 +49,7 @@ class ConfigurationColorContents(Colored, list):
     """
 
     def __init__(self, contents, name=None):
-        super().__init__(contents)
+        super(ConfigurationColorContents, self).__init__(contents)
         self.name = name
 
     def colored(self):
