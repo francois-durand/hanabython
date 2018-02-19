@@ -431,9 +431,19 @@ class PlayerBase(Player):
         if type(clue) == int:
             clue_str = str(clue)
         else:
+            # noinspection PyUnresolvedReferences
             clue_str = clue.colored()
         self.log('%s clues %s about %s.\n' % (
             self.player_names[i_cluer], self.player_names[i_clued], clue_str))
+
+    def receive_someone_forfeits(self, i_forfeiter):
+        """
+        Receive a message: a player forfeits.
+
+        :param int i_forfeiter: the position of the player who forfeits
+            (relatively to this player).
+        """
+        self.log('%s forfeits.\n' % self.player_names[i_forfeiter])
 
     def receive_action_legal(self):
         """
@@ -451,14 +461,15 @@ class PlayerBase(Player):
 
     def receive_lose(self, score):
         """
-        Receive a message: the game is lost (misfires).
+        Receive a message: the game is lost (misfires or forfeit).
         """
         self.log("%s's team loses.\n" % self.name)
         self.log('Score: %s.\n' % score)
 
     def receive_game_over(self, score):
         """
-        Receive a message: the game is over (except misfires or total victory).
+        Receive a message: the game is over and is neither really lost
+        (misfires, forfeit) nor a total victory (maximal score).
         """
         self.log("%s's team has reached the end of the game.\n" % self.name)
         self.log('Score: %s.\n' % score)

@@ -181,7 +181,7 @@ class Configuration:
     #: all players play one last time (her included).
     END_NORMAL = 0
     #: "Crowning piece" variant for the end of game. The game stops when a
-    # player starts her turn with no card in hand.
+    #: player starts her turn with no card in hand.
     END_CROWNING_PIECE = 1
 
     def __init__(self, colors=COLORS_STANDARD, deck=DECK_STANDARD,

@@ -38,6 +38,7 @@ class PlayerHuman(PlayerBase):
         :return: the action chosen by the player.
         :rtype: Action
         """
+        print('\n' * 50)
         input('%s is going to play (hit Enter).\n' % self.name)
         print(self.colored())
         while True:
@@ -99,14 +100,15 @@ class PlayerHuman(PlayerBase):
 
     def receive_lose(self, score):
         """
-        Receive a message: the game is lost (misfires).
+        Receive a message: the game is lost (misfires or forfeit).
         """
         super().receive_lose(score)
         print(self.recent_events)
 
     def receive_game_over(self, score):
         """
-        Receive a message: the game is over (except misfires or total victory).
+        Receive a message: the game is over and is neither really lost
+        (misfires, forfeit) nor a total victory (maximal score).
         """
         super().receive_game_over(score)
         print(self.recent_events)

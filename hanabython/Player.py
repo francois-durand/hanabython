@@ -159,6 +159,15 @@ class Player:
         """
         pass
 
+    def receive_someone_forfeits(self, i_forfeiter):
+        """
+        Receive a message: a player forfeits.
+
+        :param int i_forfeiter: the position of the player who forfeits
+            (relatively to this player).
+        """
+        pass
+
     # noinspection PyMethodMayBeStatic
     def choose_action(self):
         """
@@ -183,13 +192,14 @@ class Player:
 
     def receive_lose(self, score):
         """
-        Receive a message: the game is lost (misfires).
+        Receive a message: the game is lost (misfires or forfeit).
         """
         pass
 
     def receive_game_over(self, score):
         """
-        Receive a message: the game is over (except misfires or total victory).
+        Receive a message: the game is over and is neither really lost
+        (misfires, forfeit) nor a total victory (maximal score).
         """
         pass
 

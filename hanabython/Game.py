@@ -195,7 +195,8 @@ class Game:
 if __name__ == '__main__':
     fanfan = PlayerHuman(name='Fanfan')
     emilie = PlayerHuman(name='Emilie')
-    game = Game(Configuration.CONFIG_STANDARD, [fanfan, emilie])
+    pek = PlayerHuman(name='PEK')
+    game = Game(Configuration.CONFIG_STANDARD, [fanfan, emilie, pek])
     game.play()
     # print(game.hands[alice])
     # print(game.hands[bob])
