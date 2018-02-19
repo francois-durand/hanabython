@@ -31,7 +31,7 @@ class Colored:
     ...         return PrintColor.RED + 'some text' + PrintColor.RESET
     >>> my_object = MyClass()
     >>> my_object.colored()
-    '\x1b[0;31msome text\x1b[0;0m'
+    '\x1b[31msome text\x1b[0;0m'
     >>> str(my_object)
     'some text'
     >>> repr(my_object)

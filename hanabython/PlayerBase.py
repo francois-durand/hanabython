@@ -302,9 +302,9 @@ class PlayerBase(Player):
         The log is turned back on.
         """
         self.dealing_is_ongoing = False
-        self.log('\nInitial hands' + '\n')
-        self.log('-------------' + '\n')
-        self.log(self.colored_hands() + '\n')
+        # self.log('\nInitial hands' + '\n')
+        # self.log('-------------' + '\n')
+        # self.log(self.colored_hands() + '\n')
         self.log('\nFirst moves' + '\n')
         self.log('-----------' + '\n')
         self.log('The game begins.\n')

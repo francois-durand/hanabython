@@ -43,7 +43,7 @@ class Color(Colored):
     >>> Color.BLUE.symbol
     'B'
     >>> Color.BLUE.print_color
-    '\x1b[0;94m'
+    '\x1b[94m'
     >>> Color.BLUE.clue_behavior == ColorClueBehavior.NORMAL
     True
     >>> Color.MULTICOLOR.clue_behavior == ColorClueBehavior.MULTICOLOR
@@ -95,9 +95,9 @@ class Color(Colored):
         :rtype: str
 
         >>> Color.BLUE.color_repr('some text')
-        "\x1b[0;94m'some text'\x1b[0;0m"
+        "\x1b[94m'some text'\x1b[0;0m"
         >>> Color.BLUE.color_repr(42)
-        '\x1b[0;94m42\x1b[0;0m'
+        '\x1b[94m42\x1b[0;0m'
         """
         return self.print_color + repr(o) + PrintColor.RESET
 
@@ -112,9 +112,9 @@ class Color(Colored):
         :rtype: str
 
         >>> Color.BLUE.color_str('some text')
-        '\x1b[0;94msome text\x1b[0;0m'
+        '\x1b[94msome text\x1b[0;0m'
         >>> Color.BLUE.color_str(42)
-        '\x1b[0;94m42\x1b[0;0m'
+        '\x1b[94m42\x1b[0;0m'
         """
         return self.print_color + str(o) + PrintColor.RESET
 

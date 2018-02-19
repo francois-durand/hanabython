@@ -28,43 +28,43 @@ class PrintColor:
     #: This escape code is special: it is used to return to the default color.
     RESET = "\033[0;0m"
 
-    WHITE_NOT_BRIGHT = "\033[0;30m"
-    WHITE_BRIGHT = "\033[0;90m"
+    WHITE_NOT_BRIGHT = "\033[30m"
+    WHITE_BRIGHT = "\033[90m"
     #: This should be white on black background, and vice-versa.
     WHITE = WHITE_NOT_BRIGHT
 
-    RED_NOT_BRIGHT = "\033[0;31m"
-    RED_BRIGHT = "\033[0;91m"
+    RED_NOT_BRIGHT = "\033[31m"
+    RED_BRIGHT = "\033[91m"
     #:
     RED = RED_NOT_BRIGHT
     RED_BOLD = "\033[1;31m"
 
-    GREEN_NOT_BRIGHT = "\033[0;32m"
-    GREEN_BRIGHT = "\033[0;92m"
+    GREEN_NOT_BRIGHT = "\033[32m"
+    GREEN_BRIGHT = "\033[92m"
     #:
     GREEN = GREEN_NOT_BRIGHT
 
-    YELLOW_NOT_BRIGHT = "\033[0;33m"
-    YELLOW_BRIGHT = "\033[0;93m"
+    YELLOW_NOT_BRIGHT = "\033[33m"
+    YELLOW_BRIGHT = "\033[93m"
     #:
     YELLOW = YELLOW_BRIGHT
     #:
-    BROWN = "\033[0;33m"
+    BROWN = "\033[33m"
     #:
     BROWN_BOLD = "\033[1;33m"
 
-    BLUE_NOT_BRIGHT = "\033[0;34m"
-    BLUE_BRIGHT = "\033[0;94m"
+    BLUE_NOT_BRIGHT = "\033[34m"
+    BLUE_BRIGHT = "\033[94m"
     #:
     BLUE = BLUE_BRIGHT
 
-    MAGENTA_NOT_BRIGHT = "\033[0;35m"
-    MAGENTA_BRIGHT = "\033[0;95m"
+    MAGENTA_NOT_BRIGHT = "\033[35m"
+    MAGENTA_BRIGHT = "\033[95m"
     #:
     MAGENTA = MAGENTA_NOT_BRIGHT
 
-    CYAN_NOT_BRIGHT = "\033[0;36m"
-    CYAN_BRIGHT = "\033[0;96m"
+    CYAN_NOT_BRIGHT = "\033[36m"
+    CYAN_BRIGHT = "\033[96m"
     #:
     CYAN = CYAN_BRIGHT
     CYAN_NOT_BRIGHT_BOLD = "\033[1;36m"
