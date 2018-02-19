@@ -25,6 +25,24 @@ Colors
 .. autoclass:: hanabython.ColorClueBehavior
     :members:
 
+Configuration
+-------------
+
+.. autoclass:: hanabython.Configuration
+    :members:
+
+.. autoclass:: hanabython.ConfigurationColorContents
+    :members:
+
+.. autoclass:: hanabython.ConfigurationDeck
+    :members:
+
+.. autoclass:: hanabython.ConfigurationEndRule
+    :members:
+
+.. autoclass:: hanabython.ConfigurationHandSize
+    :members:
+
 Cards
 -----
 
@@ -80,24 +98,6 @@ Actions
     :members:
 
 .. autoclass:: hanabython.ActionForfeit
-    :members:
-
-Configuration
--------------
-
-.. autoclass:: hanabython.Configuration
-    :members:
-
-.. autoclass:: hanabython.ConfigurationColorContents
-    :members:
-
-.. autoclass:: hanabython.ConfigurationDeck
-    :members:
-
-.. autoclass:: hanabython.ConfigurationEndRule
-    :members:
-
-.. autoclass:: hanabython.ConfigurationHandSize
     :members:
 
 Player
