@@ -100,8 +100,8 @@ Actions
 .. autoclass:: hanabython.ActionForfeit
     :members:
 
-Player
-------
+Players
+-------
 
 .. autoclass:: hanabython.Player
     :members:
