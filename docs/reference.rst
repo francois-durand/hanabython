@@ -2,16 +2,19 @@
 Reference
 =========
 
-Strings
--------
+Manipulation of strings
+-----------------------
 
 .. autoclass:: hanabython.PrintColor
     :members:
 
-.. automodule:: hanabython.StringUtils
+.. autofunction:: hanabython.uncolor
     :members:
 
-.. automodule:: hanabython.Colored
+.. autofunction:: hanabython.title
+    :members:
+
+.. autoclass:: hanabython.Colored
     :members:
 
 
