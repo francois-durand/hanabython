@@ -38,7 +38,7 @@ class DrawPile(list):
     but it could have an influence in some non-official variants).
 
     >>> from Configuration import Configuration
-    >>> draw_pile = DrawPile(Configuration.CONFIG_STANDARD)
+    >>> draw_pile = DrawPile(Configuration.STANDARD)
     """
 
     def __init__(self, cfg):
@@ -74,7 +74,7 @@ class DrawPile(list):
         :rtype: int
 
         >>> from Configuration import Configuration
-        >>> draw_pile = DrawPile(Configuration.CONFIG_STANDARD)
+        >>> draw_pile = DrawPile(Configuration.STANDARD)
         >>> draw_pile.n_cards
         50
         """
@@ -88,7 +88,7 @@ class DrawPile(list):
         :rtype: Card
 
         >>> from Configuration import Configuration
-        >>> draw_pile = DrawPile(cfg=Configuration.CONFIG_STANDARD)
+        >>> draw_pile = DrawPile(cfg=Configuration.STANDARD)
         >>> card = draw_pile.give()
         >>> type(card)
         <class 'Card.Card'>
@@ -103,7 +103,7 @@ class DrawPile(list):
 
 
 if __name__ == '__main__':
-    my_draw_pile = DrawPile(cfg=Configuration.CONFIG_W_MULTICOLOR_SHORT)
+    my_draw_pile = DrawPile(cfg=Configuration.W_MULTICOLOR_SHORT)
     print('repr: ', repr(my_draw_pile))
     print('str: ', my_draw_pile)
     print('colored: ', my_draw_pile.colored())

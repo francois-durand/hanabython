@@ -33,7 +33,7 @@ class DrawPilePublic:
     :param Configuration cfg: the configuration of the game.
 
     >>> from Configuration import Configuration
-    >>> draw_pile = DrawPilePublic(cfg=Configuration.CONFIG_STANDARD)
+    >>> draw_pile = DrawPilePublic(cfg=Configuration.STANDARD)
     >>> print(draw_pile)
     50 cards left
     """
@@ -61,7 +61,7 @@ class DrawPilePublic:
         Updates the internal variables of the pile.
 
         >>> from Configuration import Configuration
-        >>> draw_pile = DrawPilePublic(cfg=Configuration.CONFIG_STANDARD)
+        >>> draw_pile = DrawPilePublic(cfg=Configuration.STANDARD)
         >>> print(draw_pile)
         50 cards left
         >>> while draw_pile.n_cards >= 2:
@@ -77,7 +77,7 @@ class DrawPilePublic:
 
 
 if __name__ == '__main__':
-    my_draw_pile = DrawPilePublic(Configuration.CONFIG_STANDARD)
+    my_draw_pile = DrawPilePublic(Configuration.STANDARD)
     print('repr: ', repr(my_draw_pile))
     print('str: ', my_draw_pile)
     print('colored: ', my_draw_pile.colored())

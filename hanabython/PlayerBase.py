@@ -20,6 +20,7 @@ This file is part of Hanabython.
 """
 from StringUtils import uncolor, title
 from Configuration import Configuration
+from ConfigurationEndRule import ConfigurationEndRule
 from Board import Board
 from DiscardPile import DiscardPile
 from DrawPilePublic import DrawPilePublic
@@ -130,7 +131,7 @@ class PlayerBase(Player):
         lines.append(self.discard_pile.colored())
         lines.append(title('Status', self.display_width))
         draw_line = 'Draw pile: %s.' % self.draw_pile.colored()
-        if (self.cfg.end_rule == Configuration.END_NORMAL
+        if (self.cfg.end_rule == ConfigurationEndRule.NORMAL
                 and self.remaining_turns is not None):
             draw_line += ' %s turns remaining!' % self.remaining_turns
         lines.append(draw_line)
@@ -197,7 +198,7 @@ class PlayerBase(Player):
 
         >>> from Card import Card
         >>> antoine = PlayerBase('Antoine')
-        >>> antoine.receive_init(cfg=Configuration.CONFIG_STANDARD,
+        >>> antoine.receive_init(cfg=Configuration.STANDARD,
         ...                      player_names=['Antoine', 'Donald'])
         >>> print('The card:%s.' % antoine._large_card(Card('B5')))
         The card:    B5     .
@@ -280,7 +281,7 @@ class PlayerBase(Player):
         self.discard_pile = DiscardPile(cfg)
         self.n_clues = cfg.n_clues
         self.n_misfires = 0
-        self.hand_size = cfg.hand_size(self.n_players)
+        self.hand_size = cfg.hand_size_rule.f(self.n_players)
         self.hands = [Hand() for _ in player_names]
         self.hands_public = [HandPublic(cfg) for _ in player_names]
         self.dealing_is_ongoing = False
@@ -399,7 +400,7 @@ class PlayerBase(Player):
         if success:
             self.log('%s plays %s' % (
                 self.player_names[i_player], card.colored()))
-            if (card.v == self.cfg.highest[card.c]
+            if (card.v == self.cfg.highest[self.cfg.i_from_c(card.c)]
                     and self.n_clues < self.cfg.n_clues):
                 self.n_clues += 1
                 self.log(' and regains a clue.\n')
@@ -484,7 +485,7 @@ class PlayerBase(Player):
     def demo_game(self):
         import random
         random.seed(0)
-        cfg = Configuration.CONFIG_STANDARD
+        cfg = Configuration.STANDARD
         draw_pile = DrawPile(cfg)
         self.receive_init(cfg=cfg, player_names=[self.name, 'Donald', 'Uwe'])
         self.receive_begin_dealing()
@@ -511,7 +512,7 @@ class PlayerBase(Player):
 
 if __name__ == '__main__':
     # alice = PlayerBase(name='Alice')
-    # alice.receive_init(cfg=Configuration.CONFIG_STANDARD,
+    # alice.receive_init(cfg=Configuration.STANDARD,
     #                    player_names=['Alice', 'Bob', 'Cat'])
     my_antoine = PlayerBase(name='Antoine')
     my_antoine.demo_game()

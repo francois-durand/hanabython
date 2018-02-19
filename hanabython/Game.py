@@ -20,6 +20,7 @@ This file is part of Hanabython.
 """
 from copy import copy
 from Configuration import Configuration
+from ConfigurationEndRule import ConfigurationEndRule
 from PlayerHuman import PlayerHuman
 from Board import Board
 from DrawPile import DrawPile
@@ -46,7 +47,7 @@ class Game:
         self.discard_pile = DiscardPile(cfg)
         self.n_clues = cfg.n_clues
         self.n_misfires = 0
-        self.hand_size = cfg.hand_size(self.n_players)
+        self.hand_size = cfg.hand_size_rule.f(self.n_players)
         self.hands = [Hand() for _ in self.players]
         self.remaining_turns = None  # For normal end-of-game rule
         self._lose = False
@@ -78,7 +79,7 @@ class Game:
         card = self.draw_pile.give()
         if card is not None:
             self.hands[i_drawer].receive(card)
-        if (self.cfg.end_rule == Configuration.END_NORMAL
+        if (self.cfg.end_rule == ConfigurationEndRule.NORMAL
                 and self.draw_pile.n_cards == 0
                 and self.remaining_turns is None):
             self.remaining_turns = self.n_players + 1
@@ -99,7 +100,7 @@ class Game:
         card = self.hands[i_player].give(k)
         success = self.board.try_to_play(card)
         if success:
-            if card.v == self.cfg.highest[card.c]:
+            if card.v == self.cfg.highest[self.cfg.i_from_c(card.c)]:
                 self.n_clues = min(self.n_clues + 1, self.cfg.n_clues)
             if self.board.score == self.cfg.max_score:
                 self._win = True
@@ -142,7 +143,7 @@ class Game:
             i_active_player = (i_active_player + 1) % self.n_players
             active_player = self.players[i_active_player]
             # Check whether the game dies from natural causes.
-            if (self.cfg.end_rule == Configuration.END_NORMAL
+            if (self.cfg.end_rule == ConfigurationEndRule.NORMAL
                     and self.remaining_turns is not None):
                 self.remaining_turns -= 1
                 for p in self.players:
@@ -150,7 +151,7 @@ class Game:
                 if self.remaining_turns == 0:
                     self._win = True
                     return self.game_over()
-            elif self.cfg.end_rule == Configuration.END_CROWNING_PIECE:
+            elif self.cfg.end_rule == ConfigurationEndRule.CROWNING_PIECE:
                 if len(self.hands[active_player]) == 0:
                     self._win = True
                     return self.game_over()
@@ -196,7 +197,7 @@ if __name__ == '__main__':
     fanfan = PlayerHuman(name='Fanfan')
     emilie = PlayerHuman(name='Emilie')
     pek = PlayerHuman(name='PEK')
-    game = Game(Configuration.CONFIG_STANDARD, [fanfan, emilie, pek])
+    game = Game(Configuration.STANDARD, [fanfan, emilie, pek])
     game.play()
     # print(game.hands[alice])
     # print(game.hands[bob])

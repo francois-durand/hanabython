@@ -31,7 +31,7 @@ class DiscardPile:
     :param Configuration cfg: the configuration of the game.
 
     >>> from Configuration import Configuration
-    >>> discard_pile = DiscardPile(Configuration.CONFIG_STANDARD)
+    >>> discard_pile = DiscardPile(Configuration.STANDARD)
     >>> print(discard_pile)
     No card discarded yet
     """
@@ -67,7 +67,7 @@ class DiscardPile:
         :rtype: str
 
         >>> from Configuration import Configuration
-        >>> discard_pile = DiscardPile(Configuration.CONFIG_STANDARD)
+        >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
         >>> discard_pile.receive(Card('B1'))
@@ -105,7 +105,7 @@ class DiscardPile:
         :rtype: str
 
         >>> from Configuration import Configuration
-        >>> discard_pile = DiscardPile(Configuration.CONFIG_STANDARD)
+        >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
         >>> discard_pile.receive(Card('B1'))
@@ -144,7 +144,7 @@ class DiscardPile:
         :rtype: str
 
         >>> from Configuration import Configuration
-        >>> discard_pile = DiscardPile(Configuration.CONFIG_STANDARD)
+        >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
         >>> discard_pile.receive(Card('B1'))
@@ -172,7 +172,7 @@ class DiscardPile:
         :rtype: str
 
         >>> from Configuration import Configuration
-        >>> discard_pile = DiscardPile(Configuration.CONFIG_STANDARD)
+        >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
         >>> discard_pile.receive(Card('B1'))
@@ -203,7 +203,7 @@ class DiscardPile:
         :rtype: list
 
         >>> from Configuration import Configuration
-        >>> discard_pile = DiscardPile(Configuration.CONFIG_STANDARD)
+        >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
         >>> discard_pile.receive(Card('B1'))
@@ -225,7 +225,7 @@ class DiscardPile:
         Update the internal variables of the discard pile.
 
         >>> from Configuration import Configuration
-        >>> discard_pile = DiscardPile(Configuration.CONFIG_STANDARD)
+        >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> print(discard_pile)
         B3
@@ -235,7 +235,7 @@ class DiscardPile:
 
 
 if __name__ == '__main__':
-    my_discard_pile = DiscardPile(Configuration.CONFIG_W_MULTICOLOR_SHORT)
+    my_discard_pile = DiscardPile(Configuration.W_MULTICOLOR_SHORT)
     my_discard_pile.receive(Card('R3'))
     my_discard_pile.receive(Card('R3'))
     my_discard_pile.receive(Card('M1'))

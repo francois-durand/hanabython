@@ -27,7 +27,8 @@ class Color(Colored):
     r"""
     A color.
 
-    :param str name: The full name of the color.
+    :param str name: The full name of the color. Two distinct colors must
+        have different names.
     :param str symbol: The short name of the color. For standard colors
         (defined as constants in this class), it must be 1 character, and two
         standard colors cannot have the same symbol. For other colors, it is

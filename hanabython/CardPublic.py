@@ -45,7 +45,7 @@ class CardPublic:
         explicitly clued as value v.
 
     >>> from Configuration import Configuration
-    >>> card = CardPublic(Configuration.CONFIG_EIGHT)
+    >>> card = CardPublic(Configuration.EIGHT_COLORS)
     >>> print(card)
     BGRWYPMC 12345
     """
@@ -131,7 +131,7 @@ class CardPublic:
         Updates the internal variables of the card.
 
         >>> from Configuration import Configuration
-        >>> cfg = Configuration.CONFIG_EIGHT
+        >>> cfg = Configuration.EIGHT_COLORS
         >>> card = CardPublic(cfg)
         >>> print(card)
         BGRWYPMC 12345
@@ -145,7 +145,7 @@ class CardPublic:
         Let us try with the clues in the opposite order:
 
         >>> from Configuration import Configuration
-        >>> card = CardPublic(Configuration.CONFIG_EIGHT)
+        >>> card = CardPublic(Configuration.EIGHT_COLORS)
         >>> print(card)
         BGRWYPMC 12345
         >>> card.match(clue=Color.BLUE, b=True)
@@ -158,7 +158,7 @@ class CardPublic:
         Now with clues by value:
 
         >>> from Configuration import Configuration
-        >>> card = CardPublic(Configuration.CONFIG_EIGHT)
+        >>> card = CardPublic(Configuration.EIGHT_COLORS)
         >>> print(card)
         BGRWYPMC 12345
         >>> card.match(clue=3, b=False)
@@ -175,7 +175,7 @@ class CardPublic:
 
 
 if __name__ == '__main__':
-    my_card = CardPublic(Configuration.CONFIG_EIGHT)
+    my_card = CardPublic(Configuration.EIGHT_COLORS)
     print('repr: ', repr(my_card))
     print('str:', my_card)
     print('colored: ', my_card.colored())
@@ -188,7 +188,7 @@ if __name__ == '__main__':
     print(my_card.colored())
 
     print('\nIt is blue, then it is not red:')
-    my_card = CardPublic(Configuration.CONFIG_EIGHT)
+    my_card = CardPublic(Configuration.EIGHT_COLORS)
     print(my_card.colored())
     my_card.match(clue=Color.BLUE, b=True)
     print(my_card.colored())
@@ -196,7 +196,7 @@ if __name__ == '__main__':
     print(my_card.colored())
 
     print('\nIt is not 3, then it is 5:')
-    my_card = CardPublic(Configuration.CONFIG_EIGHT)
+    my_card = CardPublic(Configuration.EIGHT_COLORS)
     print(my_card.colored())
     my_card.match(clue=3, b=False)
     print(my_card.colored())
@@ -204,7 +204,7 @@ if __name__ == '__main__':
     print(my_card.colored())
 
     print('\nIt is 5, then it is not 3:')
-    my_card = CardPublic(Configuration.CONFIG_EIGHT)
+    my_card = CardPublic(Configuration.EIGHT_COLORS)
     print(my_card.colored())
     my_card.match(clue=5, b=True)
     print(my_card.colored())

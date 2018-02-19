@@ -37,7 +37,7 @@ class Board:
         colors and indexes is the one provided by :attr:`cfg`.
 
     >>> from Configuration import Configuration
-    >>> board = Board(Configuration.CONFIG_STANDARD)
+    >>> board = Board(Configuration.STANDARD)
     >>> print(board.altitude)
     [0 0 0 0 0]
     """
@@ -70,7 +70,7 @@ class Board:
         :rtype: str
 
         >>> from Configuration import Configuration
-        >>> board = Board(Configuration.CONFIG_STANDARD)
+        >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
         >>> print(board.str_compact())
@@ -100,7 +100,7 @@ class Board:
         :rtype: str
 
         >>> from Configuration import Configuration
-        >>> board = Board(Configuration.CONFIG_STANDARD)
+        >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
         >>> print(board.str_fixed_space())
@@ -130,7 +130,7 @@ class Board:
         :rtype: str
 
         >>> from Configuration import Configuration
-        >>> board = Board(Configuration.CONFIG_STANDARD)
+        >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
         >>> print(board.str_multi_line())
@@ -163,7 +163,7 @@ class Board:
         :rtype: str
 
         >>> from Configuration import Configuration
-        >>> board = Board(Configuration.CONFIG_STANDARD)
+        >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
         >>> print(board.str_multi_line_compact())
@@ -198,7 +198,7 @@ class Board:
         :rtype: str
 
         >>> from Configuration import Configuration
-        >>> cfg = Configuration.CONFIG_STANDARD
+        >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -223,7 +223,7 @@ class Board:
         :rtype: str
 
         >>> from Configuration import Configuration
-        >>> cfg = Configuration.CONFIG_STANDARD
+        >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -248,7 +248,7 @@ class Board:
 
         >>> from Configuration import Configuration
         >>> from Card import Card
-        >>> board = Board(Configuration.CONFIG_STANDARD)
+        >>> board = Board(Configuration.STANDARD)
         >>> for s in ['B1', 'B2', 'Y1', 'Y3', 'B1']:
         ...     board.try_to_play(Card(s))
         True
@@ -273,7 +273,7 @@ class Board:
         :rtype: int
 
         >>> from Configuration import Configuration
-        >>> cfg = Configuration.CONFIG_STANDARD
+        >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -284,7 +284,7 @@ class Board:
 
 
 if __name__ == '__main__':
-    my_board = Board(Configuration.CONFIG_W_MULTICOLOR_SHORT)
+    my_board = Board(Configuration.W_MULTICOLOR_SHORT)
     for s in ['B1', 'B2', 'M1', 'M3', 'B1']:
         print('Try to play %s: ' % s, my_board.try_to_play(Card(s)))
     print('repr: ', repr(my_board))

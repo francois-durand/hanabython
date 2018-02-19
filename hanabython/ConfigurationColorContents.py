@@ -21,13 +21,15 @@ This file is part of Hanabython.
 from Colored import Colored
 
 
-class ConfigurationColorContents(Colored):
+class ConfigurationColorContents(Colored, list):
     """
     The contents of a color in a deck of Hanabi.
 
-    :param list contents: a list stating the number of copies for each card.
-        For example, [3, 2, 2, 2, 1] means there are 3 ones, 2 twos, etc.
-        Each integer in this list must be strictly positive.
+    This is essentially a list, stating the number of copies for each card.
+    For example, [3, 2, 2, 2, 1] means there are 3 ones, 2 twos, etc.
+    Each integer in this list must be strictly positive.
+
+    :param iterable contents: an iterable used to create the list.
     :param str name: the name of the configuration. Can be None (default value).
         Should not be capitalized (e.g. "my favorite configuration" and not
         "My favorite configuration").
@@ -35,26 +37,24 @@ class ConfigurationColorContents(Colored):
     >>> cfg = ConfigurationColorContents.NORMAL
     >>> print(cfg.name)
     normal
-    >>> cfg.contents
-    [3, 2, 2, 2, 1]
     >>> print(cfg)
     normal
+    >>> print(list(cfg))
+    [3, 2, 2, 2, 1]
     >>> cfg = ConfigurationColorContents([3, 2, 1])
     >>> print(cfg.name)
     None
-    >>> cfg.contents
-    [3, 2, 1]
     >>> print(cfg)
     [3, 2, 1]
     """
 
     def __init__(self, contents, name=None):
-        self.contents = contents
+        super().__init__(contents)
         self.name = name
 
     def colored(self):
         if self.name is None:
-            return str(self.contents)
+            return str(list(self))
         else:
             return self.name
 
@@ -75,6 +75,7 @@ ConfigurationColorContents.SHORT = ConfigurationColorContents(
 if __name__ == '__main__':
     my_cfg = ConfigurationColorContents.NORMAL
     my_cfg.test_str()
+    print(list(my_cfg))
 
     print('\n')
     my_cfg = ConfigurationColorContents(

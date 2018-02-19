@@ -18,222 +18,137 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor
+from Colored import Colored
 import numpy as np
 from Color import Color
+from ConfigurationDeck import ConfigurationDeck
+from ConfigurationHandSize import ConfigurationHandSize
+from ConfigurationEndRule import ConfigurationEndRule
 
 
-class Configuration:
+class Configuration(Colored):
     """
     A configuration for a game of Hanabi.
 
-    :param list colors: a list of Color objects. The order matters because it
-        will be used in many occasions, including display.
-    :param dict deck: a dictionary. For each color from :attr:`colors`,
-        it gives a list stating the number of copies for each card.
-        For example, [3, 2, 2, 2, 1] means there are 3 ones, 2 twos, etc.
-        Each integer in this list must be strictly positive.
+    :param ConfigurationDeck deck: the configuration of the deck.
     :param int n_clues: the number of clue chips that players have.
     :param int n_misfires: the number of misfire chips that players have.
         If :attr:`n_misfires` misfire chips are used, then the game is lost
         immediately (it is not a final warning but really the end of the
         game).
-    :param lambda hand_size: a function to maps the number of players to the
-        number of cards in hand.
-    :param int end_rule: a rule for the end of game. Can be either
-        :attr:`Configuration.END_NORMAL` or
-        :attr:`Configuration.END_CROWNING_PIECE`.
+    :param ConfigurationHandSize hand_size_rule: the rule used for the initial
+        size of the hands.
+    :param ConfigurationEndRule end_rule: the rule used to determine when
+        then game is finished.
 
+    :var list colors: a list of Color objects. Shortcut for
+        :attr:`deck`.:meth:`keys()`.
     :var int n_colors: the number of colors.
-    :var dict highest: a dictionary. For each color from :attr:`colors`,
-        it gives the number on the highest card in that color.
+    :var list highest: For each color from :attr:`colors`, it gives the number
+        on the highest card in that color.
     :var int n_values: the number on the highest card in the whole deck.
+    :var list values: the list of possible values (from 1 to :attr:`n_values`).
     :var np.array deck_array: a numpy array of size :attr:`n_colors` *
         :attr:`n_values`. Each row represents the distribution of cards in a
         color. Typically, a row is [3, 2, 2, 2, 1], meaning that there are 3
         ones, 2 twos, etc. Please note that column 0 corresponds to card
-        v 1, etc.
+        value 1, etc.
     :var int n_cards: the total number of cards in the deck.
-    :var int max_score: the maximum possible score (25 in standard
+    :var int max_score: the maximum possible score (25 in the standard
         configuration).
-    :var list values: the list of possible values (from 1 to :attr:`n_values`).
 
-    >>> cfg = Configuration()
+    >>> cfg = Configuration.W_MULTICOLOR_SHORT
     >>> print(cfg)
-    B [3 2 2 2 1]
-    G [3 2 2 2 1]
-    R [3 2 2 2 1]
-    W [3 2 2 2 1]
-    Y [3 2 2 2 1]
-    n_clues = 8
-    n_misfires = 3
-    end_rule = Normal
-    >>> c = cfg.colors[0]
-    >>> print(c)
-    B
-    >>> cfg.deck[c]
-    [3, 2, 2, 2, 1]
-    >>> cfg.n_colors
+    Deck: with short multicolor (5 cards).
+    Number of clues: 8.
+    Number of misfires: 3.
+    End rule: normal.
+    >>> print(cfg.hand_size_rule)
+    normal
+    >>> print(cfg.colors)
+    [<Color: B>, <Color: G>, <Color: R>, <Color: W>, <Color: Y>, <Color: M>]
+    >>> print(cfg.n_colors)
+    6
+    >>> print(cfg.highest)
+    [5, 5, 5, 5, 5, 5]
+    >>> print(cfg.n_values)
     5
-    >>> cfg.highest[c]
-    5
-    >>> cfg.n_values
-    5
+    >>> print(cfg.values)
+    [1, 2, 3, 4, 5]
     >>> print(cfg.deck_array)
     [[3 2 2 2 1]
      [3 2 2 2 1]
      [3 2 2 2 1]
      [3 2 2 2 1]
+     [3 2 2 2 1]
      [3 2 2 2 1]]
-    >>> cfg.n_cards
-    50
-
-    Use one of the standard configurations:
-
-    >>> cfg = Configuration.CONFIG_W_MULTICOLOR_SHORT
-    >>> print(cfg)
-    B [3 2 2 2 1]
-    G [3 2 2 2 1]
-    R [3 2 2 2 1]
-    W [3 2 2 2 1]
-    Y [3 2 2 2 1]
-    M [1 1 1 1 1]
-    n_clues = 8
-    n_misfires = 3
-    end_rule = Normal
+    >>> print(cfg.n_cards)
+    60
+    >>> print(cfg.max_score)
+    30
 
     Design a configuration manually:
 
     >>> from Color import Color
+    >>> from ConfigurationColorContents import ConfigurationColorContents
     >>> cfg = Configuration(
-    ...     colors=[Color.BLUE, Color.MULTICOLOR],
-    ...     deck={
-    ...         Color.BLUE:         [3, 2, 1, 1],
-    ...         Color.MULTICOLOR:   [2, 1],
-    ...     },
-    ...     n_clues=4, n_misfires=1,
-    ...     hand_size=lambda n: 3 if n <= 3 else 2
+    ...     deck=ConfigurationDeck(contents=[
+    ...         (Color.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
+    ...         (Color.RED, ConfigurationColorContents([2, 1])),
+    ...     ]),
+    ...     n_clues=4,
+    ...     n_misfires=1,
+    ...     hand_size_rule=ConfigurationHandSize.VARIANT_63,
+    ...     end_rule=ConfigurationEndRule.CROWNING_PIECE
     ... )
     >>> print(cfg)
-    B [3 2 1 1]
-    M [2 1 0 0]
-    n_clues = 4
-    n_misfires = 1
-    end_rule = Normal
+    Deck: B [3, 2, 1, 1], R [2, 1].
+    Number of clues: 4.
+    Number of misfires: 1.
+    End rule: Crowning Piece.
     """
-
-    #: Five colors of the base game. Default for :attr:`colors`.
-    COLORS_STANDARD = [
-        Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW]
-    #: Five colors + sixth normal color.
-    COLORS_W_SIXTH = [
-        Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW,
-        Color.SIXTH
-    ]
-    #: Five colors + Multicolor.
-    COLORS_W_MULTI = [
-        Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW,
-        Color.MULTICOLOR
-    ]
-    #: Five colors + sixth color + multicolor + colorless.
-    COLORS_EIGHT = [
-        Color.BLUE, Color.GREEN, Color.RED, Color.WHITE, Color.YELLOW,
-        Color.SIXTH, Color.MULTICOLOR, Color.COLORLESS
-    ]
-
-    #: Standard contents of a color (1 1 1 2 2 3 3 4 5).
-    COLOR_DECK_STANDARD = [3, 2, 2, 2, 1]
-    #: Contents of a "short" color (1 2 3 4 5).
-    COLOR_DECK_SHORT = [1, 1, 1, 1, 1]
-
-    #: Normal deck (5 colors of 10 cards). Default for :attr:`deck`.
-    DECK_STANDARD = {
-        Color.BLUE:     COLOR_DECK_STANDARD,
-        Color.GREEN:    COLOR_DECK_STANDARD,
-        Color.RED:      COLOR_DECK_STANDARD,
-        Color.WHITE:    COLOR_DECK_STANDARD,
-        Color.YELLOW:   COLOR_DECK_STANDARD
-    }
-    #: Deck with long sixth color (6 colors of 10 cards).
-    DECK_SIXTH_LONG = DECK_STANDARD.copy()
-    DECK_SIXTH_LONG[Color.SIXTH] = COLOR_DECK_STANDARD
-    #: Deck with short sixth color (5 colors of 10 cards + 1 color of 5 cards).
-    DECK_SIXTH_SHORT = DECK_STANDARD.copy()
-    DECK_SIXTH_SHORT[Color.SIXTH] = COLOR_DECK_SHORT
-    #: Deck with long multicolor (5 colors of 10 cards + 1 multi of 10 cards).
-    DECK_MULTICOLOR_LONG = DECK_STANDARD.copy()
-    DECK_MULTICOLOR_LONG[Color.MULTICOLOR] = COLOR_DECK_STANDARD
-    #: Deck with short multicolor (5 colors of 10 cards + 1 multi of 5 cards).
-    DECK_MULTICOLOR_SHORT = DECK_STANDARD.copy()
-    DECK_MULTICOLOR_SHORT[Color.MULTICOLOR] = COLOR_DECK_SHORT
-    #: Deck with 8 colors (6 colors + multi + colorless, all of 10 cards).
-    DECK_EIGHT = DECK_SIXTH_LONG.copy()
-    DECK_EIGHT[Color.MULTICOLOR] = COLOR_DECK_STANDARD
-    DECK_EIGHT[Color.COLORLESS] = COLOR_DECK_STANDARD
-
-    #: Normal rule for hand size (5 for 3- players, 4 for 4+ players).
-    #: Default for :attr:`hand_size`.
-    HAND_SIZE_NORMAL_RULE = lambda n: 5 if n <= 3 else 4
-    #: Variant for hand size (6 for 2p, 5 for 3p, 4 for 4p, 3 for 5+ players).
-    HAND_SIZE_VARIANT_63 = lambda n: 3 if n >= 5 else 8 - n
-
-    #: Default rule for the end of game. When a player draws the last card,
-    #: all players play one last time (her included).
-    END_NORMAL = 0
-    #: "Crowning piece" variant for the end of game. The game stops when a
-    #: player starts her turn with no card in hand.
-    END_CROWNING_PIECE = 1
-
-    def __init__(self, colors=COLORS_STANDARD, deck=DECK_STANDARD,
-                 n_clues=8, n_misfires=3,
-                 hand_size=HAND_SIZE_NORMAL_RULE,
-                 end_rule=END_NORMAL):
+    def __init__(self,
+                 deck=ConfigurationDeck.NORMAL,
+                 n_clues=8,
+                 n_misfires=3,
+                 hand_size_rule=ConfigurationHandSize.NORMAL,
+                 end_rule=ConfigurationEndRule.NORMAL):
         # Parameters
-        self.colors = colors
         self.deck = deck
         self.n_clues = n_clues
         self.n_misfires = n_misfires
-        self.hand_size = hand_size
+        self.hand_size_rule = hand_size_rule
         self.end_rule = end_rule
         # Other attributes
-        self.n_colors = len(colors)
-        self.highest = {c: len(deck[c]) for c in colors}
-        self.n_values = max(self.highest.values())
-        self.deck_array = np.array([
-            deck[c] + [0] * (self.n_values - len(deck[c])) for c in colors])
-        self.n_cards = np.sum(self.deck_array)
-        self.max_score = sum(self.highest.values())
-        # Conversions
+        self.colors = list(deck.keys())
+        self.n_colors = len(self.colors)
+        self.highest = [len(deck[c]) for c in self.colors]
+        self.n_values = max(self.highest)
         self.values = list(range(1, self.n_values + 1))
-        self._i_from_c = {c: i for i, c in enumerate(colors)}
+        self.deck_array = np.array([
+            deck[c] + [0] * (self.n_values - len(deck[c]))
+            for c in self.colors
+        ])
+        self.n_cards = np.sum(self.deck_array)
+        self.max_score = sum(self.highest)
+        # Conversion
+        self._i_from_c_name = {c.name: i for i, c in enumerate(self.colors)}
 
     def __repr__(self):
         return (
-            'Configuration(colors=%r, deck=%r, n_clues=%r, n_misfires=%r, '
-            'hand_size=%r, end_rule=%s)'
-            % (self.colors, self.deck, self.n_clues, self.n_misfires,
-               self.hand_size, self.end_rule)
+            '<Configuration: %r, n_clues=%s, n_misfires=%s, '
+            '%r, %r>'
+            % (self.deck, self.n_clues, self.n_misfires,
+               self.hand_size_rule, self.end_rule)
         )
 
-    def __str__(self):
-        return uncolor(self.colored())
-
     def colored(self):
-        s = ''
-        for i in range(self.n_colors):
-            s += self.colors[i].color_str(
-                '%s %s\n' % (
-                    self.colors[i].symbol, self.deck_array[i, :])
-            )
-        s += 'n_clues = %s\n' % self.n_clues
-        s += 'n_misfires = %s\n' % self.n_misfires
-        # s += 'hand_size: %s\n' % str(
-        #     {n: self.hand_size(n) for n in range(2, 6)})
-        s += 'end_rule = %s' % {
-            Configuration.END_NORMAL: 'Normal',
-            Configuration.END_CROWNING_PIECE: 'Crowning Piece',
-        }[self.end_rule]
-        return s
+        return '\n'.join([
+            'Deck: %s.' % self.deck,
+            'Number of clues: %s.' % self.n_clues,
+            'Number of misfires: %s.' % self.n_misfires,
+            'End rule: %s.' % self.end_rule
+        ])
 
     def i_from_c(self, c):
         """
@@ -242,108 +157,61 @@ class Configuration:
         :param Color c: a color.
 
         :return: the corresponding index.
-        :rtype: Color
+        :rtype: int
 
         >>> from Color import Color
-        >>> cfg = Configuration()
+        >>> cfg = Configuration.STANDARD
         >>> cfg.i_from_c(Color.BLUE)
         0
         """
-        return self._i_from_c[c]
+        return self._i_from_c_name[c.name]
 
     # noinspection PyMethodMayBeStatic
     def i_from_v(self, v):
         """
-        Finds index from a v (for example in :attr:`deck_array`).
+        Finds index from a value (for example in :attr:`deck_array`).
 
-        :param int v: the v (typically 1 to 5).
+        :param int v: the value (typically 1 to 5).
 
         :return: the corresponding index (typically 0 to 4).
         :rtype: int
 
-        >>> cfg = Configuration()
+        >>> cfg = Configuration.STANDARD
         >>> cfg.i_from_v(1)
         0
         """
         return v - 1
 
-    # def c_from_i(self, i):
-    #     """
-    #     Finds color from an index (for example in :attr:`deck_array`).
-    #
-    #     This is simply an alias for `self.colors[i]`, created for homogeneity
-    #     with other similar methods.
-    #
-    #     :param int i: an index.
-    #
-    #     :return: the corresponding color.
-    #     :rtype: Color
-    #
-    #     >>> cfg = Configuration()
-    #     >>> print(cfg.c_from_i(0))
-    #     Blue (B)
-    #     """
-    #     return self.colors[i]
-
-    # def v_from_i(self, i):
-    #     """
-    #     Finds v from an index (for example in :attr:`deck_array`).
-    #
-    #     :param int i: an index (typically 0 to 4).
-    #
-    #     :return: the corresponding v (typically 1 to 5).
-    #     :rtype: int
-    #
-    #     >>> cfg = Configuration()
-    #     >>> cfg.v_from_i(0)
-    #     1
-    #     """
-    #     return self._v_from_i(i)
-
     #: Standard configuration.
-    CONFIG_STANDARD = None
+    STANDARD = None
     #: Configuration with long sixth color.
-    CONFIG_W_SIXTH_LONG = None
+    W_SIXTH = None
     #: Configuration with short sixth color.
-    CONFIG_W_SIXTH_SHORT = None
+    W_SIXTH_SHORT = None
     #: Configuration with long multicolor.
-    CONFIG_W_MULTICOLOR_LONG = None
+    W_MULTICOLOR = None
     #: Configuration with short multicolor.
-    CONFIG_W_MULTICOLOR_SHORT = None
+    W_MULTICOLOR_SHORT = None
     #: Configuration with 8 long colors (6 normal + multi + colorless).
-    CONFIG_EIGHT = None
+    EIGHT_COLORS = None
 
 
-Configuration.CONFIG_STANDARD = Configuration()
-Configuration.CONFIG_W_SIXTH_LONG = Configuration(
-    colors=Configuration.COLORS_W_SIXTH,
-    deck=Configuration.DECK_SIXTH_LONG,
-)
-Configuration.CONFIG_W_SIXTH_SHORT = Configuration(
-    colors=Configuration.COLORS_W_SIXTH,
-    deck=Configuration.DECK_SIXTH_SHORT,
-)
-Configuration.CONFIG_W_MULTICOLOR_LONG = Configuration(
-    colors=Configuration.COLORS_W_MULTI,
-    deck=Configuration.DECK_MULTICOLOR_LONG,
-)
-Configuration.CONFIG_W_MULTICOLOR_SHORT = Configuration(
-    colors=Configuration.COLORS_W_MULTI,
-    deck=Configuration.DECK_MULTICOLOR_SHORT,
-)
-Configuration.CONFIG_EIGHT = Configuration(
-    colors=Configuration.COLORS_EIGHT,
-    deck=Configuration.DECK_EIGHT,
-)
+Configuration.STANDARD = Configuration()
+Configuration.W_SIXTH = Configuration(
+    deck=ConfigurationDeck.W_SIXTH)
+Configuration.W_SIXTH_SHORT = Configuration(
+    deck=ConfigurationDeck.W_SIXTH_SHORT)
+Configuration.W_MULTICOLOR = Configuration(
+    deck=ConfigurationDeck.W_MULTICOLOR)
+Configuration.W_MULTICOLOR_SHORT = Configuration(
+    deck=ConfigurationDeck.W_MULTICOLOR_SHORT)
+Configuration.EIGHT_COLORS = Configuration(
+    deck=ConfigurationDeck.EIGHT_COLORS)
 
 
 if __name__ == '__main__':
-    cfg = Configuration()
-    print('repr: ', repr(cfg))
-    print('\nstr: ')
-    print(cfg)
-    print('\ncolored: ')
-    print(cfg.colored())
+    cfg = Configuration.EIGHT_COLORS
+    cfg.test_str()
 
     print('\nAttributes: ')
     for k in cfg.__dict__.keys():
@@ -351,10 +219,10 @@ if __name__ == '__main__':
             print(k + ': ', cfg.__dict__[k])
 
     print('\nOther standard configurations: ')
-    print(Configuration.CONFIG_W_SIXTH_LONG.colored() + '\n')
-    print(Configuration.CONFIG_W_SIXTH_SHORT.colored() + '\n')
-    print(Configuration.CONFIG_W_MULTICOLOR_LONG.colored() + '\n')
-    print(Configuration.CONFIG_W_MULTICOLOR_SHORT.colored() + '\n')
+    print(Configuration.W_SIXTH.colored() + '\n')
+    print(Configuration.W_SIXTH_SHORT.colored() + '\n')
+    print(Configuration.W_MULTICOLOR.colored() + '\n')
+    print(Configuration.W_MULTICOLOR_SHORT.colored() + '\n')
 
     import doctest
     doctest.testmod()

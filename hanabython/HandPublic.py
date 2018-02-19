@@ -43,7 +43,7 @@ class HandPublic(list):
         be given to the players during the initial dealing of hands.
 
     >>> from Configuration import Configuration
-    >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
+    >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
     >>> print(hand)
     [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
     """
@@ -76,7 +76,7 @@ class HandPublic(list):
         An unknown card is added on the left, i.e. at the beginning of the list.
 
         >>> from Configuration import Configuration
-        >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
+        >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=5, bool_list=[True, True, False, False])
         >>> print(hand)
         [BGRWY     5, BGRWY     5, BGRWY 1234 , BGRWY 1234 ]
@@ -95,7 +95,7 @@ class HandPublic(list):
         The card is simply suppressed from the hand.
 
         >>> from Configuration import Configuration
-        >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
+        >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=5, bool_list=[False, True, False, False])
         >>> hand.match(clue=4, bool_list=[True, False, False, False])
         >>> print(hand)
@@ -117,7 +117,7 @@ class HandPublic(list):
         Updates the internal variables of the hand.
 
         >>> from Configuration import Configuration
-        >>> hand = HandPublic(cfg=Configuration.CONFIG_STANDARD, n_cards=4)
+        >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=3, bool_list=[False, True, False, False])
         >>> print(hand)
         [BGRWY 12 45, BGRWY   3  , BGRWY 12 45, BGRWY 12 45]
