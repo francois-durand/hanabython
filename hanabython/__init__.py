@@ -6,7 +6,7 @@ __author__ = """François Durand"""
 __email__ = 'fradurand@gmail.com'
 __version__ = '0.1.0'
 
-from Action import Action
+from .Action import Action
 from ActionClue import ActionClue
 from ActionDiscard import ActionDiscard
 from ActionForfeit import ActionForfeit
