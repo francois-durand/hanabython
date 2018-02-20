@@ -25,14 +25,14 @@ from hanabython.Classes.ColorClueBehavior import ColorClueBehavior
 
 class Color(Colored):
     r"""
-    A color.
+    A color in Hanabi.
 
-    :param str name: The full name of the color. Two distinct colors must
-        have different names.
+    :param str name: The full name of the color. In a game, two distinct
+        colors must have different names.
     :param str symbol: The short name of the color. For standard colors
-        (defined as constants in this class), it must be 1 character, and two
-        standard colors cannot have the same symbol. For other colors, it is
-        better to do the same, but it is not mandatory.
+        (defined as constants in this class), it is always 1 character, and
+        no two standard colors have the same symbol. For user-defined colors,
+        it is recommended to do the same, but not necessary.
     :param str print_color: an ANSI escape code that modifies the printing
         color. See :class:`StringAnsi`.
     :param ColorClueBehavior clue_behavior: how this color behaves regarding
@@ -50,7 +50,7 @@ class Color(Colored):
     True
     """
 
-    def __init__(self, name, symbol, print_color,
+    def __init__(self, name:str, symbol, print_color,
                  clue_behavior=ColorClueBehavior.NORMAL):
         self.name = name
         self.symbol = symbol
@@ -60,12 +60,13 @@ class Color(Colored):
     @classmethod
     def from_symbol(cls, s):
         """
-        Finds one of the standard colors from its symbol
+        Find one of the standard colors from its symbol.
 
         :param str s: the symbol of the color.
 
         :return: the corresponding color. It must be one of the constants
-            defined in the class Color, e.g. BLUE, MULTI, etc.
+            defined in the class Color, e.g. :attr:`BLUE`, :attr:`MULTICOLOR`,
+            etc.
         :rtype: Color
 
         >>> my_color = Color.from_symbol('B')
@@ -84,26 +85,9 @@ class Color(Colored):
     def colored(self):
         return self.color_str(self.symbol)
 
-    def color_repr(self, o):
+    def color_str(self, o) -> str:
         r"""
-        Convert an object to a colored representation
-
-        :param object o: any object.
-
-        :return: the ``__repr__`` of this object, with an ANSI color-modifying
-            escape code at the beginning and its cancellation at the end.
-        :rtype: str
-
-        >>> Color.BLUE.color_repr('some text')
-        "\x1b[94m'some text'\x1b[0;0m"
-        >>> Color.BLUE.color_repr(42)
-        '\x1b[94m42\x1b[0;0m'
-        """
-        return self.print_color + repr(o) + StringAnsi.RESET
-
-    def color_str(self, o):
-        r"""
-        Convert an object to a colored string
+        Convert an object to a colored string.
 
         :param object o: any object.
 
@@ -120,9 +104,9 @@ class Color(Colored):
 
     def match(self, clue_color):
         """
-        React to a color clue
+        React to a color clue.
 
-        :param Color clue_color: the color of the clue
+        :param Color clue_color: the color of the clue.
 
         :return: whether a card of the current color should react to a clue of
             color :attr:`clue_color`.
@@ -154,14 +138,14 @@ class Color(Colored):
     WHITE = None
     #:
     YELLOW = None
-    #: Use this for the sixth color (the display color might change in future
-    #: implementations).
+    #: Use this for the sixth color. As of now, it is brown but the display
+    #: color might change in future implementations).
     SIXTH = None
-    #: Use this for multicolor cards (the display color might change in future
-    #: implementations).
+    #: Use this for multicolor cards. As of now, it is cyan but the display
+    #: color might change in future implementations).
     MULTICOLOR = None
-    #: Use this for the colorless cards (the display color might change in
-    #: future implementations).
+    #: Use this for the colorless cards. As of now, it is pink but the display
+    #: color might change in future implementations).
     COLORLESS = None
 
 
@@ -173,14 +157,14 @@ Color.YELLOW = Color(name='Yellow', symbol='Y', print_color=StringAnsi.YELLOW)
 Color.SIXTH = Color(name='Pink', symbol='P', print_color=StringAnsi.MAGENTA)
 Color.MULTICOLOR = Color(
     name='Multicolor', symbol='M',
-    print_color=StringAnsi.CYAN + StringAnsi.STYLE_BOLD
-                + StringAnsi.STYLE_UNDERLINE,
+    print_color=(
+        StringAnsi.CYAN + StringAnsi.STYLE_BOLD + StringAnsi.STYLE_UNDERLINE),
     clue_behavior=ColorClueBehavior.MULTICOLOR
 )
 Color.COLORLESS = Color(
     name='Colorless', symbol='C',
-    print_color=StringAnsi.RED + StringAnsi.STYLE_BOLD
-                + StringAnsi.STYLE_UNDERLINE,
+    print_color=(
+        StringAnsi.RED + StringAnsi.STYLE_BOLD + StringAnsi.STYLE_UNDERLINE),
     clue_behavior=ColorClueBehavior.COLORLESS
 )
 

@@ -25,13 +25,13 @@ class ColorClueBehavior:
     A type of behavior regarding color clues.
     """
 
-    #: Normal behavior (you can clue this color, and the card catches only the
+    #: Normal behavior (you can clue this color, and the card matches only the
     #: clues of its own color).
     NORMAL = 0
-    #: Multicolor behavior (you cannot clue this color, and the card catches the
+    #: Multicolor behavior (you cannot clue this color, and the card matches the
     #: clues of all colors).
     MULTICOLOR = 1
-    #: Colorless behavior (you cannot clue this color, and the card catches the
+    #: Colorless behavior (you cannot clue this color, and the card matches the
     #: clues of no color).
     COLORLESS = 2
 
