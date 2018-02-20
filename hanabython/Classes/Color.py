@@ -172,11 +172,15 @@ Color.WHITE = Color(name='White', symbol='W', print_color=PrintColor.WHITE)
 Color.YELLOW = Color(name='Yellow', symbol='Y', print_color=PrintColor.YELLOW)
 Color.SIXTH = Color(name='Pink', symbol='P', print_color=PrintColor.MAGENTA)
 Color.MULTICOLOR = Color(
-    name='Multicolor', symbol='M', print_color=PrintColor.CYAN_BOLD,
+    name='Multicolor', symbol='M',
+    print_color=PrintColor.CYAN + PrintColor.STYLE_BOLD
+                + PrintColor.STYLE_UNDERLINE,
     clue_behavior=ColorClueBehavior.MULTICOLOR
 )
 Color.COLORLESS = Color(
-    name='Colorless', symbol='C', print_color=PrintColor.BROWN_BOLD,
+    name='Colorless', symbol='C',
+    print_color=PrintColor.RED + PrintColor.STYLE_BOLD
+                + PrintColor.STYLE_UNDERLINE,
     clue_behavior=ColorClueBehavior.COLORLESS
 )
 

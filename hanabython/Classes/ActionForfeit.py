@@ -35,7 +35,8 @@ class ActionForfeit(Action):
         super().__init__(Action.FORFEIT)
 
     def colored(self):
-        return PrintColor.RED_BOLD + 'Forfeit' + PrintColor.RESET
+        return (PrintColor.RED + PrintColor.STYLE_BOLD
+                + 'Forfeit' + PrintColor.RESET)
 
 
 if __name__ == '__main__':

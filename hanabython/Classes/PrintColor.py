@@ -27,6 +27,12 @@ class PrintColor:
 
     #: This escape code is special: it is used to return to the default color.
     RESET = "\033[0;0m"
+    #: Bold font
+    STYLE_BOLD = "\033[1m"
+    #: Underline
+    STYLE_UNDERLINE = "\033[4m"
+    #: Reverse video
+    STYLE_REVERSE = "\033[7m"
 
     WHITE_NOT_BRIGHT = "\033[30m"
     WHITE_BRIGHT = "\033[90m"
@@ -37,7 +43,6 @@ class PrintColor:
     RED_BRIGHT = "\033[91m"
     #:
     RED = RED_NOT_BRIGHT
-    RED_BOLD = "\033[1;31m"
 
     GREEN_NOT_BRIGHT = "\033[32m"
     GREEN_BRIGHT = "\033[92m"
@@ -49,9 +54,8 @@ class PrintColor:
     #:
     YELLOW = YELLOW_BRIGHT
     #:
-    BROWN = "\033[33m"
+    BROWN = YELLOW_NOT_BRIGHT
     #:
-    BROWN_BOLD = "\033[1;33m"
 
     BLUE_NOT_BRIGHT = "\033[34m"
     BLUE_BRIGHT = "\033[94m"
@@ -67,10 +71,6 @@ class PrintColor:
     CYAN_BRIGHT = "\033[96m"
     #:
     CYAN = CYAN_BRIGHT
-    CYAN_NOT_BRIGHT_BOLD = "\033[1;36m"
-    CYAN_BRIGHT_BOLD = "\033[1;96m"
-    #:
-    CYAN_BOLD = "\033[1;96m"
 
 
 if __name__ == '__main__':
