@@ -36,7 +36,8 @@ class DrawPile(Colored, list):
 
     Basically, a DrawPile is a list of cards. The top of the pile, where cards
     are drawn, is represented by the end of the list (not that we care much,
-    but it could have an influence in some non-official variants).
+    but it could have an influence someday in some not-yet-implemented
+    non-official variants).
 
     >>> from Classes.Configuration import Configuration
     >>> draw_pile = DrawPile(Configuration.STANDARD)

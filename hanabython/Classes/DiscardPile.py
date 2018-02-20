@@ -54,8 +54,8 @@ class DiscardPile(Colored):
         Convert to nice string.
 
         :return: a representation of the discard pile. As of now, it is the
-            one used for the standard method :meth:`__str__` (it might change
-            in the future).
+            one used for the standard method :meth:`__str__` (this behavior
+            might be modified in the future).
 
         >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
@@ -70,7 +70,7 @@ class DiscardPile(Colored):
 
     def colored_fancy(self) -> str:
         """
-        Colored version of :meth:`str_fancy`
+        Colored version of :meth:`str_fancy`.
         """
         if len(self.chronological) == 0:
             return 'No card discarded yet'
@@ -107,7 +107,7 @@ class DiscardPile(Colored):
 
     def colored_as_array(self) -> str:
         """
-        Colored version of :meth:`str_as_array`
+        Colored version of :meth:`str_as_array`.
         """
         to_join = [
             '   ' + ' '.join([str(i + 1) for i in range(self.cfg.n_values)])
@@ -136,7 +136,7 @@ class DiscardPile(Colored):
 
     def colored_as_list_ordered(self) -> str:
         """
-        Colored version of :meth:`str_as_list_ordered`
+        Colored version of :meth:`str_as_list_ordered`.
         """
         ordered = self.list_reordered
         return '[' + ', '.join([card.colored() for card in ordered]) + ']'
@@ -159,7 +159,7 @@ class DiscardPile(Colored):
 
     def colored_as_chronological(self) -> str:
         """
-        Colored version of :meth:`str_as_chronological`
+        Colored version of :meth:`str_as_chronological`.
         """
         return '[' + ', '.join([
             card.colored() for card in self.chronological
@@ -168,7 +168,7 @@ class DiscardPile(Colored):
     @property
     def list_reordered(self) -> List[Card]:
         """
-        List of discarded cards, ordered by color and value
+        List of discarded cards, ordered by color and value.
 
         :return: the list of discarded cards, by lexicographic order. The order
             on the colors is the one specified in :attr:`cfg`.
