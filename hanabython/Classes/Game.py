@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+import logging
 from copy import copy
 from typing import List, Union
 from hanabython.Classes.Color import Color
@@ -41,15 +42,9 @@ class Game(Colored):
     :param list players:
     """
 
-    def debug(self, o: object) -> None:
-        if self.debug_mode:
-            print('GAME: ' + str(o))
-
-    def __init__(self, cfg: Configuration, players: List[Player],
-                 debug_mode: bool = False):
+    def __init__(self, cfg: Configuration, players: List[Player]):
         # General initializations
-        self.debug_mode = debug_mode
-        self.debug('General initializations')
+        logging.info('General initializations')
         self.players = players
         self.n_players = len(self.players)
         self.cfg = cfg
@@ -65,13 +60,13 @@ class Game(Colored):
         self._win = False
         self.broadcast_init()
         # Deal
-        self.debug('Dealing cards')
+        logging.info('Dealing cards')
         self.broadcast_begin_dealing()
         for i in range(self.hand_size):
             for i_p, p in enumerate(self.players):
                 self.draw(i_p)
         self.broadcast_end_dealing()
-        self.debug('Cards are dealt')
+        logging.info('Cards are dealt')
 
     def colored(self) -> str:
         return 'This is a game of Hanabi.'
@@ -155,15 +150,15 @@ class Game(Colored):
         return self.board.score
 
     def play(self) -> int:
-        self.debug("The game begins.")
+        logging.info("The game begins.")
         i_active_player = -1
         while True:
-            self.debug("Enter the big 'while' loop.")
+            logging.info("Enter the big 'while' loop.")
             i_active_player = (i_active_player + 1) % self.n_players
             active_player = self.players[i_active_player]
-            self.debug("%s's turn begins" % active_player.name)
+            logging.info("%s's turn begins" % active_player.name)
             # Check whether the game dies from natural causes.
-            self.debug("Check end-of-game condition.")
+            logging.info("Check end-of-game condition.")
             if (self.cfg.end_rule == ConfigurationEndRule.NORMAL
                     and self.remaining_turns is not None):
                 self.remaining_turns -= 1
@@ -176,11 +171,11 @@ class Game(Colored):
                 if len(self.hands[active_player]) == 0:
                     self._win = True
                     return self.game_over()
-            self.debug("The game is not over, let us proceed.")
+            logging.info("The game is not over, let us proceed.")
             # Require a legal action from the player
             # We do not check the 'out of bounds' problem, which will throw an
             # error anyway.
-            self.debug("Ask %s for an action." % active_player.name)
+            logging.info("Ask %s for an action." % active_player.name)
             is_action_legal = False
             while not is_action_legal:
                 action = active_player.choose_action()
@@ -192,31 +187,32 @@ class Game(Colored):
                 else:
                     is_action_legal = True
             active_player.receive_action_legal()
-            self.debug("%s proposed a legal action." % active_player.name)
+            logging.info("%s proposed a legal action." % active_player.name)
             # Perform the action and inform everybody
             if action.category == Action.DISCARD:
-                self.debug("It is a 'discard' action.")
+                logging.info("It is a 'discard' action.")
                 self.discard(i_discarder=i_active_player, k=action.k)
                 self.draw(i_drawer=i_active_player)
             elif action.category == Action.PLAY:
-                self.debug("It is a 'play' action.")
+                logging.info("It is a 'play' action.")
                 self.play_card(i_player=i_active_player, k=action.k)
                 if self.n_misfires == self.cfg.n_misfires:
                     self._lose = True
                 else:
                     self.draw(i_drawer=i_active_player)
             elif action.category == Action.CLUE:
-                self.debug("It is a 'clue' action.")
+                logging.info("It is a 'clue' action.")
                 self.give_clue(
                     i_cluer=i_active_player,
                     i_clued=(i_active_player + action.i) % self.n_players,
                     clue=action.clue)
             else:  # Forfeit
-                self.debug("It is a 'forfeit' action.")
+                logging.info("It is a 'forfeit' action.")
                 self._lose = True
-            self.debug("Inform %s that the turn is over." % active_player.name)
+            logging.info("Inform %s that the turn is over."
+                         % active_player.name)
             active_player.receive_action_finished()
-            self.debug("%s's turn is over." % active_player.name)
+            logging.info("%s's turn is over." % active_player.name)
             if self._lose:
                 return self.lose()
             if self._win:
@@ -224,6 +220,11 @@ class Game(Colored):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(
+        filename='Game.log',
+        format='%(levelname)s - %(module)s - %(message)s',
+        level=logging.DEBUG
+    )
     fanfan = PlayerHuman(name='Fanfan')
     emilie = PlayerHuman(name='Emilie')
     pek = PlayerHuman(name='PEK')

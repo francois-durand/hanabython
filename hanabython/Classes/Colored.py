@@ -79,7 +79,6 @@ class Colored:
 
 if __name__ == '__main__':
     from Classes.StringAnsi import StringAnsi
-
     class TestClass(Colored):
         def colored(self):
             return StringAnsi.RED + 'some text' + StringAnsi.RESET
