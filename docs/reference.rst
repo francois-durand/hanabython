@@ -5,21 +5,21 @@ Reference
 Manipulation of strings
 -----------------------
 
-.. autoclass:: PrintColor
+.. autoclass:: hanabython.PrintColor
     :members:
 
 .. autofunction:: hanabython.uncolor
 
 .. autofunction:: hanabython.title
 
-.. autoclass:: hanabython.Colored
+.. autoclass:: hanabython.Classes.Colored
     :members:
 
 
 Colors
 ------
 
-.. autoclass:: hanabython.Color
+.. autoclass:: Classes.Color
     :members:
 
 .. autoclass:: hanabython.ColorClueBehavior
