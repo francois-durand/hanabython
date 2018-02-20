@@ -19,6 +19,7 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from hanabython.Classes.Colored import Colored
+from typing import Iterable
 
 
 class ConfigurationColorContents(Colored, list):
@@ -29,8 +30,8 @@ class ConfigurationColorContents(Colored, list):
     For example, [3, 2, 2, 2, 1] means there are 3 ones, 2 twos, etc.
     Each integer in this list must be strictly positive.
 
-    :param iterable contents: an iterable used to create the list.
-    :param str name: the name of the configuration. Can be None (default value).
+    :param contents: an iterable used to create the list.
+    :param name: the name of the configuration. Can be None (default value).
         Should not be capitalized (e.g. "my favorite configuration" and not
         "My favorite configuration").
 
@@ -48,7 +49,7 @@ class ConfigurationColorContents(Colored, list):
     [3, 2, 1]
     """
 
-    def __init__(self, contents, name=None):
+    def __init__(self, contents: Iterable[int], name: str = None):
         super(ConfigurationColorContents, self).__init__(contents)
         self.name = name
 

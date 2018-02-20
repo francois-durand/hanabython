@@ -19,6 +19,7 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
+from typing import List
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Color import Color
 from hanabython.Classes.ConfigurationDeck import ConfigurationDeck
@@ -30,15 +31,15 @@ class Configuration(Colored):
     """
     A configuration for a game of Hanabi.
 
-    :param ConfigurationDeck deck: the configuration of the deck.
-    :param int n_clues: the number of clue chips that players have.
-    :param int n_misfires: the number of misfire chips that players have.
+    :param deck: the configuration of the deck.
+    :param n_clues: the number of clue chips that players have.
+    :param n_misfires: the number of misfire chips that players have.
         If :attr:`n_misfires` misfire chips are used, then the game is lost
         immediately (it is not a final warning but really the end of the
         game).
-    :param ConfigurationHandSize hand_size_rule: the rule used for the initial
+    :param hand_size_rule: the rule used for the initial
         size of the hands.
-    :param ConfigurationEndRule end_rule: the rule used to determine when
+    :param end_rule: the rule used to determine when
         then game is finished.
 
     :var list colors: a list of Color objects. Shortcut for
@@ -81,17 +82,17 @@ class Configuration(Colored):
      [3 2 2 2 1]
      [3 2 2 2 1]
      [3 2 2 2 1]
-     [3 2 2 2 1]]
+     [1 1 1 1 1]]
     >>> print(cfg.n_cards)
-    60
+    55
     >>> print(cfg.max_score)
     30
 
     Design a configuration manually:
 
-    >>> from Classes.ConfigurationDeck import ConfigurationDeck
-    >>> from Classes.Color import Color
-    >>> from Classes.ConfigurationColorContents import ConfigurationColorContents
+    >>> from hanabython import ConfigurationDeck
+    >>> from hanabython import Color
+    >>> from hanabython import ConfigurationColorContents
     >>> cfg = Configuration(
     ...     deck=ConfigurationDeck(contents=[
     ...         (Color.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
@@ -108,12 +109,14 @@ class Configuration(Colored):
     Number of misfires: 1.
     End rule: Crowning Piece.
     """
-    def __init__(self,
-                 deck=ConfigurationDeck.NORMAL,
-                 n_clues=8,
-                 n_misfires=3,
-                 hand_size_rule=ConfigurationHandSize.NORMAL,
-                 end_rule=ConfigurationEndRule.NORMAL):
+    def __init__(
+        self,
+        deck: ConfigurationDeck = ConfigurationDeck.NORMAL,
+        n_clues: int = 8,
+        n_misfires: int = 3,
+        hand_size_rule: ConfigurationHandSize = ConfigurationHandSize.NORMAL,
+        end_rule: ConfigurationEndRule = ConfigurationEndRule.NORMAL
+    ):
         # Parameters
         self.deck = deck
         self.n_clues = n_clues
@@ -121,7 +124,7 @@ class Configuration(Colored):
         self.hand_size_rule = hand_size_rule
         self.end_rule = end_rule
         # Other attributes
-        self.colors = list(deck.keys())
+        self.colors = list(deck.keys())  # type: List[Color]
         self.n_colors = len(self.colors)
         self.highest = [len(deck[c]) for c in self.colors]
         self.n_values = max(self.highest)
@@ -135,7 +138,7 @@ class Configuration(Colored):
         # Conversion
         self._i_from_c_name = {c.name: i for i, c in enumerate(self.colors)}
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             '<Configuration: %r, n_clues=%s, n_misfires=%s, '
             '%r, %r>'
@@ -143,7 +146,7 @@ class Configuration(Colored):
                self.hand_size_rule, self.end_rule)
         )
 
-    def colored(self):
+    def colored(self) -> str:
         return '\n'.join([
             'Deck: %s.' % self.deck.colored(),
             'Number of clues: %s.' % self.n_clues,
@@ -151,14 +154,13 @@ class Configuration(Colored):
             'End rule: %s.' % self.end_rule.colored()
         ])
 
-    def i_from_c(self, c):
+    def i_from_c(self, c: Color) -> int:
         """
         Finds index from a color (for example in :attr:`deck_array`).
 
-        :param Color c: a color.
+        :param c: a color.
 
         :return: the corresponding index.
-        :rtype: int
 
         >>> from Classes.Color import Color
         >>> cfg = Configuration.STANDARD
@@ -168,14 +170,13 @@ class Configuration(Colored):
         return self._i_from_c_name[c.name]
 
     # noinspection PyMethodMayBeStatic
-    def i_from_v(self, v):
+    def i_from_v(self, v: int) -> int:
         """
         Finds index from a value (for example in :attr:`deck_array`).
 
-        :param int v: the value (typically 1 to 5).
+        :param v: the value (typically 1 to 5).
 
         :return: the corresponding index (typically 0 to 4).
-        :rtype: int
 
         >>> cfg = Configuration.STANDARD
         >>> cfg.i_from_v(1)
