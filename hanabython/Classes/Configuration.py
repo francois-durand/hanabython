@@ -42,7 +42,7 @@ class Configuration(Colored):
     :param end_rule: the rule used to determine when
         then game is finished.
 
-    :var list colors: a list of Color objects. Shortcut for
+    :var colors: a list of Color objects. Shortcut for
         :attr:`deck`.:meth:`keys()`.
     :var int n_colors: the number of colors.
     :var list highest: For each color from :attr:`colors`, it gives the number
@@ -124,16 +124,16 @@ class Configuration(Colored):
         self.hand_size_rule = hand_size_rule
         self.end_rule = end_rule
         # Other attributes
-        self.colors = list(deck.keys())  # type: List[Color]
-        self.n_colors = len(self.colors)
-        self.highest = [len(deck[c]) for c in self.colors]
-        self.n_values = max(self.highest)
-        self.values = list(range(1, self.n_values + 1))
+        self.colors = list(deck.keys())                     # type: List[Color]
+        self.n_colors = len(self.colors)                    # type: int
+        self.highest = [len(deck[c]) for c in self.colors]  # type: List[int]
+        self.n_values = max(self.highest)                   # type: int
+        self.values = list(range(1, self.n_values + 1))     # type: List[int]
         self.deck_array = np.array([
             deck[c] + [0] * (self.n_values - len(deck[c]))
             for c in self.colors
-        ])
-        self.n_cards = np.sum(self.deck_array)
+        ])                                                  # type: np.array
+        self.n_cards = np.sum(self.deck_array)              # type: int
         self.max_score = sum(self.highest)
         # Conversion
         self._i_from_c_name = {c.name: i for i, c in enumerate(self.colors)}
