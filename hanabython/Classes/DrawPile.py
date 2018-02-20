@@ -78,7 +78,7 @@ class DrawPile(Colored, list):
         >>> draw_pile = DrawPile(cfg=Configuration.STANDARD)
         >>> card = draw_pile.give()
         >>> type(card)
-        <class 'Classes.Card.Card'>
+        <class 'hanabython.Classes.Card.Card'>
         >>> while draw_pile.n_cards >= 1:
         ...     _ = draw_pile.give()
         >>> print(draw_pile.give())
