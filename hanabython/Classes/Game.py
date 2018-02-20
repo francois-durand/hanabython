@@ -19,6 +19,8 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from copy import copy
+from typing import List, Union
+from hanabython.Classes.Color import Color
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Configuration import Configuration
 from hanabython.Classes.ConfigurationEndRule import ConfigurationEndRule
@@ -28,6 +30,7 @@ from hanabython.Classes.DrawPile import DrawPile
 from hanabython.Classes.DiscardPile import DiscardPile
 from hanabython.Classes.Hand import Hand
 from hanabython.Classes.Action import Action
+from hanabython.Classes.Player import Player
 
 
 class Game(Colored):
@@ -38,15 +41,16 @@ class Game(Colored):
     :param list players:
     """
 
-    @staticmethod
-    def debug(s):
-        pass
-        # print('GAME: ' + s)
+    def debug(self, o: object) -> None:
+        if self.debug_mode:
+            print('GAME: ' + str(o))
 
-    def __init__(self, cfg, players):
+    def __init__(self, cfg: Configuration, players: List[Player],
+                 debug_mode: bool = False):
         # General initializations
         self.debug('General initializations')
         self.players = players
+        self.debug_mode = debug_mode
         self.n_players = len(self.players)
         self.cfg = cfg
         self.board = Board(cfg)
@@ -69,25 +73,25 @@ class Game(Colored):
         self.broadcast_end_dealing()
         self.debug('Cards are dealt')
 
-    def colored(self):
+    def colored(self) -> str:
         return 'This is a game of Hanabi.'
 
-    def broadcast_init(self):
+    def broadcast_init(self) -> None:
         for i, p in enumerate(self.players):
             p.receive_init(cfg=copy(self.cfg), player_names=(
                 [self.players[j].name for j in range(i, self.n_players)]
                 + [self.players[j].name for j in range(i)]
             ))
 
-    def broadcast_begin_dealing(self):
+    def broadcast_begin_dealing(self) -> None:
         for p in self.players:
             p.receive_begin_dealing()
 
-    def broadcast_end_dealing(self):
+    def broadcast_end_dealing(self) -> None:
         for p in self.players:
             p.receive_end_dealing()
 
-    def draw(self, i_drawer):
+    def draw(self, i_drawer: int) -> None:
         card = self.draw_pile.give()
         if card is not None:
             self.hands[i_drawer].receive(card)
@@ -101,14 +105,14 @@ class Game(Colored):
             else:
                 p.receive_partner_draws(self.rel(i_drawer, i), copy(card))
 
-    def discard(self, i_discarder, k):
+    def discard(self, i_discarder: int, k: int) -> None:
         card = self.hands[i_discarder].give(k)
         self.discard_pile.receive(card)
         self.n_clues += 1
         for i, p in enumerate(self.players):
             p.receive_someone_throws(self.rel(i_discarder, i), k, card)
 
-    def play_card(self, i_player, k):
+    def play_card(self, i_player: int, k: int) -> None:
         card = self.hands[i_player].give(k)
         success = self.board.try_to_play(card)
         if success:
@@ -124,32 +128,33 @@ class Game(Colored):
             p.receive_someone_plays(
                 self.rel(i_player, i), k, copy(card))
 
-    def give_clue(self, i_cluer, i_clued, clue):
+    def give_clue(self, i_cluer: int, i_clued: int,
+                  clue: Union[int, Color]) -> None:
         self.n_clues -= 1
         bool_list = self.hands[i_clued].match(clue)
         for i, p in enumerate(self.players):
             p.receive_someone_clues(self.rel(i_cluer, i), self.rel(i_clued, i),
                                     copy(clue), copy(bool_list))
 
-    def rel(self, who, fro):
+    def rel(self, who: int, fro: int) -> int:
         return (who - fro) % self.n_players
 
-    def lose(self):
+    def lose(self) -> int:
         for i, p in enumerate(self.players):
             p.receive_lose(score=0)
         return 0
 
-    def game_over(self):
+    def game_over(self) -> int:
         for i, p in enumerate(self.players):
             p.receive_game_over(score=self.board.score)
         return self.board.score
 
-    def win(self):
+    def win(self) -> int:
         for i, p in enumerate(self.players):
             p.receive_win(score=self.board.score)
         return self.board.score
 
-    def play(self):
+    def play(self) -> int:
         self.debug("The game begins.")
         i_active_player = -1
         while True:

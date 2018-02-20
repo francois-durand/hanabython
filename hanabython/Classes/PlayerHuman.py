@@ -30,21 +30,17 @@ from time import sleep
 
 class PlayerHuman(PlayerBase):
 
-    def __init__(self, name):
-        super().__init__(name)
-
-    def choose_action(self):
+    def choose_action(self) -> Action:
         """
         Choose an action.
 
         :return: the action chosen by the player.
-        :rtype: Action
         """
         print('\n' * 40)
         # The "clear_output" is here for usage in Jupyter.
-        sleep(0.5) # Essential line to prevent strange behavior in Jupyter!
+        sleep(0.5)  # Essential line to prevent strange behavior in Jupyter!
         clear_output()
-        sleep(0.5) # Essential line to prevent strange behavior in Jupyter!
+        sleep(0.5)  # Essential line to prevent strange behavior in Jupyter!
         input('%s is going to play (hit Enter).\n' % self.name)
         print(self.colored())
         while True:
@@ -97,7 +93,7 @@ class PlayerHuman(PlayerBase):
                 return ActionDiscard(k=k)
         return ActionForfeit()
 
-    def receive_action_finished(self):
+    def receive_action_finished(self) -> None:
         """
         Receive a message: the action of the player is finished.
         """
@@ -106,14 +102,14 @@ class PlayerHuman(PlayerBase):
             input("Your turn is over (hit Enter).\n")
         super().receive_action_finished()
 
-    def receive_lose(self, score):
+    def receive_lose(self, score: int) -> None:
         """
         Receive a message: the game is lost (misfires or forfeit).
         """
         super().receive_lose(score)
         print(self.recent_events)
 
-    def receive_game_over(self, score):
+    def receive_game_over(self, score: int) -> None:
         """
         Receive a message: the game is over and is neither really lost
         (misfires, forfeit) nor a total victory (maximal score).
@@ -121,7 +117,7 @@ class PlayerHuman(PlayerBase):
         super().receive_game_over(score)
         print(self.recent_events)
 
-    def receive_win(self, score):
+    def receive_win(self, score: int) -> None:
         """
         Receive a message: the game is won (total victory).
         """

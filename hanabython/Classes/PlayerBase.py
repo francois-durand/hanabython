@@ -18,6 +18,9 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import List, Union
+from hanabython.Classes.Card import Card
+from hanabython.Classes.Color import Color
 from hanabython.Classes.StringUtils import uncolor, title
 from hanabython.Classes.Configuration import Configuration
 from hanabython.Classes.ConfigurationEndRule import ConfigurationEndRule
@@ -76,25 +79,25 @@ class PlayerBase(Player):
     >>> print(antoine)
     Antoine
     """
-    def __init__(self, name):
+    def __init__(self, name: str):
         super().__init__(name)
-        self.player_names = None
-        self.n_players = None
-        self.cfg = None
-        self.board = None
-        self.draw_pile = None
-        self.discard_pile = None
-        self.n_clues = None
-        self.n_misfires = None
-        self.hand_size = None
-        self.hands = None
-        self.hands_public = None
-        self.remaining_turns = None
-        self.dealing_is_ongoing = None
-        self.recent_events = None
-        self.display_width = None
+        self.player_names = None        # type: List[str]
+        self.n_players = None           # type: int
+        self.cfg = None                 # type: Configuration
+        self.board = None               # type: Board
+        self.draw_pile = None           # type: DrawPilePublic
+        self.discard_pile = None        # type: DiscardPile
+        self.n_clues = None             # type: int
+        self.n_misfires = None          # type: int
+        self.hand_size = None           # type: int
+        self.hands = None               # type: List[Hand]
+        self.hands_public = None        # type: List[HandPublic]
+        self.remaining_turns = None     # type: int
+        self.dealing_is_ongoing = None  # type: bool
+        self.recent_events = None       # type: str
+        self.display_width = None       # type: int
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         s = '<PlayerBase\n'
         for attr in self.__dict__:
             left = (60 - len(attr)) // 2
@@ -104,7 +107,7 @@ class PlayerBase(Player):
         s += 'End PlayerBase>'
         return s
 
-    def colored(self):
+    def colored(self) -> str:
         if self.cfg is None:
             return super().colored()
         # noinspection PyListCreation
@@ -134,12 +137,11 @@ class PlayerBase(Player):
         )
         return '\n'.join(lines)
 
-    def colored_hands(self):
+    def colored_hands(self) -> str:
         """
         A string used to display the hands of all players.
 
         :return: the string (whose width is usually `display_width`).
-        :rtype: str
 
         >>> antoine = PlayerBase('Antoine')
         >>> antoine.demo_game()
@@ -172,7 +174,7 @@ class PlayerBase(Player):
         return '\n'.join(lines)
 
     # noinspection PyProtectedMember
-    def _large_card(self, card):
+    def _large_card(self, card: Card) -> str:
         """
         A string representing a Card, with the same width as a CardPublic.
 
@@ -180,10 +182,9 @@ class PlayerBase(Player):
         :meth:`receive_init`. Indeed, the configuration is needed to known
         the width.
 
-        :param Card card: the card.
+        :param card: the card.
 
         :return: the large string.
-        :rtype: str
 
         >>> from Classes.Card import Card
         >>> antoine = PlayerBase('Antoine')
@@ -195,13 +196,12 @@ class PlayerBase(Player):
         return uncolor(self._large_card_color(card))
 
     # noinspection PyProtectedMember
-    def _large_card_color(self, card):
+    def _large_card_color(self, card: Card) -> str:
         """
         Colored version of :meth:`_large_card`
 
         :return: the same string as :meth:`_large_card`, but with ANSI escape
             codes to add colors where relevant.
-        :rtype: str
         """
         width = self.cfg.n_colors + self.cfg.n_values + 1
         s = str(card)
@@ -209,11 +209,11 @@ class PlayerBase(Player):
         right = width - len(s) - left
         return ' ' * left + card.colored() + ' ' * right
 
-    def log(self, o):
+    def log(self, o: object) -> None:
         """
         Log events.
 
-        :param object o: an object. The method adds `str(o)` to the variable
+        :param o: an object. The method adds `str(o)` to the variable
             :attr:`recent_events`, except during the initial dealing of cards
             (to avoid useless messages about each card). When using strings, do
             not forget the end-of-line character (it is not added
@@ -234,7 +234,7 @@ class PlayerBase(Player):
         if not self.dealing_is_ongoing:
             self.recent_events += str(o)
 
-    def log_init(self):
+    def log_init(self) -> None:
         """
         Initialize the log process (at the beginning of a game).
 
@@ -242,7 +242,7 @@ class PlayerBase(Player):
         """
         self.recent_events = ''
 
-    def log_forget(self):
+    def log_forget(self) -> None:
         """
         Forget old events (during the game).
 
@@ -252,13 +252,13 @@ class PlayerBase(Player):
         """
         self.recent_events = ''
 
-    def receive_init(self, cfg, player_names):
+    def receive_init(self, cfg: Configuration, player_names: List[str]) -> None:
         """
         Receive a message: the game starts.
 
         Initialize all the instance variables.
 
-        :param Configuration cfg: the configuration of the game.
+        :param cfg: the configuration of the game.
         :param player_names: the names of the players, rotated so that this
             player corresponds to index 0.
         """
@@ -282,7 +282,7 @@ class PlayerBase(Player):
         self.log(self.cfg.colored())
         self.log('\n')
 
-    def receive_begin_dealing(self):
+    def receive_begin_dealing(self) -> None:
         """
         Receive a message: the initial dealing of hands begins.
 
@@ -290,7 +290,7 @@ class PlayerBase(Player):
         """
         self.dealing_is_ongoing = True
 
-    def receive_end_dealing(self):
+    def receive_end_dealing(self) -> None:
         """
         Receive a message: the initial dealing of hands is over.
 
@@ -308,7 +308,7 @@ class PlayerBase(Player):
         self.log('-----------' + '\n')
         self.log('The game begins.\n')
 
-    def receive_remaining_turns(self, remaining_turns):
+    def receive_remaining_turns(self, remaining_turns: int) -> None:
         """
         Receive a message: the number of remaining turns is now known.
 
@@ -316,12 +316,12 @@ class PlayerBase(Player):
         discard pile is empty, we know how many turns are left. "Turn" means
         that one player gets to play (not all of them).
 
-        :param int remaining_turns: the number of turns left.
+        :param remaining_turns: the number of turns left.
         """
         self.remaining_turns = remaining_turns
         self.log('%s turns remaining!\n' % self.remaining_turns)
 
-    def receive_i_draw(self):
+    def receive_i_draw(self) -> None:
         """
         Receive a message: this player tries to draw a card.
 
@@ -333,15 +333,15 @@ class PlayerBase(Player):
         self.hands_public[0].receive()
         self.log('%s draws a card.\n' % self.name)
 
-    def receive_partner_draws(self, i_drawer, card):
+    def receive_partner_draws(self, i_drawer: int, card: Card) -> None:
         """
         Receive a message: another player tries to draw a card.
 
         A card is actually drawn only if the draw pile is not empty.
 
-        :param int i_drawer: the position of the player who draws (relatively
+        :param i_drawer: the position of the player who draws (relatively
             to this player).
-        :param Card card: the card drawn.
+        :param card: the card drawn.
         """
         if card is None:
             return
@@ -351,17 +351,19 @@ class PlayerBase(Player):
         self.log('%s draws %s.\n' % (
             self.player_names[i_drawer], card.colored()))
 
-    def receive_someone_throws(self, i_thrower, k, card):
+    def receive_someone_throws(
+        self, i_thrower: int, k: int, card: Card
+    ) -> None:
         """
         Receive a message: a player willingly discards a card.
 
         It is not necessary to check whether this action is legal: the Game
         will only send this message when it is the case.
 
-        :param int i_thrower: the position of the player who throws (relatively
+        :param i_thrower: the position of the player who throws (relatively
             to this player).
-        :param int k: position of the card in the hand.
-        :param Card card: the card thrown.
+        :param k: position of the card in the hand.
+        :param card: the card thrown.
         """
         self.hands_public[i_thrower].give(k)
         if i_thrower != 0:
@@ -371,16 +373,16 @@ class PlayerBase(Player):
         self.log('%s discards %s.\n' % (
             self.player_names[i_thrower], card.colored()))
 
-    def receive_someone_plays(self, i_player, k, card):
+    def receive_someone_plays(self, i_player: int, k: int, card: Card) -> None:
         """
         Receive a message: a player tries to play a card on the board.
 
         This can be a success or a misfire.
 
-        :param int i_player: the position of the player who plays the card
+        :param i_player: the position of the player who plays the card
             (relatively to this player).
-        :param int k: position of the card in the hand.
-        :param Card card: the card played.
+        :param k: position of the card in the hand.
+        :param card: the card played.
         """
         self.hands_public[i_player].give(k)
         if i_player != 0:
@@ -401,19 +403,22 @@ class PlayerBase(Player):
             self.log('%s tries to play %s and misfires.\n' % (
                 self.player_names[i_player], card.colored()))
 
-    def receive_someone_clues(self, i_cluer, i_clued, clue, bool_list):
+    def receive_someone_clues(
+        self, i_cluer: int, i_clued: int, clue: Union[int, Color],
+        bool_list: List[bool]
+    ) -> None:
         """
         Receive a message: a player gives a clue to another.
 
         It is not necessary to check whether this action is legal: the Game
         will only send this message when it is the case.
 
-        :param int i_cluer: the position of the player who gives the clue
+        :param i_cluer: the position of the player who gives the clue
             (relatively to this player).
-        :param int i_clued: the position of the player who receives the clue
+        :param i_clued: the position of the player who receives the clue
             (relatively to this player).
-        :param int|Color clue: the clue (value or color).
-        :param list bool_list: a list of boolean that indicates what cards
+        :param clue: the clue (value or color).
+        :param bool_list: a list of boolean that indicates what cards
             match the clue given.
         """
         self.n_clues -= 1
@@ -426,16 +431,16 @@ class PlayerBase(Player):
         self.log('%s clues %s about %s.\n' % (
             self.player_names[i_cluer], self.player_names[i_clued], clue_str))
 
-    def receive_someone_forfeits(self, i_forfeiter):
+    def receive_someone_forfeits(self, i_forfeiter: int) -> None:
         """
         Receive a message: a player forfeits.
 
-        :param int i_forfeiter: the position of the player who forfeits
+        :param i_forfeiter: the position of the player who forfeits
             (relatively to this player).
         """
         self.log('%s forfeits.\n' % self.player_names[i_forfeiter])
 
-    def receive_action_legal(self):
+    def receive_action_legal(self) -> None:
         """
         Receive a message: the action chosen is legal.
 
@@ -443,20 +448,20 @@ class PlayerBase(Player):
         """
         self.log_forget()
 
-    def receive_action_finished(self):
+    def receive_action_finished(self) -> None:
         """
         Receive a message: the action of the player is finished.
         """
         self.log_forget()
 
-    def receive_lose(self, score):
+    def receive_lose(self, score: int) -> None:
         """
         Receive a message: the game is lost (misfires or forfeit).
         """
         self.log("%s's team loses.\n" % self.name)
         self.log('Score: %s.\n' % score)
 
-    def receive_game_over(self, score):
+    def receive_game_over(self, score: int) -> None:
         """
         Receive a message: the game is over and is neither really lost
         (misfires, forfeit) nor a total victory (maximal score).
@@ -464,14 +469,14 @@ class PlayerBase(Player):
         self.log("%s's team has reached the end of the game.\n" % self.name)
         self.log('Score: %s.\n' % score)
 
-    def receive_win(self, score):
+    def receive_win(self, score: int) -> None:
         """
         Receive a message: the game is won (total victory).
         """
         self.log("%s's team wins!\n" % self.name)
         self.log('Score: %s.\n' % score)
 
-    def demo_game(self):
+    def demo_game(self) -> None:
         import random
         random.seed(0)
         cfg = Configuration.STANDARD
