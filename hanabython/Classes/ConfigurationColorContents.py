@@ -68,7 +68,7 @@ ConfigurationColorContents.NORMAL = ConfigurationColorContents(
     contents=[3, 2, 2, 2, 1], name='normal'
 )
 ConfigurationColorContents.SHORT = ConfigurationColorContents(
-    contents=[3, 2, 2, 2, 1], name='short'
+    contents=[1, 1, 1, 1, 1], name='short'
 )
 
 
