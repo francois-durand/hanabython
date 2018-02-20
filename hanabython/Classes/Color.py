@@ -58,11 +58,9 @@ class Color(Colored):
         self.clue_behavior = clue_behavior
 
     @classmethod
-    def from_symbol(cls, s):
+    def from_symbol(cls, s: str):
         """
         Find one of the standard colors from its symbol.
-
-        :param str s: the symbol of the color.
 
         :return: the corresponding color. It must be one of the constants
             defined in the class Color, e.g. :attr:`BLUE`, :attr:`MULTICOLOR`,
@@ -85,15 +83,14 @@ class Color(Colored):
     def colored(self):
         return self.color_str(self.symbol)
 
-    def color_str(self, o) -> str:
+    def color_str(self, o: object) -> str:
         r"""
         Convert an object to a colored string.
 
-        :param object o: any object.
+        :param o: any object.
 
         :return: the ``__str__`` of this object, with an ANSI color-modifying
             escape code at the beginning and its cancellation at the end.
-        :rtype: str
 
         >>> Color.BLUE.color_str('some text')
         '\x1b[94msome text\x1b[0;0m'
