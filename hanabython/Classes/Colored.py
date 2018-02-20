@@ -46,7 +46,7 @@ class Colored:
 
     def colored(self) -> str:
         """
-        Colored version of :meth:`__str__`
+        Colored version of :meth:`__str__`.
 
         In the subclasses, the principle is to override only this method.
         :meth:`__str__` is automatically defined as the uncolored version of

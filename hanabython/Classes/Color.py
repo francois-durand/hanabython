@@ -65,7 +65,6 @@ class Color(Colored):
         :return: the corresponding color. It must be one of the constants
             defined in the class Color, e.g. :attr:`BLUE`, :attr:`MULTICOLOR`,
             etc.
-        :rtype: Color
 
         >>> my_color = Color.from_symbol('B')
         >>> print(my_color.name)
@@ -133,14 +132,14 @@ class Color(Colored):
     WHITE = None
     #:
     YELLOW = None
-    #: Use this for the sixth color. As of now, it is brown but the display
-    #: color might change in future implementations).
+    #: Use this for the colorless cards. As of now, it is pink but the display
+    #: color might change in future implementations.
     SIXTH = None
     #: Use this for multicolor cards. As of now, it is cyan but the display
-    #: color might change in future implementations).
+    #: color might change in future implementations.
     MULTICOLOR = None
-    #: Use this for the colorless cards. As of now, it is pink but the display
-    #: color might change in future implementations).
+    #: Use this for the sixth color. As of now, it is brown but the display
+    #: color might change in future implementations.
     COLORLESS = None
 
 

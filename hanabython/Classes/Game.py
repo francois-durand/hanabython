@@ -48,9 +48,9 @@ class Game(Colored):
     def __init__(self, cfg: Configuration, players: List[Player],
                  debug_mode: bool = False):
         # General initializations
+        self.debug_mode = debug_mode
         self.debug('General initializations')
         self.players = players
-        self.debug_mode = debug_mode
         self.n_players = len(self.players)
         self.cfg = cfg
         self.board = Board(cfg)
@@ -227,7 +227,7 @@ if __name__ == '__main__':
     fanfan = PlayerHuman(name='Fanfan')
     emilie = PlayerHuman(name='Emilie')
     pek = PlayerHuman(name='PEK')
-    game = Game(Configuration.STANDARD, [fanfan, emilie, pek])
+    game = Game(Configuration.W_MULTICOLOR_SHORT, [fanfan, emilie, pek])
     game.play()
     # print(game.hands[alice])
     # print(game.hands[bob])
