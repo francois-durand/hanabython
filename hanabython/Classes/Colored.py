@@ -54,10 +54,10 @@ class Colored:
         added.
 
         Of course, it is also possible to override :meth:`__str__` and/or
-        :meth:`__repr__`.
+        :meth:`__repr__` if a different behavior is desired.
 
         :return: a string representing the object, possibly with ANSI escape
-            codes to add colors where relevant.
+            codes to add colors and style.
         :rtype: str
         """
         pass

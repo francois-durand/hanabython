@@ -42,9 +42,9 @@ class PlayerHuman(PlayerBase):
         """
         print('\n' * 40)
         # The "clear_output" is here for usage in Jupyter.
-        sleep(0.1) # Essential line to prevent strange behavior in Jupyter!
+        sleep(0.5) # Essential line to prevent strange behavior in Jupyter!
         clear_output()
-        sleep(0.1) # Essential line to prevent strange behavior in Jupyter!
+        sleep(0.5) # Essential line to prevent strange behavior in Jupyter!
         input('%s is going to play (hit Enter).\n' % self.name)
         print(self.colored())
         while True:

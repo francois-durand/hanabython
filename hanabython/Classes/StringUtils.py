@@ -30,9 +30,11 @@ def uncolor(s):
     :return: the same string without its ANSI escape codes.
     :rtype: str
 
-    >>> s = "\033[0;31mHanabi\033[0;0m by \033[0;94mAntoine Bauza\033[0;0m"
+    >>> from hanabython import StringAnsi
+    >>> s = (StringAnsi.RED + "Hanabi" + StringAnsi.RESET + ', a game by '
+    ...      + StringAnsi.BLUE + 'Antoine Bauza' + StringAnsi.RESET)
     >>> uncolor(s)
-    'Hanabi by Antoine Bauza'
+    'Hanabi, a game by Antoine Bauza'
     """
     return re.sub(r'\033.\d*(;\d*)?m', "", s)
 
@@ -45,7 +47,7 @@ def title(s, width):
     :param int width: the total width of the final layout (in number of
         characters).
 
-    :return: a title-style string.
+    :return: the string formatted as a title.
     :rtype: str
 
     >>> title(s='Title', width=20)
