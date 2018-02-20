@@ -55,7 +55,6 @@ class StringAnsi:
     YELLOW = YELLOW_BRIGHT
     #:
     BROWN = YELLOW_NOT_BRIGHT
-    #:
 
     BLUE_NOT_BRIGHT = "\033[34m"
     BLUE_BRIGHT = "\033[94m"
