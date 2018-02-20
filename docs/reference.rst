@@ -5,7 +5,7 @@ Reference
 Manipulation of strings
 -----------------------
 
-.. autoclass:: Classes.PrintColor
+.. autoclass:: PrintColor
     :members:
 
 .. autofunction:: hanabython.uncolor
