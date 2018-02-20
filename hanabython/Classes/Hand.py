@@ -35,7 +35,10 @@ class Hand(Colored, list):
     Basically, a Hand is a list of Card objects. It can be constructed as such,
     or using a list of strings which will be automatically converted to cards.
 
-    :param source: an iterable used to construct the hand.
+    :param source: an iterable used to construct the hand. N.B.: this parameter
+        is mostly used for examples and tests. In contrast, at the beginning of
+        a game, the hand should be initialized with no cards, because cards will
+        be given one by one to the players during the initial dealing of hands.
 
     >>> hand = Hand([Card('Y3'), Card('M1'), Card('B2'), Card('R4')])
     >>> print(hand)
@@ -58,7 +61,7 @@ class Hand(Colored, list):
 
     def receive(self, card: Card) -> None:
         """
-        Receive a card
+        Receive a card.
 
         :param card: the card received.
 
@@ -71,11 +74,11 @@ class Hand(Colored, list):
         """
         self.insert(0, card)
 
-    def give(self, i: int) -> Card:
+    def give(self, k: int) -> Card:
         """
-        Give a card
+        Give a card.
 
-        :param i: the position of the card in the hand (0 = newest).
+        :param k: the position of the card in the hand (0 = newest).
 
         :return: the card given.
 
@@ -83,8 +86,10 @@ class Hand(Colored, list):
         >>> card = hand.give(1)
         >>> print(card)
         B1
+        >>> print(hand)
+        [Y3, M1, B2, R4]
         """
-        return self.pop(i)
+        return self.pop(k)
 
     def match(self, clue: Union[int, Color]) -> List[bool]:
         """
@@ -92,8 +97,8 @@ class Hand(Colored, list):
 
         :param clue: the clue (value or color).
 
-        :return: a list of booleans. The ``i``-th coefficient is ``True``
-            iff the ``i``-th card of the hand matches the clue given.
+        :return: a list of booleans. The `i`-th coefficient is `True`
+            iff the `i`-th card of the hand matches the clue given.
 
         >>> hand = Hand(['G2', 'Y3', 'M1', 'B2', 'R4'])
         >>> hand.match(Color.RED)

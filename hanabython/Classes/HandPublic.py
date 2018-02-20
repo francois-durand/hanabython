@@ -42,7 +42,7 @@ class HandPublic(Colored, list):
     :param n_cards: the number of cards in the hand. N.B.: this parameter
         is mostly used for examples and tests. In contrast, at the beginning of
         a game, the hand should be initialized with 0 cards, because cards will
-        be given to the players during the initial dealing of hands.
+        be given one by one to the players during the initial dealing of hands.
 
     >>> from Classes.Configuration import Configuration
     >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
@@ -75,11 +75,11 @@ class HandPublic(Colored, list):
         """
         self.insert(0, CardPublic(self.cfg))
 
-    def give(self, i: int) -> None:
+    def give(self, k: int) -> None:
         """
         Give a card.
 
-        :param i: the position of the card in the hand (0 = newest).
+        :param k: the position of the card in the hand (0 = newest).
 
         The card is simply suppressed from the hand.
 
@@ -93,15 +93,15 @@ class HandPublic(Colored, list):
         >>> print(hand)
         [BGRWY    4 , BGRWY 123  , BGRWY 123  ]
         """
-        self.pop(i)
+        self.pop(k)
 
     def match(self, clue: Union[int, Color], bool_list: List[bool]):
         """
         React to a clue
 
         :param clue: the clue (value or Color).
-        :param bool_list: a list of booleans. The ``i``-th coefficient is
-            ``True`` iff the ``i``-th card of the hand matches the clue given.
+        :param bool_list: a list of booleans. The `i`-th coefficient is
+            `True` iff the `i`-th card of the hand matches the clue given.
 
         Updates the internal variables of the hand.
 
