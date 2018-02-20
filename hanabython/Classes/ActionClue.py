@@ -27,9 +27,9 @@ class ActionClue(Action):
     """
     An action of a player: give a clue.
 
-    :param i: the position of the concerned player, relatively
+    :param i: the relative position of the concerned player
         (i.e. 1 for next player, 2 for second next player, etc.).
-    :param clue: a Color object or a card value.
+    :param clue: the clue (value or color).
 
     >>> action = ActionClue(i=1, clue=2)
     >>> print(action)

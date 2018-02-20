@@ -25,9 +25,9 @@ class ActionDiscard(Action):
     """
     An action of a player: discard.
 
-    :param k: position of the card in the hand (between 0 and #cards - 1).
+    :param k: position of the card in the hand (between 0 and `#cards - 1`).
         Be careful: as of now, :attr:`__str__` expresses the position in
-        "user-friendly" format, i.e. between 1 and #cards (this behavior might
+        "user-friendly" format, i.e. between 1 and `#cards` (this behavior might
         change in the future).
 
     >>> action = ActionDiscard(k=2)

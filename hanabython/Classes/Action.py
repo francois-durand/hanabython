@@ -23,7 +23,7 @@ from hanabython.Classes.Colored import Colored
 
 class Action(Colored):
     """
-    An action performed by a player (Discard, Play, Clue or Forfeit)
+    An action performed by a player (Discard, Play, Clue or Forfeit).
 
     :param category: can be :attr:`Action.DISCARD`, :attr:`Action.PLAY`,
         :attr:`Action.CLUE` or :attr:`Action.FORFEIT`.
