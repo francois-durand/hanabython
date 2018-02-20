@@ -30,25 +30,25 @@ class DrawPilePublic(Colored):
     normal version of the game and all official variants, it is only the number
     of cards left.
 
-    :param Configuration cfg: the configuration of the game.
+    :param cfg: the configuration of the game.
 
     >>> from Classes.Configuration import Configuration
     >>> draw_pile = DrawPilePublic(cfg=Configuration.STANDARD)
     >>> print(draw_pile)
     50 cards left
     """
-    def __init__(self, cfg):
+    def __init__(self, cfg: Configuration):
         self.cfg = cfg
         self.n_cards = cfg.n_cards
 
-    def colored(self):
+    def colored(self) -> str:
         if self.n_cards == 0:
             return 'No card left'
         if self.n_cards == 1:
             return '1 card left'
         return str(self.n_cards) + ' cards left'
 
-    def give(self):
+    def give(self) -> None:
         """
         Give the card from the top of pile.
 

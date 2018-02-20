@@ -34,7 +34,7 @@ class ActionForfeit(Action):
     def __init__(self):
         super().__init__(Action.FORFEIT)
 
-    def colored(self):
+    def colored(self) -> str:
         return (StringAnsi.RED + StringAnsi.STYLE_BOLD
                 + 'Forfeit' + StringAnsi.RESET)
 

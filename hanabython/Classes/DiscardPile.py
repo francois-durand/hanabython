@@ -18,9 +18,10 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import List
+import numpy as np
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.StringUtils import uncolor
-import numpy as np
 from hanabython.Classes.Configuration import Configuration
 from hanabython.Classes.Card import Card
 
@@ -29,7 +30,7 @@ class DiscardPile(Colored):
     """
     The discard pile in a game of Hanabi.
 
-    :param Configuration cfg: the configuration of the game.
+    :param cfg: the configuration of the game.
 
     >>> from Classes.Configuration import Configuration
     >>> discard_pile = DiscardPile(Configuration.STANDARD)
@@ -37,25 +38,24 @@ class DiscardPile(Colored):
     No card discarded yet
     """
 
-    def __init__(self, cfg):
+    def __init__(self, cfg: Configuration):
         self.cfg = cfg
         self.chronological = []
         self.array = np.zeros(cfg.deck_array.shape, dtype=int)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '<DiscardPile: %s>' % self.str_as_chronological()
 
-    def colored(self):
+    def colored(self) -> str:
         return self.colored_fancy()
 
-    def str_fancy(self):
+    def str_fancy(self) -> str:
         """
         Convert to nice string.
 
         :return: a representation of the discard pile. As of now, it is the
             one used for the standard method :meth:`__str__` (it might change
             in the future).
-        :rtype: str
 
         >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
@@ -68,7 +68,7 @@ class DiscardPile(Colored):
         """
         return uncolor(self.colored_fancy())
 
-    def colored_fancy(self):
+    def colored_fancy(self) -> str:
         """
         Colored version of :meth:`str_fancy`
         """
@@ -84,12 +84,11 @@ class DiscardPile(Colored):
             lines.append(c.color_str(' '.join(words)))
         return '\n'.join(lines)
 
-    def str_as_array(self):
+    def str_as_array(self) -> str:
         """
         Convert to string in an array-style layout.
 
         :return: a representation of the discard pile.
-        :rtype: str
 
         >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
@@ -106,7 +105,7 @@ class DiscardPile(Colored):
         """
         return uncolor(self.colored_as_array())
 
-    def colored_as_array(self):
+    def colored_as_array(self) -> str:
         """
         Colored version of :meth:`str_as_array`
         """
@@ -119,12 +118,11 @@ class DiscardPile(Colored):
             )
         return '\n'.join(to_join)
 
-    def str_as_list_ordered(self):
+    def str_as_list_ordered(self) -> str:
         """
         Convert to string in a list-style layout, ordered by color and value.
 
         :return: a representation of the discard pile.
-        :rtype: str
 
         >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
@@ -136,19 +134,18 @@ class DiscardPile(Colored):
         """
         return uncolor(self.colored_as_list_ordered())
 
-    def colored_as_list_ordered(self):
+    def colored_as_list_ordered(self) -> str:
         """
         Colored version of :meth:`str_as_list_ordered`
         """
         ordered = self.list_reordered
         return '[' + ', '.join([card.colored() for card in ordered]) + ']'
 
-    def str_as_chronological(self):
+    def str_as_chronological(self) -> str:
         """
         Convert to string in a list-style layout, by chronological order.
 
         :return: a representation of the discard pile.
-        :rtype: str
 
         >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
@@ -160,7 +157,7 @@ class DiscardPile(Colored):
         """
         return uncolor(self.colored_as_chronological())
 
-    def colored_as_chronological(self):
+    def colored_as_chronological(self) -> str:
         """
         Colored version of :meth:`str_as_chronological`
         """
@@ -169,13 +166,12 @@ class DiscardPile(Colored):
         ]) + ']'
 
     @property
-    def list_reordered(self):
+    def list_reordered(self) -> List[Card]:
         """
         List of discarded cards, ordered by color and value
 
         :return: the list of discarded cards, by lexicographic order. The order
             on the colors is the one specified in :attr:`cfg`.
-        :rtype: list
 
         >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
@@ -191,11 +187,11 @@ class DiscardPile(Colored):
                 ordered.extend([Card(c, v)] * self.array[i, j])
         return ordered
 
-    def receive(self, card):
+    def receive(self, card) -> None:
         """
         Receive a card.
 
-        :param Card card: the card discarded.
+        :param card: the card discarded.
 
         Update the internal variables of the discard pile.
 

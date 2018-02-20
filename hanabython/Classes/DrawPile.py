@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Union
 from hanabython.Classes.Colored import Colored
 from random import shuffle
 from hanabython.Classes.Configuration import Configuration
@@ -28,7 +29,7 @@ class DrawPile(Colored, list):
     """
     The draw pile of a game of Hanabi.
 
-    :param Configuration cfg: the configuration of the game.
+    :param cfg: the configuration of the game.
 
     At initialization, the draw pile is generated with the parameters in
     :attr:`cfg`, then it is shuffled.
@@ -41,7 +42,7 @@ class DrawPile(Colored, list):
     >>> draw_pile = DrawPile(Configuration.STANDARD)
     """
 
-    def __init__(self, cfg):
+    def __init__(self, cfg: Configuration):
         super().__init__()
         self.cfg = cfg
         for i, c in enumerate(cfg.colors):
@@ -49,16 +50,15 @@ class DrawPile(Colored, list):
                 self.extend([Card(c, v)] * cfg.deck[c][j])
         shuffle(self)
 
-    def colored(self):
+    def colored(self) -> str:
         return '[' + ', '.join([card.colored() for card in self]) + ']'
 
     @property
-    def n_cards(self):
+    def n_cards(self) -> int:
         """
         Number of cards in the pile.
 
         :return: the number of cards.
-        :rtype: int
 
         >>> from Classes.Configuration import Configuration
         >>> draw_pile = DrawPile(Configuration.STANDARD)
@@ -67,12 +67,11 @@ class DrawPile(Colored, list):
         """
         return len(self)
 
-    def give(self):
+    def give(self) -> Union[Card, None]:
         """
         Give the card from the top of pile.
 
         :return: the card drawn. If the pile is empty, return None.
-        :rtype: Card
 
         >>> from Classes.Configuration import Configuration
         >>> draw_pile = DrawPile(cfg=Configuration.STANDARD)

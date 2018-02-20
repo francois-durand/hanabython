@@ -18,6 +18,8 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Union
+from hanabython.Classes.Color import Color
 from hanabython.Classes.Action import Action
 
 
@@ -25,9 +27,9 @@ class ActionClue(Action):
     """
     An action of a player: give a clue.
 
-    :param int i: the position of the concerned player, relatively
+    :param i: the position of the concerned player, relatively
         (i.e. 1 for next player, 2 for second next player, etc.).
-    :param Color|int clue: a Color object or a card value.
+    :param clue: a Color object or a card value.
 
     >>> action = ActionClue(i=1, clue=2)
     >>> print(action)
@@ -38,12 +40,12 @@ class ActionClue(Action):
     Clue B to player in relative position 2
     """
 
-    def __init__(self, i, clue):
+    def __init__(self, i: int, clue: Union[int, Color]):
         super().__init__(Action.CLUE)
         self.i = i
         self.clue = clue
 
-    def colored(self):
+    def colored(self) -> str:
         if type(self.clue) == int:
             return 'Clue %s to player in relative position %s' % (
                 self.clue, self.i)

@@ -25,7 +25,7 @@ class ActionPlay(Action):
     """
     An action of a player: try to play a card on the board.
 
-    :param int k: position of the card in the hand (between 0 and #cards - 1).
+    :param k: position of the card in the hand (between 0 and #cards - 1).
         Be careful: as of now, :attr:`__str__` expresses the position in
         "user-friendly" format, i.e. between 1 and #cards (this behavior might
         change in the future).
@@ -34,11 +34,11 @@ class ActionPlay(Action):
     >>> print(action)
     Try to play card in position 3
     """
-    def __init__(self, k):
+    def __init__(self, k: int):
         super().__init__(Action.PLAY)
         self.k = k
 
-    def colored(self):
+    def colored(self) -> str:
         return 'Try to play card in position %s' % (self.k + 1)
 
 

@@ -18,9 +18,9 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+import numpy as np
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.StringUtils import uncolor
-import numpy as np
 from hanabython.Classes.Configuration import Configuration
 from hanabython.Classes.Color import Color
 from hanabython.Classes.Card import Card
@@ -30,7 +30,7 @@ class Board(Colored):
     """
     The board (cards successfully played) in a game of Hanabi.
 
-    :param Configuration cfg: the configuration of the game.
+    :param cfg: the configuration of the game.
 
     :var np.array altitude: indicates the highest card played in each color.
         E.g. with color ``c`` of index ``i``, ``altitude[i]`` is the value
@@ -43,22 +43,21 @@ class Board(Colored):
     [0 0 0 0 0]
     """
 
-    def __init__(self, cfg):
+    def __init__(self, cfg: Configuration):
         self.cfg = cfg
-        self.altitude = np.zeros(self.cfg.n_colors, dtype=int)
+        self.altitude = np.zeros(self.cfg.n_colors, dtype=int)  # type: np.array
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '<Board: %s>' % self.str_compact()
 
-    def colored(self):
+    def colored(self) -> str:
         return self.colored_fixed_space()
 
-    def str_compact(self):
+    def str_compact(self) -> str:
         """
         Convert to string in "compact" layout
 
         :return: a representation of the board.
-        :rtype: str
 
         >>> from Classes.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
@@ -69,7 +68,7 @@ class Board(Colored):
         """
         return uncolor(self.colored_compact())
 
-    def colored_compact(self):
+    def colored_compact(self) -> str:
         """
         Colored version of :meth:`str_compact`
         """
@@ -79,12 +78,11 @@ class Board(Colored):
             if self.altitude[i] > 0
         ])
 
-    def str_fixed_space(self):
+    def str_fixed_space(self) -> str:
         """
         Convert to string in "fixed-space" layout
 
         :return: a representation of the board.
-        :rtype: str
 
         >>> from Classes.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
@@ -95,7 +93,7 @@ class Board(Colored):
         """
         return uncolor(self.colored_fixed_space())
 
-    def colored_fixed_space(self):
+    def colored_fixed_space(self) -> str:
         """
         Colored version of :meth:`str_fixed_space`
         """
@@ -105,12 +103,11 @@ class Board(Colored):
             for i, c in enumerate(self.cfg.colors)
         ])
 
-    def str_multi_line(self):
+    def str_multi_line(self) -> str:
         """
         Convert to string in "multi-line" layout
 
         :return: a representation of the board.
-        :rtype: str
 
         >>> from Classes.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
@@ -125,7 +122,7 @@ class Board(Colored):
         """
         return uncolor(self.colored_multi_line())
 
-    def colored_multi_line(self):
+    def colored_multi_line(self) -> str:
         """
         Colored version of :meth:`str_multi_line`
         """
@@ -134,12 +131,11 @@ class Board(Colored):
             for i, c in enumerate(self.cfg.colors)
         ])
 
-    def str_multi_line_compact(self):
+    def str_multi_line_compact(self) -> str:
         """
         Convert to string in "compact multi-line" layout
 
         :return: a representation of the board.
-        :rtype: str
 
         >>> from Classes.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
@@ -151,7 +147,7 @@ class Board(Colored):
         """
         return uncolor(self.colored_multi_line_compact())
 
-    def colored_multi_line_compact(self):
+    def colored_multi_line_compact(self) -> str:
         """
         Colored version of :meth:`str_multi_line_compact`
         """
@@ -162,15 +158,14 @@ class Board(Colored):
         ])
 
     # noinspection PyProtectedMember
-    def _str_one_color(self, i, c):
+    def _str_one_color(self, i: int, c: Color) -> str:
         """
         Convert one color to string
 
-        :param int i: index of the color.
-        :param Color c: the color.
+        :param i: index of the color.
+        :param c: the color.
 
         :return: a representation of the cards played in this color.
-        :rtype: str
 
         >>> from Classes.Configuration import Configuration
         >>> cfg = Configuration.STANDARD
@@ -187,15 +182,14 @@ class Board(Colored):
         ])
 
     # noinspection PyProtectedMember
-    def _str_one_color_factorized(self, i, c):
+    def _str_one_color_factorized(self, i: int, c: Color) -> str:
         """
         Same as :meth:`_str_one_color`, but with the color symbol only once.
 
-        :param int i: index of the color.
-        :param Color c: the color.
+        :param i: index of the color.
+        :param c: the color.
 
         :return: a representation of the cards played in this color.
-        :rtype: str
 
         >>> from Classes.Configuration import Configuration
         >>> cfg = Configuration.STANDARD
@@ -211,15 +205,14 @@ class Board(Colored):
             str(j) for j in range(1, self.altitude[i] + 1)
         ])
 
-    def try_to_play(self, card):
+    def try_to_play(self, card: Card) -> bool:
         """
         Try to play a card on the board.
 
-        :param Card card: the card.
+        :param card: the card.
 
         :return: True if the card is successfully played on the board, False
             otherwise (i.e. if it leads to a strike).
-        :rtype: bool
 
         >>> from Classes.Configuration import Configuration
         >>> from Classes.Card import Card
@@ -240,12 +233,11 @@ class Board(Colored):
             return False
 
     @property
-    def score(self):
+    def score(self) -> int:
         """
         The current score.
 
         :return: the sum of the altitudes reached in all colors.
-        :rtype: int
 
         >>> from Classes.Configuration import Configuration
         >>> cfg = Configuration.STANDARD
@@ -255,7 +247,7 @@ class Board(Colored):
         >>> print(board.score)
         7
         """
-        return np.sum(self.altitude)
+        return int(np.sum(self.altitude))
 
 
 if __name__ == '__main__':

@@ -25,7 +25,7 @@ class Action(Colored):
     """
     An action performed by a player (Discard, Play, Clue or Forfeit)
 
-    :param int category: can be :attr:`Action.DISCARD`, :attr:`Action.PLAY`,
+    :param category: can be :attr:`Action.DISCARD`, :attr:`Action.PLAY`,
         :attr:`Action.CLUE` or :attr:`Action.FORFEIT`.
 
     Generally, only subclasses are instantiated. Cf. :class:`ActionDiscard`,
@@ -43,7 +43,7 @@ class Action(Colored):
     #: Possibles categories of action.
     CATEGORIES = {DISCARD, PLAY, CLUE, FORFEIT}
 
-    def __init__(self, category):
+    def __init__(self, category: int):
         self.category = category
         if category not in Action.CATEGORIES:
             raise ValueError('Unknown action category: ', category)
