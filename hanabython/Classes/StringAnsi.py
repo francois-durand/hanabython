@@ -27,8 +27,11 @@ class StringAnsi:
 
     #: This escape code is special: it is used to return to default aspect.
     RESET = "\033[0;0m"
+    #:
     STYLE_BOLD = "\033[1m"
+    #:
     STYLE_UNDERLINE = "\033[4m"
+    #:
     STYLE_REVERSE_VIDEO = "\033[7m"
 
     WHITE_NOT_BRIGHT = "\033[30m"
