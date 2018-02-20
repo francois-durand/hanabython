@@ -18,17 +18,17 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Classes.StringUtils import uncolor, title
-from Classes.Configuration import Configuration
-from Classes.ConfigurationEndRule import ConfigurationEndRule
-from Classes.Board import Board
-from Classes.DiscardPile import DiscardPile
-from Classes.DrawPilePublic import DrawPilePublic
-from Classes.DrawPile import DrawPile
-from Classes.Hand import Hand
-from Classes.HandPublic import HandPublic
-from Classes.PrintColor import PrintColor
-from Classes.Player import Player
+from hanabython.Classes.StringUtils import uncolor, title
+from hanabython.Classes.Configuration import Configuration
+from hanabython.Classes.ConfigurationEndRule import ConfigurationEndRule
+from hanabython.Classes.Board import Board
+from hanabython.Classes.DiscardPile import DiscardPile
+from hanabython.Classes.DrawPilePublic import DrawPilePublic
+from hanabython.Classes.DrawPile import DrawPile
+from hanabython.Classes.Hand import Hand
+from hanabython.Classes.HandPublic import HandPublic
+from hanabython.Classes.PrintColor import PrintColor
+from hanabython.Classes.Player import Player
 
 
 class PlayerBase(Player):

@@ -18,11 +18,11 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Classes.Colored import Colored
+from hanabython.Classes.Colored import Colored
 import numpy as np
-from Classes.Configuration import Configuration
-from Classes.Color import Color
-from Classes.PrintColor import PrintColor
+from hanabython.Classes.Configuration import Configuration
+from hanabython.Classes.Color import Color
+from hanabython.Classes.PrintColor import PrintColor
 
 
 class CardPublic(Colored):

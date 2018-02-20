@@ -18,12 +18,12 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Classes.PlayerBase import PlayerBase
-from Classes.Action import Action
-from Classes.ActionClue import ActionClue
-from Classes.ActionPlay import ActionPlay
-from Classes.ActionDiscard import ActionDiscard
-from Classes.ActionForfeit import ActionForfeit
+from hanabython.Classes.PlayerBase import PlayerBase
+from hanabython.Classes.Action import Action
+from hanabython.Classes.ActionClue import ActionClue
+from hanabython.Classes.ActionPlay import ActionPlay
+from hanabython.Classes.ActionDiscard import ActionDiscard
+from hanabython.Classes.ActionForfeit import ActionForfeit
 from IPython.display import clear_output
 from time import sleep
 

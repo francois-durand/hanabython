@@ -19,11 +19,11 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from Classes.Colored import Colored
-from Classes.Color import Color
-from Classes.ConfigurationDeck import ConfigurationDeck
-from Classes.ConfigurationHandSize import ConfigurationHandSize
-from Classes.ConfigurationEndRule import ConfigurationEndRule
+from hanabython.Classes.Colored import Colored
+from hanabython.Classes.Color import Color
+from hanabython.Classes.ConfigurationDeck import ConfigurationDeck
+from hanabython.Classes.ConfigurationHandSize import ConfigurationHandSize
+from hanabython.Classes.ConfigurationEndRule import ConfigurationEndRule
 
 
 class Configuration(Colored):

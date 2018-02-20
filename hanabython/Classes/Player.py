@@ -18,8 +18,8 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Classes.Colored import Colored
-from Classes.ActionForfeit import ActionForfeit
+from hanabython.Classes.Colored import Colored
+from hanabython.Classes.ActionForfeit import ActionForfeit
 
 
 class Player(Colored):

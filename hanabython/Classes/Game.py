@@ -19,15 +19,15 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from copy import copy
-from Classes.Colored import Colored
-from Classes.Configuration import Configuration
-from Classes.ConfigurationEndRule import ConfigurationEndRule
-from Classes.PlayerHuman import PlayerHuman
-from Classes.Board import Board
-from Classes.DrawPile import DrawPile
-from Classes.DiscardPile import DiscardPile
-from Classes.Hand import Hand
-from Classes.Action import Action
+from hanabython.Classes.Colored import Colored
+from hanabython.Classes.Configuration import Configuration
+from hanabython.Classes.ConfigurationEndRule import ConfigurationEndRule
+from hanabython.Classes.PlayerHuman import PlayerHuman
+from hanabython.Classes.Board import Board
+from hanabython.Classes.DrawPile import DrawPile
+from hanabython.Classes.DiscardPile import DiscardPile
+from hanabython.Classes.Hand import Hand
+from hanabython.Classes.Action import Action
 
 
 class Game(Colored):

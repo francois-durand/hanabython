@@ -18,9 +18,9 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Classes.Color import Colored
-from Classes.Configuration import Configuration
-from Classes.CardPublic import CardPublic
+from hanabython.Classes.Color import Colored
+from hanabython.Classes.Configuration import Configuration
+from hanabython.Classes.CardPublic import CardPublic
 
 
 class HandPublic(Colored, list):

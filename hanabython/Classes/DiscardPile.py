@@ -18,11 +18,11 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Classes.Colored import Colored
-from Classes.StringUtils import uncolor
+from hanabython.Classes.Colored import Colored
+from hanabython.Classes.StringUtils import uncolor
 import numpy as np
-from Classes.Configuration import Configuration
-from Classes.Card import Card
+from hanabython.Classes.Configuration import Configuration
+from hanabython.Classes.Card import Card
 
 
 class DiscardPile(Colored):
