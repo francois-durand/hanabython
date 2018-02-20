@@ -40,7 +40,7 @@ class ConfigurationHandSize(Colored):
     7 for 2p, 6 for 3p, 5 for 4p, 4 for 5p
     """
 
-    def __init__(self, f: Callable[int, int], name: str = None):
+    def __init__(self, f: Callable[[int], int], name: str = None):
         self.f = f
         self.name = name
 
