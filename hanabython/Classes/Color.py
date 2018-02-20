@@ -27,15 +27,15 @@ class Color(Colored):
     r"""
     A color in Hanabi.
 
-    :param str name: The full name of the color. In a game, two distinct
+    :param name: The full name of the color. In a game, two distinct
         colors must have different names.
-    :param str symbol: The short name of the color. For standard colors
+    :param symbol: The short name of the color. For standard colors
         (defined as constants in this class), it is always 1 character, and
         no two standard colors have the same symbol. For user-defined colors,
         it is recommended to do the same, but not necessary.
-    :param str print_color: an ANSI escape code that modifies the printing
+    :param print_color: an ANSI escape code that modifies the printing
         color. See :class:`StringAnsi`.
-    :param ColorClueBehavior clue_behavior: how this color behaves regarding
+    :param clue_behavior: how this color behaves regarding
         color clues.
 
     >>> Color.BLUE.name
@@ -50,15 +50,15 @@ class Color(Colored):
     True
     """
 
-    def __init__(self, name: str, symbol, print_color,
-                 clue_behavior=ColorClueBehavior.NORMAL):
+    def __init__(self, name: str, symbol: str, print_color: str,
+                 clue_behavior: ColorClueBehavior = ColorClueBehavior.NORMAL):
         self.name = name
         self.symbol = symbol
         self.print_color = print_color
         self.clue_behavior = clue_behavior
 
     @classmethod
-    def from_symbol(cls, s: str):
+    def from_symbol(cls, s: str) -> 'Color':
         """
         Find one of the standard colors from its symbol.
 
@@ -80,7 +80,7 @@ class Color(Colored):
                 return Color.__dict__[k]
         raise ValueError('Could not find color with symbol: ', s)
 
-    def colored(self):
+    def colored(self) -> str:
         return self.color_str(self.symbol)
 
     def color_str(self, o: object) -> str:
@@ -99,15 +99,14 @@ class Color(Colored):
         """
         return self.print_color + str(o) + StringAnsi.RESET
 
-    def match(self, clue_color):
+    def match(self, clue_color: 'Color') -> bool:
         """
         React to a color clue.
 
-        :param Color clue_color: the color of the clue.
+        :param clue_color: the color of the clue.
 
         :return: whether a card of the current color should react to a clue of
             color :attr:`clue_color`.
-        :rtype: bool
 
         >>> Color.BLUE.match(clue_color=Color.BLUE)
         True
@@ -124,7 +123,6 @@ class Color(Colored):
             return False
         return self.name == clue_color.name
 
-    # The actual definitions of the following constants are outside the class.
     #:
     BLUE = None
     #:
