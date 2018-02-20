@@ -22,7 +22,7 @@ from hanabython.Classes.Colored import Colored
 import numpy as np
 from hanabython.Classes.Configuration import Configuration
 from hanabython.Classes.Color import Color
-from hanabython.Classes.PrintColor import PrintColor
+from hanabython.Classes.StringAnsi import StringAnsi
 
 
 class CardPublic(Colored):
@@ -68,7 +68,7 @@ class CardPublic(Colored):
         s += ' '
         for i, v in enumerate(self.cfg.values):
             if self.yes_clued_v[i]:
-                s += "\033[7m" + str(v) + PrintColor.RESET
+                s += "\033[7m" + str(v) + StringAnsi.RESET
             elif self.can_be_v[i]:
                 s += str(v)
             else:

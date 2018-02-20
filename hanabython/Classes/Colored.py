@@ -25,10 +25,10 @@ class Colored:
     r"""
     An object with a colored string representation.
 
-    >>> from Classes.PrintColor import PrintColor
+    >>> from Classes.StringAnsi import StringAnsi
     >>> class MyClass(Colored):
     ...     def colored(self):
-    ...         return PrintColor.RED + 'some text' + PrintColor.RESET
+    ...         return StringAnsi.RED + 'some text' + StringAnsi.RESET
     >>> my_object = MyClass()
     >>> my_object.colored()
     '\x1b[31msome text\x1b[0;0m'
@@ -78,11 +78,11 @@ class Colored:
 
 
 if __name__ == '__main__':
-    from Classes.PrintColor import PrintColor
+    from Classes.StringAnsi import StringAnsi
 
     class TestClass(Colored):
         def colored(self):
-            return PrintColor.RED + 'some text' + PrintColor.RESET
+            return StringAnsi.RED + 'some text' + StringAnsi.RESET
     test_object = TestClass()
     test_object.test_str()
 

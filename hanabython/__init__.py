@@ -31,5 +31,5 @@ from .Classes.HandPublic import HandPublic
 from .Classes.Player import Player
 from .Classes.PlayerBase import PlayerBase
 from .Classes.PlayerHuman import PlayerHuman
-from .Classes.PrintColor import PrintColor
+from .Classes.StringAnsi import StringAnsi
 from .Classes.StringUtils import uncolor, title

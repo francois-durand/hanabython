@@ -19,7 +19,7 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from hanabython.Classes.Colored import Colored
-from hanabython.Classes.PrintColor import PrintColor
+from hanabython.Classes.StringAnsi import StringAnsi
 from hanabython.Classes.ColorClueBehavior import ColorClueBehavior
 
 
@@ -34,7 +34,7 @@ class Color(Colored):
         standard colors cannot have the same symbol. For other colors, it is
         better to do the same, but it is not mandatory.
     :param str print_color: an ANSI escape code that modifies the printing
-        color. See :class:`PrintColor`.
+        color. See :class:`StringAnsi`.
     :param ColorClueBehavior clue_behavior: how this color behaves regarding
         color clues.
 
@@ -99,7 +99,7 @@ class Color(Colored):
         >>> Color.BLUE.color_repr(42)
         '\x1b[94m42\x1b[0;0m'
         """
-        return self.print_color + repr(o) + PrintColor.RESET
+        return self.print_color + repr(o) + StringAnsi.RESET
 
     def color_str(self, o):
         r"""
@@ -116,7 +116,7 @@ class Color(Colored):
         >>> Color.BLUE.color_str(42)
         '\x1b[94m42\x1b[0;0m'
         """
-        return self.print_color + str(o) + PrintColor.RESET
+        return self.print_color + str(o) + StringAnsi.RESET
 
     def match(self, clue_color):
         """
@@ -165,22 +165,22 @@ class Color(Colored):
     COLORLESS = None
 
 
-Color.BLUE = Color(name='Blue', symbol='B', print_color=PrintColor.BLUE)
-Color.GREEN = Color(name='Green', symbol='G', print_color=PrintColor.GREEN)
-Color.RED = Color(name='Red', symbol='R', print_color=PrintColor.RED)
-Color.WHITE = Color(name='White', symbol='W', print_color=PrintColor.WHITE)
-Color.YELLOW = Color(name='Yellow', symbol='Y', print_color=PrintColor.YELLOW)
-Color.SIXTH = Color(name='Pink', symbol='P', print_color=PrintColor.MAGENTA)
+Color.BLUE = Color(name='Blue', symbol='B', print_color=StringAnsi.BLUE)
+Color.GREEN = Color(name='Green', symbol='G', print_color=StringAnsi.GREEN)
+Color.RED = Color(name='Red', symbol='R', print_color=StringAnsi.RED)
+Color.WHITE = Color(name='White', symbol='W', print_color=StringAnsi.WHITE)
+Color.YELLOW = Color(name='Yellow', symbol='Y', print_color=StringAnsi.YELLOW)
+Color.SIXTH = Color(name='Pink', symbol='P', print_color=StringAnsi.MAGENTA)
 Color.MULTICOLOR = Color(
     name='Multicolor', symbol='M',
-    print_color=PrintColor.CYAN + PrintColor.STYLE_BOLD
-                + PrintColor.STYLE_UNDERLINE,
+    print_color=StringAnsi.CYAN + StringAnsi.STYLE_BOLD
+                + StringAnsi.STYLE_UNDERLINE,
     clue_behavior=ColorClueBehavior.MULTICOLOR
 )
 Color.COLORLESS = Color(
     name='Colorless', symbol='C',
-    print_color=PrintColor.RED + PrintColor.STYLE_BOLD
-                + PrintColor.STYLE_UNDERLINE,
+    print_color=StringAnsi.RED + StringAnsi.STYLE_BOLD
+                + StringAnsi.STYLE_UNDERLINE,
     clue_behavior=ColorClueBehavior.COLORLESS
 )
 

@@ -19,7 +19,7 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from hanabython.Classes.Action import Action
-from hanabython.Classes.PrintColor import PrintColor
+from hanabython.Classes.StringAnsi import StringAnsi
 
 
 class ActionForfeit(Action):
@@ -35,8 +35,8 @@ class ActionForfeit(Action):
         super().__init__(Action.FORFEIT)
 
     def colored(self):
-        return (PrintColor.RED + PrintColor.STYLE_BOLD
-                + 'Forfeit' + PrintColor.RESET)
+        return (StringAnsi.RED + StringAnsi.STYLE_BOLD
+                + 'Forfeit' + StringAnsi.RESET)
 
 
 if __name__ == '__main__':

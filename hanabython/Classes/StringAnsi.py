@@ -20,12 +20,12 @@ This file is part of Hanabython.
 """
 
 
-class PrintColor:
+class StringAnsi:
     """
-    An ANSI escape code that modifies the printing color.
+    An ANSI escape code that modifies the printing aspect.
     """
 
-    #: This escape code is special: it is used to return to the default color.
+    #: This escape code is special: it is used to return to default aspect.
     RESET = "\033[0;0m"
     #: Bold font
     STYLE_BOLD = "\033[1m"
@@ -75,6 +75,6 @@ class PrintColor:
 
 if __name__ == '__main__':
     # N.B.: Available colors for multi are brown, magenta and cyan
-    for k in PrintColor.__dict__.keys():
+    for k in StringAnsi.__dict__.keys():
         if not k.startswith('_'):
-            print(PrintColor.__dict__[k] + k + PrintColor.RESET)
+            print(StringAnsi.__dict__[k] + k + StringAnsi.RESET)

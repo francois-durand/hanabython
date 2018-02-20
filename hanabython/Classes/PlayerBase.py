@@ -27,7 +27,7 @@ from hanabython.Classes.DrawPilePublic import DrawPilePublic
 from hanabython.Classes.DrawPile import DrawPile
 from hanabython.Classes.Hand import Hand
 from hanabython.Classes.HandPublic import HandPublic
-from hanabython.Classes.PrintColor import PrintColor
+from hanabython.Classes.StringAnsi import StringAnsi
 from hanabython.Classes.Player import Player
 
 
@@ -125,9 +125,9 @@ class PlayerBase(Player):
             draw_line += ' %s turns remaining!' % self.remaining_turns
         lines.append(draw_line)
         lines.append(
-            (PrintColor.BLUE + '%s' + PrintColor.RESET
+            (StringAnsi.BLUE + '%s' + StringAnsi.RESET
              + ' clues left (out of %s). '
-             + PrintColor.RED + '%s' + PrintColor.RESET
+             + StringAnsi.RED + '%s' + StringAnsi.RESET
              + ' misfires (out of %s).')
             % (self.n_clues, self.cfg.n_clues,
                self.n_misfires, self.cfg.n_misfires)
