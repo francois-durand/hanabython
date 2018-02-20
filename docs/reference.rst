@@ -12,7 +12,16 @@ Manipulation of strings
 
 .. autofunction:: hanabython.title
 
-.. autoclass:: hanabython.Classes.Colored
+.. autoclass:: hanabython.Colored
+    :members:
+
+Colors
+------
+
+.. autoclass:: hanabython.Color
+    :members:
+
+.. autoclass:: hanabython.ColorClueBehavior
     :members:
 
 
