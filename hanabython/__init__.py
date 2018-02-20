@@ -6,4 +6,4 @@ __author__ = """François Durand"""
 __email__ = 'fradurand@gmail.com'
 __version__ = '0.1.0'
 
-from Classes.PrintColor import PrintColor
+from .Classes.PrintColor import PrintColor
