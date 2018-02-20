@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Union
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Color import Color
 
@@ -94,17 +95,16 @@ class Card(Colored):
                 except ValueError:
                     raise ValueError('Could not interpret as a card: ', s)
 
-    def colored(self):
+    def colored(self) -> str:
         return self.c.color_str(self.c.symbol + str(self.v))
 
-    def match(self, clue):
+    def match(self, clue: Union[int, Color]) -> bool:
         """
         React to a clue.
 
-        :param int|Color clue: the clue (value or color).
+        :param clue: the clue (value or color).
 
         :return: whether the card should be pointed when giving this clue.
-        :rtype: bool
 
         >>> from Classes.Color import Color
         >>> card_blue = Card('B3')

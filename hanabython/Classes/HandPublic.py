@@ -18,7 +18,9 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from hanabython.Classes.Color import Colored
+from typing import Union, List
+from hanabython.Classes.Color import Color
+from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Configuration import Configuration
 from hanabython.Classes.CardPublic import CardPublic
 
@@ -36,8 +38,8 @@ class HandPublic(Colored, list):
 
     Basically, a HandPublic is a list of CardPublic objects.
 
-    :param Configuration cfg: the configuration of the game.
-    :param int n_cards: the number of cards in the hand. N.B.: this parameter
+    :param cfg: the configuration of the game.
+    :param n_cards: the number of cards in the hand. N.B.: this parameter
         is mostly used for examples and tests. In contrast, at the beginning of
         a game, the hand should be initialized with 0 cards, because cards will
         be given to the players during the initial dealing of hands.
@@ -47,16 +49,16 @@ class HandPublic(Colored, list):
     >>> print(hand)
     [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
     """
-    def __init__(self, cfg, n_cards=0):
+    def __init__(self, cfg: Configuration, n_cards: int = 0):
         super().__init__()
         self.cfg = cfg
         for i in range(n_cards):
             self.receive()
 
-    def colored(self):
+    def colored(self) -> str:
         return '[' + ', '.join([card.colored() for card in self]) + ']'
 
-    def receive(self):
+    def receive(self) -> None:
         """
         Receive a card.
 
@@ -73,11 +75,11 @@ class HandPublic(Colored, list):
         """
         self.insert(0, CardPublic(self.cfg))
 
-    def give(self, i):
+    def give(self, i: int) -> None:
         """
         Give a card.
 
-        :param int i: the position of the card in the hand (0 = newest).
+        :param i: the position of the card in the hand (0 = newest).
 
         The card is simply suppressed from the hand.
 
@@ -93,12 +95,12 @@ class HandPublic(Colored, list):
         """
         self.pop(i)
 
-    def match(self, clue, bool_list):
+    def match(self, clue: Union[int, Color], bool_list: List[bool]):
         """
         React to a clue
 
-        :param int|Color clue: the clue (value or Color).
-        :param list bool_list: a list of booleans. The ``i``-th coefficient is
+        :param clue: the clue (value or Color).
+        :param bool_list: a list of booleans. The ``i``-th coefficient is
             ``True`` iff the ``i``-th card of the hand matches the clue given.
 
         Updates the internal variables of the hand.

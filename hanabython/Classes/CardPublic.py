@@ -18,8 +18,9 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from hanabython.Classes.Colored import Colored
 import numpy as np
+from typing import Union
+from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Configuration import Configuration
 from hanabython.Classes.Color import Color
 from hanabython.Classes.StringAnsi import StringAnsi
@@ -32,7 +33,7 @@ class CardPublic(Colored):
     An object of this class represents what is known by all players, including
     the owner of the card.
 
-    :param Configuration cfg: the configuration of the game.
+    :param cfg: the configuration of the game.
 
     :var np.array can_be_c: a coefficient is True iff the card can be of the
         corresponding color.
@@ -49,14 +50,14 @@ class CardPublic(Colored):
     >>> print(card)
     BGRWYPMC 12345
     """
-    def __init__(self, cfg):
+    def __init__(self, cfg: Configuration):
         self.cfg = cfg
-        self.can_be_c = np.ones(cfg.n_colors, dtype=bool)
-        self.can_be_v = np.ones(cfg.n_values, dtype=bool)
-        self.yes_clued_c = np.zeros(cfg.n_colors, dtype=bool)
-        self.yes_clued_v = np.zeros(cfg.n_values, dtype=bool)
+        self.can_be_c = np.ones(cfg.n_colors, dtype=bool)       # type: np.array
+        self.can_be_v = np.ones(cfg.n_values, dtype=bool)       # type: np.array
+        self.yes_clued_c = np.zeros(cfg.n_colors, dtype=bool)   # type: np.array
+        self.yes_clued_v = np.zeros(cfg.n_values, dtype=bool)   # type: np.array
 
-    def colored(self):
+    def colored(self) -> str:
         s = ''
         for i, c in enumerate(self.cfg.colors):
             if self.yes_clued_c[i]:
@@ -75,14 +76,14 @@ class CardPublic(Colored):
                 s += ' '
         return s
 
-    def _match_c(self, clue, b):
+    def _match_c(self, clue: Color, b: bool) -> None:
         """
         React to a clue by color.
 
-        :param Color clue: the color of the clue.
-        :param bool b: whether the card matched the clue or not.
-
         Updates the internal variables of the card.
+
+        :param clue: the color of the clue.
+        :param b: whether the card matched the clue or not.
         """
         for i, c in enumerate(self.cfg.colors):
             if c.match(clue) != b:
@@ -91,14 +92,14 @@ class CardPublic(Colored):
             if b and c.match(clue) and self.can_be_c[i]:
                 self.yes_clued_c[i] = True
 
-    def _match_v(self, clue, b):
+    def _match_v(self, clue: int, b: bool) -> None:
         """
         React to a clue by value.
 
-        :param int clue: the value of the clue.
-        :param bool b: whether the card matched the clue or not.
-
         Updates the internal variables of the card.
+
+        :param clue: the value of the clue.
+        :param b: whether the card matched the clue or not.
         """
         i = self.cfg.i_from_v(clue)
         if b:
@@ -108,14 +109,14 @@ class CardPublic(Colored):
         else:
             self.can_be_v[i] = False
 
-    def match(self, clue, b):
+    def match(self, clue: Union[int, Color], b: bool) -> None:
         """
         React to a clue.
 
-        :param int|Color clue: the clue (value or color).
-        :param bool b: whether the card matched the clue or not.
-
         Updates the internal variables of the card.
+
+        :param clue: the clue (value or color).
+        :param b: whether the card matched the clue or not.
 
         >>> from Classes.Configuration import Configuration
         >>> cfg = Configuration.EIGHT_COLORS

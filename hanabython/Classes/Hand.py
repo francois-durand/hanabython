@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Iterable, Union, List
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Card import Card
 from hanabython.Classes.Color import Color
@@ -34,6 +35,8 @@ class Hand(Colored, list):
     Basically, a Hand is a list of Card objects. It can be constructed as such,
     or using a list of strings which will be automatically converted to cards.
 
+    :param source: an iterable used to construct the hand.
+
     >>> hand = Hand([Card('Y3'), Card('M1'), Card('B2'), Card('R4')])
     >>> print(hand)
     [Y3, M1, B2, R4]
@@ -41,23 +44,23 @@ class Hand(Colored, list):
     >>> print(hand)
     [Y3, M1, B2, R4]
     """
-    def __init__(self, source=None):
+    def __init__(self, source: Iterable[Union[Card, str]] = None):
         super().__init__()
         if source is not None:
             for item in source:
-                if type(item) == Card:
-                    self.append(item)
-                else:
+                if type(item) == str:
                     self.append(Card(item))
+                else:
+                    self.append(item)
 
-    def colored(self):
+    def colored(self) -> str:
         return '[' + ', '.join(card.colored() for card in self) + ']'
 
-    def receive(self, card):
+    def receive(self, card: Card) -> None:
         """
         Receive a card
 
-        :param Card card: the card received.
+        :param card: the card received.
 
         The card is added on the left, i.e. at the beginning of the list.
 
@@ -68,14 +71,13 @@ class Hand(Colored, list):
         """
         self.insert(0, card)
 
-    def give(self, i):
+    def give(self, i: int) -> Card:
         """
         Give a card
 
-        :param int i: the position of the card in the hand (0 = newest).
+        :param i: the position of the card in the hand (0 = newest).
 
         :return: the card given.
-        :rtype: Card
 
         >>> hand = Hand(['Y3', 'B1', 'M1', 'B2', 'R4'])
         >>> card = hand.give(1)
@@ -84,15 +86,14 @@ class Hand(Colored, list):
         """
         return self.pop(i)
 
-    def match(self, clue):
+    def match(self, clue: Union[int, Color]) -> List[bool]:
         """
         React to a clue.
 
-        :param int|Color clue: the clue (value or color).
+        :param clue: the clue (value or color).
 
         :return: a list of booleans. The ``i``-th coefficient is ``True``
             iff the ``i``-th card of the hand matches the clue given.
-        :rtype: list
 
         >>> hand = Hand(['G2', 'Y3', 'M1', 'B2', 'R4'])
         >>> hand.match(Color.RED)
