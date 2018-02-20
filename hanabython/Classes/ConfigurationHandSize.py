@@ -53,17 +53,16 @@ class ConfigurationHandSize(Colored):
             return self.name
 
     #: Normal rule for hand size (5 for 3- players, 4 for 4+ players).
-    #: Default for :attr:`hand_size`.
     NORMAL = None
     #: Experimental variant for hand size (6 for 2 players, 3 for 5+ players).
-    VARIANT_63 = None
+    VARIANT_6_3 = None
 
 
 ConfigurationHandSize.NORMAL = ConfigurationHandSize(
     f=lambda n: 5 if n <= 3 else 4,
     name='normal'
 )
-ConfigurationHandSize.VARIANT_63 = ConfigurationHandSize(
+ConfigurationHandSize.VARIANT_6_3 = ConfigurationHandSize(
     f=lambda n: 3 if n >= 5 else 8 - n,
     name='experimental (6 for 2 players, 3 for 5 players)'
 )

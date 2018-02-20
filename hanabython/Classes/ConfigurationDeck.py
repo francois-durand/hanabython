@@ -127,7 +127,7 @@ class ConfigurationDeck(Colored, OrderedDict):
     W_MULTICOLOR = None
     #: Deck with short multicolor (5 colors of 10 cards + 1 multi of 5 cards).
     W_MULTICOLOR_SHORT = None
-    #: Deck with 8 colors (6 colors + multi + colorless, all of 10 cards).
+    #: Deck with 8 colors (6 colors + multicolor + colorless, all of 10 cards).
     EIGHT_COLORS = None
 
 

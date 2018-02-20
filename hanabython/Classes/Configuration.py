@@ -42,8 +42,8 @@ class Configuration(Colored):
     :param end_rule: the rule used to determine when
         then game is finished.
 
-    :var list colors: a list of Color objects. Shortcut for
-        :attr:`deck`.:meth:`keys()`.
+    :var list colors: a list of Color objects. It is the list of keys
+        of :attr:`deck`.
     :var int n_colors: the number of colors.
     :var list highest: For each color from :attr:`colors`, it gives the number
         on the highest card in that color.
@@ -54,7 +54,8 @@ class Configuration(Colored):
         color. Typically, a row is [3, 2, 2, 2, 1], meaning that there are 3
         ones, 2 twos, etc. Please note that column 0 corresponds to card
         value 1, etc.
-    :var int n_cards: the total number of cards in the deck.
+    :var int n_cards: the total number of cards in the deck (50 in the
+        standard configuration).
     :var int max_score: the maximum possible score (25 in the standard
         configuration).
 
@@ -100,7 +101,7 @@ class Configuration(Colored):
     ...     ]),
     ...     n_clues=4,
     ...     n_misfires=1,
-    ...     hand_size_rule=ConfigurationHandSize.VARIANT_63,
+    ...     hand_size_rule=ConfigurationHandSize.VARIANT_6_3,
     ...     end_rule=ConfigurationEndRule.CROWNING_PIECE
     ... )
     >>> print(cfg)
@@ -165,8 +166,7 @@ class Configuration(Colored):
         :return: the corresponding index.
 
         >>> from Classes.Color import Color
-        >>> cfg = Configuration.STANDARD
-        >>> cfg.i_from_c(Color.BLUE)
+        >>> Configuration.STANDARD.i_from_c(Color.BLUE)
         0
         """
         return self._i_from_c_name[c.name]
@@ -180,8 +180,7 @@ class Configuration(Colored):
 
         :return: the corresponding index (typically 0 to 4).
 
-        >>> cfg = Configuration.STANDARD
-        >>> cfg.i_from_v(1)
+        >>> Configuration.STANDARD.i_from_v(1)
         0
         """
         return v - 1
@@ -196,7 +195,7 @@ class Configuration(Colored):
     W_MULTICOLOR = None
     #: Configuration with short multicolor.
     W_MULTICOLOR_SHORT = None
-    #: Configuration with 8 long colors (6 normal + multi + colorless).
+    #: Configuration with 8 long colors (6 normal + multicolor + colorless).
     EIGHT_COLORS = None
 
 
@@ -237,7 +236,7 @@ if __name__ == '__main__':
         ]),
         n_clues=4,
         n_misfires=1,
-        hand_size_rule=ConfigurationHandSize.VARIANT_63,
+        hand_size_rule=ConfigurationHandSize.VARIANT_6_3,
         end_rule=ConfigurationEndRule.CROWNING_PIECE
     )
     print(my_cfg.colored())
