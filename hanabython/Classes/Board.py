@@ -55,7 +55,7 @@ class Board(Colored):
 
     def str_compact(self) -> str:
         """
-        Convert to string in "compact" layout
+        Convert to string in "compact" layout.
 
         :return: a representation of the board.
 
@@ -70,7 +70,7 @@ class Board(Colored):
 
     def colored_compact(self) -> str:
         """
-        Colored version of :meth:`str_compact`
+        Colored version of :meth:`str_compact`.
         """
         return ' '.join([
             c.color_str(self._str_one_color(i, c))
@@ -80,7 +80,7 @@ class Board(Colored):
 
     def str_fixed_space(self) -> str:
         """
-        Convert to string in "fixed-space" layout
+        Convert to string in "fixed-space" layout.
 
         :return: a representation of the board.
 
@@ -95,7 +95,7 @@ class Board(Colored):
 
     def colored_fixed_space(self) -> str:
         """
-        Colored version of :meth:`str_fixed_space`
+        Colored version of :meth:`str_fixed_space`.
         """
         length = 1 + 2 * self.cfg.n_values
         return ' '.join([
@@ -105,7 +105,7 @@ class Board(Colored):
 
     def str_multi_line(self) -> str:
         """
-        Convert to string in "multi-line" layout
+        Convert to string in "multi-line" layout.
 
         :return: a representation of the board.
 
@@ -124,7 +124,7 @@ class Board(Colored):
 
     def colored_multi_line(self) -> str:
         """
-        Colored version of :meth:`str_multi_line`
+        Colored version of :meth:`str_multi_line`.
         """
         return '\n'.join([
             c.color_str(self._str_one_color(i, c))
@@ -133,7 +133,7 @@ class Board(Colored):
 
     def str_multi_line_compact(self) -> str:
         """
-        Convert to string in "compact multi-line" layout
+        Convert to string in "compact multi-line" layout.
 
         :return: a representation of the board.
 
@@ -149,7 +149,7 @@ class Board(Colored):
 
     def colored_multi_line_compact(self) -> str:
         """
-        Colored version of :meth:`str_multi_line_compact`
+        Colored version of :meth:`str_multi_line_compact`.
         """
         return '\n'.join([
             c.color_str(self._str_one_color(i, c))
@@ -160,7 +160,7 @@ class Board(Colored):
     # noinspection PyProtectedMember
     def _str_one_color(self, i: int, c: Color) -> str:
         """
-        Convert one color to string
+        Convert one color to string.
 
         :param i: index of the color.
         :param c: the color.
@@ -212,7 +212,7 @@ class Board(Colored):
         :param card: the card.
 
         :return: True if the card is successfully played on the board, False
-            otherwise (i.e. if it leads to a strike).
+            otherwise (i.e. if it leads to a misfire).
 
         >>> from Classes.Configuration import Configuration
         >>> from Classes.Card import Card
@@ -224,6 +224,8 @@ class Board(Colored):
         True
         False
         False
+        >>> print(board.str_compact())
+        B1 B2 Y1
         """
         i_c = self.cfg.i_from_c(card.c)
         if card.v == self.altitude[i_c] + 1:
