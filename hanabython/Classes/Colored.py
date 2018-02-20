@@ -38,13 +38,13 @@ class Colored:
     '<MyClass: some text>'
     """
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '<%s: %s>' % (self.__class__.__name__, self)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return uncolor(self.colored())
 
-    def colored(self):
+    def colored(self) -> str:
         """
         Colored version of :meth:`__str__`
 
@@ -62,7 +62,7 @@ class Colored:
         """
         pass
 
-    def test_str(self):
+    def test_str(self) -> None:
         """
         Test the string representations of the object.
 

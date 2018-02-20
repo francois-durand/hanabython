@@ -50,7 +50,7 @@ class Color(Colored):
     True
     """
 
-    def __init__(self, name:str, symbol, print_color,
+    def __init__(self, name: str, symbol, print_color,
                  clue_behavior=ColorClueBehavior.NORMAL):
         self.name = name
         self.symbol = symbol

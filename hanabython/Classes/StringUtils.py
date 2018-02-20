@@ -21,14 +21,13 @@ This file is part of Hanabython.
 import re
 
 
-def uncolor(s):
+def uncolor(s: str) -> str:
     """
     Remove ANSI escape codes from the string.
 
-    :param str string s: a string.
+    :param string s: a string.
 
     :return: the same string without its ANSI escape codes.
-    :rtype: str
 
     >>> from hanabython import StringAnsi
     >>> s = (StringAnsi.RED + "Hanabi" + StringAnsi.RESET + ', a game by '
@@ -39,16 +38,15 @@ def uncolor(s):
     return re.sub(r'\033.\d*(;\d*)?m', "", s)
 
 
-def title(s, width):
+def title(s: str, width: int) -> str:
     """
     Format a string as a title.
 
-    :param str s: the string
-    :param int width: the total width of the final layout (in number of
+    :param s: the string
+    :param width: the total width of the final layout (in number of
         characters).
 
     :return: the string formatted as a title.
-    :rtype: str
 
     >>> title(s='Title', width=20)
     '****** Title *******'
