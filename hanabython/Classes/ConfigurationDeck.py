@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Iterable, Tuple
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Color import Color
 from hanabython.Classes.ConfigurationColorContents \
@@ -36,10 +37,10 @@ class ConfigurationDeck(Colored, OrderedDict):
     The order of the colors is important: it will be used in many occasions
     (including for display).
 
-    :param iterable contents: the iterable used to construct the ordered
+    :param contents: the iterable used to construct the ordered
         dictionary. Typically it is an :class:`OrderedDict` or a list of pairs
         (`color`, `contents`).
-    :param str name: the name of the configuration. Can be None (default value).
+    :param name: the name of the configuration. Can be None (default value).
         Should not be capitalized (e.g. "my favorite configuration" and not
         "My favorite configuration").
 
@@ -59,11 +60,13 @@ class ConfigurationDeck(Colored, OrderedDict):
     >>> print(cfg)
     B normal, R [3, 2, 1]
     """
-    def __init__(self, contents, name=None):
+    def __init__(self,
+                 contents: Iterable[Tuple[Color, ConfigurationColorContents]],
+                 name: str = None):
         super(ConfigurationDeck, self).__init__(contents)
         self.name = name
 
-    def colored(self):
+    def colored(self) -> str:
         if self.name is None:
             return ', '.join([
                 c.color_str('%s %s') % (c, v) for c, v in self.items()
@@ -71,7 +74,7 @@ class ConfigurationDeck(Colored, OrderedDict):
         else:
             return self.name
 
-    def copy(self):
+    def copy(self) -> 'ConfigurationDeck':
         """
         Copy the deck configuration.
 
@@ -90,16 +93,17 @@ class ConfigurationDeck(Colored, OrderedDict):
         return ConfigurationDeck(contents=self.items(), name=self.name)
 
     @staticmethod
-    def normal_plus(contents, name=None):
+    def normal_plus(
+        contents: Iterable[Tuple[Color, ConfigurationColorContents]],
+        name: str = None
+    ) -> 'ConfigurationDeck':
         """
         Shortcut to define a deck configuration from the normal one.
 
-        :param iterable contents: the additional contents (typically
-            multicolor, etc.)
-        :param str name: the name of the configuration.
+        :param contents: the additional contents (typically multicolor, etc.)
+        :param name: the name of the configuration.
 
         :return: the new configuration.
-        :rtype: ConfigurationDeck
 
         >>> cfg = ConfigurationDeck.normal_plus(contents=[
         ...     (Color.SIXTH, ConfigurationColorContents.NORMAL),

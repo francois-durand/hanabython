@@ -28,8 +28,8 @@ class ConfigurationEndRule(Colored):
     This class does not implement the rules themselves: they are hardcoded in
     the class :class:`Game`.
 
-    :param int i: a unique identifier of the rule.
-    :param str name: the name of the configuration. Can be None (default value).
+    :param i: a unique identifier of the rule.
+    :param name: the name of the configuration. Can be None (default value).
         Should not be capitalized (e.g. "my favorite configuration" and not
         "My favorite configuration"), except if it is seen as a title
         (e.g. "Crowning Piece").
@@ -43,14 +43,14 @@ class ConfigurationEndRule(Colored):
     False
     """
 
-    def __init__(self, i, name):
+    def __init__(self, i: int, name: str):
         self.i = i
         self.name = name
 
-    def colored(self):
+    def colored(self) -> str:
         return self.name
 
-    def __eq__(self, other):
+    def __eq__(self, other: 'ConfigurationEndRule') -> bool:
         return self.i == other.i
 
     #: Default rule for the end of game. When a player draws the last card,

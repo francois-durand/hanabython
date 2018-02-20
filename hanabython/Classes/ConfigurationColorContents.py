@@ -53,7 +53,7 @@ class ConfigurationColorContents(Colored, list):
         super(ConfigurationColorContents, self).__init__(contents)
         self.name = name
 
-    def colored(self):
+    def colored(self) -> str:
         if self.name is None:
             return str(list(self))
         else:

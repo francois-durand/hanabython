@@ -19,7 +19,7 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from typing import List
+from typing import List, Dict
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Color import Color
 from hanabython.Classes.ConfigurationDeck import ConfigurationDeck
@@ -42,7 +42,7 @@ class Configuration(Colored):
     :param end_rule: the rule used to determine when
         then game is finished.
 
-    :var colors: a list of Color objects. Shortcut for
+    :var list colors: a list of Color objects. Shortcut for
         :attr:`deck`.:meth:`keys()`.
     :var int n_colors: the number of colors.
     :var list highest: For each color from :attr:`colors`, it gives the number
@@ -134,9 +134,11 @@ class Configuration(Colored):
             for c in self.colors
         ])                                                  # type: np.array
         self.n_cards = np.sum(self.deck_array)              # type: int
-        self.max_score = sum(self.highest)
+        self.max_score = sum(self.highest)                  # type: int
         # Conversion
-        self._i_from_c_name = {c.name: i for i, c in enumerate(self.colors)}
+        self._i_from_c_name = {
+            c.name: i for i, c in enumerate(self.colors)
+        }                                               # type: Dict[Color, int]
 
     def __repr__(self) -> str:
         return (

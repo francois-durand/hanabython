@@ -18,6 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from typing import Callable
 from hanabython.Classes.Colored import Colored
 
 
@@ -25,8 +26,8 @@ class ConfigurationHandSize(Colored):
     """
     A rule for the initial size of the players' hands.
 
-    :param callable f: a callable that, to a number of players, associates
-        a number of cards.
+    :param f: a callable that, to a number of players, associates a number of
+        cards.
     :param name: the name of the configuration. Can be None (default value).
         Should not be capitalized (e.g. "my favorite configuration" and not
         "My favorite configuration").
@@ -39,11 +40,11 @@ class ConfigurationHandSize(Colored):
     7 for 2p, 6 for 3p, 5 for 4p, 4 for 5p
     """
 
-    def __init__(self, f, name=None):
+    def __init__(self, f: Callable[int, int], name: str = None):
         self.f = f
         self.name = name
 
-    def colored(self):
+    def colored(self) -> str:
         if self.name is None:
             return ', '.join([
                 '%s for %sp' % (self.f(n), n) for n in range(2, 6)
