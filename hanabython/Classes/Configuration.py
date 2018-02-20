@@ -19,11 +19,11 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from Colored import Colored
-from Color import Color
-from ConfigurationDeck import ConfigurationDeck
-from ConfigurationHandSize import ConfigurationHandSize
-from ConfigurationEndRule import ConfigurationEndRule
+from Classes.Colored import Colored
+from Classes.Color import Color
+from Classes.ConfigurationDeck import ConfigurationDeck
+from Classes.ConfigurationHandSize import ConfigurationHandSize
+from Classes.ConfigurationEndRule import ConfigurationEndRule
 
 
 class Configuration(Colored):
@@ -89,9 +89,9 @@ class Configuration(Colored):
 
     Design a configuration manually:
 
-    >>> from ConfigurationDeck import ConfigurationDeck
-    >>> from Color import Color
-    >>> from ConfigurationColorContents import ConfigurationColorContents
+    >>> from Classes.ConfigurationDeck import ConfigurationDeck
+    >>> from Classes.Color import Color
+    >>> from Classes.ConfigurationColorContents import ConfigurationColorContents
     >>> cfg = Configuration(
     ...     deck=ConfigurationDeck(contents=[
     ...         (Color.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
@@ -160,7 +160,7 @@ class Configuration(Colored):
         :return: the corresponding index.
         :rtype: int
 
-        >>> from Color import Color
+        >>> from Classes.Color import Color
         >>> cfg = Configuration.STANDARD
         >>> cfg.i_from_c(Color.BLUE)
         0
@@ -226,7 +226,7 @@ if __name__ == '__main__':
     print(Configuration.W_MULTICOLOR_SHORT.colored() + '\n')
 
     print('\nA manual configuration: ')
-    from ConfigurationColorContents import ConfigurationColorContents
+    from Classes.ConfigurationColorContents import ConfigurationColorContents
     my_cfg = Configuration(
         deck=ConfigurationDeck(contents=[
             (Color.BLUE, ConfigurationColorContents([3, 2, 1, 1])),

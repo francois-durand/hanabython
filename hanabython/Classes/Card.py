@@ -18,8 +18,8 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Colored import Colored
-from Color import Color
+from Classes.Colored import Colored
+from Classes.Color import Color
 
 
 class Card(Colored):
@@ -106,7 +106,7 @@ class Card(Colored):
         :return: whether the card should be pointed when giving this clue.
         :rtype: bool
 
-        >>> from Color import Color
+        >>> from Classes.Color import Color
         >>> card_blue = Card('B3')
         >>> card_blue.match(Color.BLUE)
         True

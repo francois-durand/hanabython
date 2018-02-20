@@ -18,9 +18,9 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Color import Colored
-from Configuration import Configuration
-from CardPublic import CardPublic
+from Classes.Color import Colored
+from Classes.Configuration import Configuration
+from Classes.CardPublic import CardPublic
 
 
 class HandPublic(Colored, list):
@@ -42,7 +42,7 @@ class HandPublic(Colored, list):
         a game, the hand should be initialized with 0 cards, because cards will
         be given to the players during the initial dealing of hands.
 
-    >>> from Configuration import Configuration
+    >>> from Classes.Configuration import Configuration
     >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
     >>> print(hand)
     [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
@@ -62,7 +62,7 @@ class HandPublic(Colored, list):
 
         An unknown card is added on the left, i.e. at the beginning of the list.
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=5, bool_list=[True, True, False, False])
         >>> print(hand)
@@ -81,7 +81,7 @@ class HandPublic(Colored, list):
 
         The card is simply suppressed from the hand.
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=5, bool_list=[False, True, False, False])
         >>> hand.match(clue=4, bool_list=[True, False, False, False])
@@ -103,12 +103,12 @@ class HandPublic(Colored, list):
 
         Updates the internal variables of the hand.
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=3, bool_list=[False, True, False, False])
         >>> print(hand)
         [BGRWY 12 45, BGRWY   3  , BGRWY 12 45, BGRWY 12 45]
-        >>> from Color import Color
+        >>> from Classes.Color import Color
         >>> hand.match(clue=Color.RED, bool_list=[False, True, False, False])
         >>> print(hand)
         [BG WY 12 45,   R     3  , BG WY 12 45, BG WY 12 45]
@@ -121,7 +121,7 @@ if __name__ == '__main__':
     my_hand = HandPublic(cfg=Configuration(), n_cards=4)
     my_hand.test_str()
 
-    from Color import Color
+    from Classes.Color import Color
     print("\nLet's give some clues: ")
     print(my_hand.colored())
     my_hand.match(clue=Color.RED, bool_list=[True, False, True, False, False])

@@ -18,7 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Action import Action
+from Classes.Action import Action
 
 
 class ActionClue(Action):
@@ -32,7 +32,7 @@ class ActionClue(Action):
     >>> action = ActionClue(i=1, clue=2)
     >>> print(action)
     Clue 2 to player in relative position 1
-    >>> from Color import Color
+    >>> from Classes.Color import Color
     >>> action = ActionClue(i=2, clue=Color.BLUE)
     >>> print(action)
     Clue B to player in relative position 2
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     my_action.test_str()
 
     print()
-    from Color import Color
+    from Classes.Color import Color
     my_action = ActionClue(i=1, clue=Color.BLUE)
     my_action.test_str()
 

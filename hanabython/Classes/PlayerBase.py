@@ -18,18 +18,17 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from StringUtils import uncolor, title
-from Configuration import Configuration
-from ConfigurationEndRule import ConfigurationEndRule
-from Board import Board
-from DiscardPile import DiscardPile
-from DrawPilePublic import DrawPilePublic
-from DrawPile import DrawPile
-from Hand import Hand
-from HandPublic import HandPublic
-from Card import Card
-from PrintColor import PrintColor
-from Player import Player
+from Classes.StringUtils import uncolor, title
+from Classes.Configuration import Configuration
+from Classes.ConfigurationEndRule import ConfigurationEndRule
+from Classes.Board import Board
+from Classes.DiscardPile import DiscardPile
+from Classes.DrawPilePublic import DrawPilePublic
+from Classes.DrawPile import DrawPile
+from Classes.Hand import Hand
+from Classes.HandPublic import HandPublic
+from Classes.PrintColor import PrintColor
+from Classes.Player import Player
 
 
 class PlayerBase(Player):
@@ -144,7 +143,7 @@ class PlayerBase(Player):
 
         >>> antoine = PlayerBase('Antoine')
         >>> antoine.demo_game()
-        >>> from StringUtils import uncolor
+        >>> from Classes.StringUtils import uncolor
         >>> print(uncolor(antoine.colored_hands()))
         Antoine
         [BGRWY 12345, BGRWY  2345, BGRWY 1    , BGRWY 1    , BGRWY  2345]
@@ -186,7 +185,7 @@ class PlayerBase(Player):
         :return: the large string.
         :rtype: str
 
-        >>> from Card import Card
+        >>> from Classes.Card import Card
         >>> antoine = PlayerBase('Antoine')
         >>> antoine.receive_init(cfg=Configuration.STANDARD,
         ...                      player_names=['Antoine', 'Donald'])

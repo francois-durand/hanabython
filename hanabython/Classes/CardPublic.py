@@ -18,11 +18,11 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Colored import Colored
+from Classes.Colored import Colored
 import numpy as np
-from Configuration import Configuration
-from Color import Color
-from PrintColor import PrintColor
+from Classes.Configuration import Configuration
+from Classes.Color import Color
+from Classes.PrintColor import PrintColor
 
 
 class CardPublic(Colored):
@@ -44,7 +44,7 @@ class CardPublic(Colored):
     :var np.array yes_clued_v: a coefficient is True iff the card was
         explicitly clued as value v.
 
-    >>> from Configuration import Configuration
+    >>> from Classes.Configuration import Configuration
     >>> card = CardPublic(Configuration.EIGHT_COLORS)
     >>> print(card)
     BGRWYPMC 12345
@@ -117,7 +117,7 @@ class CardPublic(Colored):
 
         Updates the internal variables of the card.
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> cfg = Configuration.EIGHT_COLORS
         >>> card = CardPublic(cfg)
         >>> print(card)
@@ -131,7 +131,7 @@ class CardPublic(Colored):
 
         Let us try with the clues in the opposite order:
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> card = CardPublic(Configuration.EIGHT_COLORS)
         >>> print(card)
         BGRWYPMC 12345
@@ -144,7 +144,7 @@ class CardPublic(Colored):
 
         Now with clues by value:
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> card = CardPublic(Configuration.EIGHT_COLORS)
         >>> print(card)
         BGRWYPMC 12345

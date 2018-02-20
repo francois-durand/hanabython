@@ -18,9 +18,9 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Colored import Colored
-from Color import Color
-from ConfigurationColorContents import ConfigurationColorContents
+from Classes.Colored import Colored
+from Classes.Color import Color
+from Classes.ConfigurationColorContents import ConfigurationColorContents
 from collections import OrderedDict
 
 

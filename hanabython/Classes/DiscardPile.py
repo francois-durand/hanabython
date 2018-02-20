@@ -18,11 +18,11 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Colored import Colored
-from StringUtils import uncolor
+from Classes.Colored import Colored
+from Classes.StringUtils import uncolor
 import numpy as np
-from Configuration import Configuration
-from Card import Card
+from Classes.Configuration import Configuration
+from Classes.Card import Card
 
 
 class DiscardPile(Colored):
@@ -31,7 +31,7 @@ class DiscardPile(Colored):
 
     :param Configuration cfg: the configuration of the game.
 
-    >>> from Configuration import Configuration
+    >>> from Classes.Configuration import Configuration
     >>> discard_pile = DiscardPile(Configuration.STANDARD)
     >>> print(discard_pile)
     No card discarded yet
@@ -57,7 +57,7 @@ class DiscardPile(Colored):
             in the future).
         :rtype: str
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -91,7 +91,7 @@ class DiscardPile(Colored):
         :return: a representation of the discard pile.
         :rtype: str
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -126,7 +126,7 @@ class DiscardPile(Colored):
         :return: a representation of the discard pile.
         :rtype: str
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -150,7 +150,7 @@ class DiscardPile(Colored):
         :return: a representation of the discard pile.
         :rtype: str
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -177,7 +177,7 @@ class DiscardPile(Colored):
             on the colors is the one specified in :attr:`cfg`.
         :rtype: list
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -199,7 +199,7 @@ class DiscardPile(Colored):
 
         Update the internal variables of the discard pile.
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> print(discard_pile)

@@ -18,8 +18,8 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Colored import Colored
-from Configuration import Configuration
+from Classes.Colored import Colored
+from Classes.Configuration import Configuration
 
 
 class DrawPilePublic(Colored):
@@ -32,7 +32,7 @@ class DrawPilePublic(Colored):
 
     :param Configuration cfg: the configuration of the game.
 
-    >>> from Configuration import Configuration
+    >>> from Classes.Configuration import Configuration
     >>> draw_pile = DrawPilePublic(cfg=Configuration.STANDARD)
     >>> print(draw_pile)
     50 cards left
@@ -54,7 +54,7 @@ class DrawPilePublic(Colored):
 
         Updates the internal variables of the pile.
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> draw_pile = DrawPilePublic(cfg=Configuration.STANDARD)
         >>> print(draw_pile)
         50 cards left

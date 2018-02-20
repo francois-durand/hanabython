@@ -18,12 +18,12 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from Colored import Colored
-from StringUtils import uncolor
+from Classes.Colored import Colored
+from Classes.StringUtils import uncolor
 import numpy as np
-from Configuration import Configuration
-from Color import Color
-from Card import Card
+from Classes.Configuration import Configuration
+from Classes.Color import Color
+from Classes.Card import Card
 
 
 class Board(Colored):
@@ -37,7 +37,7 @@ class Board(Colored):
         of the highest card played in color ``c``. The correspondence between
         colors and indexes is the one provided by :attr:`cfg`.
 
-    >>> from Configuration import Configuration
+    >>> from Classes.Configuration import Configuration
     >>> board = Board(Configuration.STANDARD)
     >>> print(board.altitude)
     [0 0 0 0 0]
@@ -60,7 +60,7 @@ class Board(Colored):
         :return: a representation of the board.
         :rtype: str
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -86,7 +86,7 @@ class Board(Colored):
         :return: a representation of the board.
         :rtype: str
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -112,7 +112,7 @@ class Board(Colored):
         :return: a representation of the board.
         :rtype: str
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -141,7 +141,7 @@ class Board(Colored):
         :return: a representation of the board.
         :rtype: str
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -172,7 +172,7 @@ class Board(Colored):
         :return: a representation of the cards played in this color.
         :rtype: str
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
@@ -197,7 +197,7 @@ class Board(Colored):
         :return: a representation of the cards played in this color.
         :rtype: str
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
@@ -221,8 +221,8 @@ class Board(Colored):
             otherwise (i.e. if it leads to a strike).
         :rtype: bool
 
-        >>> from Configuration import Configuration
-        >>> from Card import Card
+        >>> from Classes.Configuration import Configuration
+        >>> from Classes.Card import Card
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['B1', 'B2', 'Y1', 'Y3', 'B1']:
         ...     board.try_to_play(Card(s))
@@ -247,7 +247,7 @@ class Board(Colored):
         :return: the sum of the altitudes reached in all colors.
         :rtype: int
 
-        >>> from Configuration import Configuration
+        >>> from Classes.Configuration import Configuration
         >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
