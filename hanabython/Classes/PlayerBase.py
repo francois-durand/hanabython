@@ -18,9 +18,9 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from typing import List, Union
+from typing import List
+from hanabython.Classes.Clue import Clue
 from hanabython.Classes.Card import Card
-from hanabython.Classes.Color import Color
 from hanabython.Classes.StringUtils import uncolor, title
 from hanabython.Classes.Configuration import Configuration
 from hanabython.Classes.ConfigurationEndRule import ConfigurationEndRule
@@ -404,8 +404,7 @@ class PlayerBase(Player):
                 self.player_names[i_player], card.colored()))
 
     def receive_someone_clues(
-        self, i_cluer: int, i_clued: int, clue: Union[int, Color],
-        bool_list: List[bool]
+        self, i_cluer: int, i_clued: int, clue: Clue, bool_list: List[bool]
     ) -> None:
         """
         Receive a message: a player gives a clue to another.
@@ -491,11 +490,11 @@ class PlayerBase(Player):
                 self.receive_partner_draws(i_drawer=i, card=draw_pile.give())
         self.receive_end_dealing()
         self.receive_someone_clues(
-            i_cluer=0, i_clued=1, clue=1,
-            bool_list=self.hands[1].match(1))
+            i_cluer=0, i_clued=1, clue=Clue(1),
+            bool_list=self.hands[1].match(Clue(1)))
         self.receive_someone_clues(
-            i_cluer=1, i_clued=0, clue=1,
-            bool_list=my_hand.match(1))
+            i_cluer=1, i_clued=0, clue=Clue(1),
+            bool_list=my_hand.match(Clue(1)))
         self.receive_someone_throws(i_thrower=2, k=4, card=self.hands[2][4])
         self.receive_partner_draws(i_drawer=2, card=draw_pile.give())
         self.receive_someone_plays(i_player=0, k=1, card=my_hand[1])

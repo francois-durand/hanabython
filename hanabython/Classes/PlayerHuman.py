@@ -24,6 +24,7 @@ from hanabython.Classes.ActionClue import ActionClue
 from hanabython.Classes.ActionPlay import ActionPlay
 from hanabython.Classes.ActionDiscard import ActionDiscard
 from hanabython.Classes.ActionForfeit import ActionForfeit
+from hanabython.Classes.Clue import Clue
 from IPython.display import clear_output
 from time import sleep
 
@@ -68,13 +69,13 @@ class PlayerHuman(PlayerBase):
             while True:
                 clue_str = input('What clue? (B, G, ..., 1, 2, ...)\n')
                 try:
-                    clue = int(clue_str)
+                    clue = Clue(int(clue_str))
                     break
                 except ValueError:
                     pass
                 try:
-                    clue = [
-                        c for c in self.cfg.colors if c.symbol == clue_str][0]
+                    clue = Clue([
+                        c for c in self.cfg.colors if c.symbol == clue_str][0])
                     break
                 except IndexError:
                     pass

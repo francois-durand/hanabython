@@ -20,8 +20,8 @@ This file is part of Hanabython.
 """
 import logging
 from copy import copy
-from typing import List, Union
-from hanabython.Classes.Color import Color
+from typing import List
+from hanabython.Classes.Clue import Clue
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Configuration import Configuration
 from hanabython.Classes.ConfigurationEndRule import ConfigurationEndRule
@@ -123,8 +123,7 @@ class Game(Colored):
             p.receive_someone_plays(
                 self.rel(i_player, i), k, copy(card))
 
-    def give_clue(self, i_cluer: int, i_clued: int,
-                  clue: Union[int, Color]) -> None:
+    def give_clue(self, i_cluer: int, i_clued: int, clue: Clue) -> None:
         self.n_clues -= 1
         bool_list = self.hands[i_clued].match(clue)
         for i, p in enumerate(self.players):

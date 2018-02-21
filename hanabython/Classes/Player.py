@@ -18,10 +18,10 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from typing import List, Union
+from typing import List
+from hanabython.Classes.Clue import Clue
 from hanabython.Classes.Action import Action
 from hanabython.Classes.Card import Card
-from hanabython.Classes.Color import Color
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Configuration import Configuration
 
@@ -133,7 +133,7 @@ class Player(Colored):
         pass
 
     def receive_someone_clues(
-        self, i_cluer: int, i_clued: int, clue: Union[int, Color],
+        self, i_cluer: int, i_clued: int, clue: Clue,
         bool_list: List[bool]
     ) -> None:
         """
@@ -146,7 +146,7 @@ class Player(Colored):
             (relatively to this player).
         :param i_clued: the position of the player who receives the clue
             (relatively to this player).
-        :param clue: the clue (value or color).
+        :param clue: the clue.
         :param bool_list: a list of boolean that indicates what cards
             match the clue given.
         """

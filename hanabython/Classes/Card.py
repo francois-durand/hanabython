@@ -18,7 +18,7 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from typing import Union
+from hanabython.Classes.Clue import Clue
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Color import Color
 
@@ -98,43 +98,43 @@ class Card(Colored):
     def colored(self) -> str:
         return self.c.color_str(self.c.symbol + str(self.v))
 
-    def match(self, clue: Union[int, Color]) -> bool:
+    def match(self, clue: Clue) -> bool:
         """
         React to a clue.
 
-        :param clue: the clue (value or color).
+        :param clue: the clue.
 
         :return: whether the card should be pointed when giving this clue.
 
         >>> from Classes.Color import Color
         >>> card_blue = Card('B3')
-        >>> card_blue.match(Color.BLUE)
+        >>> card_blue.match(Clue(Color.BLUE))
         True
-        >>> card_blue.match(Color.RED)
+        >>> card_blue.match(Clue(Color.RED))
         False
-        >>> card_blue.match(3)
+        >>> card_blue.match(Clue(3))
         True
-        >>> card_blue.match(4)
+        >>> card_blue.match(Clue(4))
         False
         >>> card_multi = Card('M3')
-        >>> card_multi.match(Color.BLUE)
+        >>> card_multi.match(Clue(Color.BLUE))
         True
         >>> card_colorless = Card('C3')
-        >>> card_colorless.match(Color.BLUE)
+        >>> card_colorless.match(Clue(Color.BLUE))
         False
         """
-        if type(clue) == int:
-            return self.v == clue
+        if clue.category == Clue.VALUE:
+            return self.v == clue.x
         else:
-            return self.c.match(clue)
+            return self.c.match(clue.x)
 
 
 if __name__ == '__main__':
     card = Card(c=Color.BLUE, v=3)
     card.test_str()
 
-    print('\nIs is blue?', card.match(Color.BLUE))
-    print('Is it a 4?', card.match(4))
+    print('\nIs is blue?', card.match(Clue(Color.BLUE)))
+    print('Is it a 4?', card.match(Clue(4)))
 
     import doctest
     doctest.testmod()

@@ -42,6 +42,12 @@ Configuration
 .. autoclass:: hanabython.ConfigurationHandSize
     :members:
 
+Clues
+-----
+
+.. autoclass:: hanabython.Clue
+    :members:
+
 Cards
 -----
 

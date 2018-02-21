@@ -18,8 +18,8 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from typing import Union, List
-from hanabython.Classes.Color import Color
+from typing import List
+from hanabython.Classes.Clue import Clue
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Configuration import Configuration
 from hanabython.Classes.CardPublic import CardPublic
@@ -66,7 +66,7 @@ class HandPublic(Colored, list):
 
         >>> from Classes.Configuration import Configuration
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
-        >>> hand.match(clue=5, bool_list=[True, True, False, False])
+        >>> hand.match(clue=Clue(5), bool_list=[True, True, False, False])
         >>> print(hand)
         [BGRWY     5, BGRWY     5, BGRWY 1234 , BGRWY 1234 ]
         >>> hand.receive()
@@ -85,8 +85,8 @@ class HandPublic(Colored, list):
 
         >>> from Classes.Configuration import Configuration
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
-        >>> hand.match(clue=5, bool_list=[False, True, False, False])
-        >>> hand.match(clue=4, bool_list=[True, False, False, False])
+        >>> hand.match(clue=Clue(5), bool_list=[False, True, False, False])
+        >>> hand.match(clue=Clue(4), bool_list=[True, False, False, False])
         >>> print(hand)
         [BGRWY    4 , BGRWY     5, BGRWY 123  , BGRWY 123  ]
         >>> hand.give(1)
@@ -95,11 +95,11 @@ class HandPublic(Colored, list):
         """
         self.pop(k)
 
-    def match(self, clue: Union[int, Color], bool_list: List[bool]):
+    def match(self, clue: Clue, bool_list: List[bool]):
         """
         React to a clue
 
-        :param clue: the clue (value or Color).
+        :param clue: the clue.
         :param bool_list: a list of booleans. The `i`-th coefficient is
             `True` iff the `i`-th card of the hand matches the clue given.
 
@@ -107,11 +107,12 @@ class HandPublic(Colored, list):
 
         >>> from Classes.Configuration import Configuration
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
-        >>> hand.match(clue=3, bool_list=[False, True, False, False])
+        >>> hand.match(clue=Clue(3), bool_list=[False, True, False, False])
         >>> print(hand)
         [BGRWY 12 45, BGRWY   3  , BGRWY 12 45, BGRWY 12 45]
         >>> from Classes.Color import Color
-        >>> hand.match(clue=Color.RED, bool_list=[False, True, False, False])
+        >>> hand.match(clue=Clue(Color.RED),
+        ...            bool_list=[False, True, False, False])
         >>> print(hand)
         [BG WY 12 45,   R     3  , BG WY 12 45, BG WY 12 45]
         """
@@ -126,11 +127,14 @@ if __name__ == '__main__':
     from Classes.Color import Color
     print("\nLet's give some clues: ")
     print(my_hand.colored())
-    my_hand.match(clue=Color.RED, bool_list=[True, False, True, False, False])
+    my_hand.match(clue=Clue(Color.RED),
+                  bool_list=[True, False, True, False, False])
     print(my_hand.colored())
-    my_hand.match(clue=Color.BLUE, bool_list=[False, True, False, False, False])
+    my_hand.match(clue=Clue(Color.BLUE),
+                  bool_list=[False, True, False, False, False])
     print(my_hand.colored())
-    my_hand.match(clue=3, bool_list=[True, False, False, True, False])
+    my_hand.match(clue=Clue(3),
+                  bool_list=[True, False, False, True, False])
     print(my_hand.colored())
 
     print("\nGive card in position 2: ")

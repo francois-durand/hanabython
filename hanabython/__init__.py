@@ -14,6 +14,7 @@ from .Classes.ActionPlay import ActionPlay
 from .Classes.Board import Board
 from .Classes.Card import Card
 from .Classes.CardPublic import CardPublic
+from .Classes.Clue import Clue
 from .Classes.Color import Color
 from .Classes.ColorClueBehavior import ColorClueBehavior
 from .Classes.Colored import Colored

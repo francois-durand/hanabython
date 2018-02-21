@@ -19,7 +19,7 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from typing import Union
+from hanabython.Classes.Clue import Clue
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Configuration import Configuration
 from hanabython.Classes.Color import Color
@@ -76,32 +76,32 @@ class CardPublic(Colored):
                 s += ' '
         return s
 
-    def _match_c(self, clue: Color, b: bool) -> None:
+    def _match_c(self, x: Color, b: bool) -> None:
         """
         React to a clue by color.
 
         Updates the internal variables of the card.
 
-        :param clue: the color of the clue.
+        :param x: the color of the clue.
         :param b: whether the card matched the clue or not.
         """
         for i, c in enumerate(self.cfg.colors):
-            if c.match(clue) != b:
+            if c.match(x) != b:
                 self.can_be_c[i] = False
                 self.yes_clued_c[i] = False  # important for multicolor
-            if b and c.match(clue) and self.can_be_c[i]:
+            if b and c.match(x) and self.can_be_c[i]:
                 self.yes_clued_c[i] = True
 
-    def _match_v(self, clue: int, b: bool) -> None:
+    def _match_v(self, x: int, b: bool) -> None:
         """
         React to a clue by value.
 
         Updates the internal variables of the card.
 
-        :param clue: the value of the clue.
+        :param x: the value of the clue.
         :param b: whether the card matched the clue or not.
         """
-        i = self.cfg.i_from_v(clue)
+        i = self.cfg.i_from_v(x)
         if b:
             self.yes_clued_v[i] = True
             self.can_be_v[:] = False
@@ -109,37 +109,37 @@ class CardPublic(Colored):
         else:
             self.can_be_v[i] = False
 
-    def match(self, clue: Union[int, Color], b: bool) -> None:
+    def match(self, clue: Clue, b: bool) -> None:
         """
         React to a clue.
 
         Updates the internal variables of the card.
 
-        :param clue: the clue (value or color).
-        :param b: whether the card matched the clue or not.
+        :param clue: the clue.
+        :param b: whether the card matches or not.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> cfg = Configuration.EIGHT_COLORS
         >>> card = CardPublic(cfg)
         >>> print(card)
         BGRWYPMC 12345
-        >>> card.match(clue=Color.RED, b=False)
+        >>> card.match(clue=Clue(Color.RED), b=False)
         >>> print(card)
         BG WYP C 12345
-        >>> card.match(clue=Color.BLUE, b=True)
+        >>> card.match(clue=Clue(Color.BLUE), b=True)
         >>> print(card)
         B        12345
 
         Let us try with the clues in the opposite order:
 
-        >>> from Classes.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> card = CardPublic(Configuration.EIGHT_COLORS)
         >>> print(card)
         BGRWYPMC 12345
-        >>> card.match(clue=Color.BLUE, b=True)
+        >>> card.match(clue=Clue(Color.BLUE), b=True)
         >>> print(card)
         B     M  12345
-        >>> card.match(clue=Color.RED, b=False)
+        >>> card.match(clue=Clue(Color.RED), b=False)
         >>> print(card)
         B        12345
 
@@ -149,17 +149,17 @@ class CardPublic(Colored):
         >>> card = CardPublic(Configuration.EIGHT_COLORS)
         >>> print(card)
         BGRWYPMC 12345
-        >>> card.match(clue=3, b=False)
+        >>> card.match(clue=Clue(3), b=False)
         >>> print(card)
         BGRWYPMC 12 45
-        >>> card.match(clue=5, b=True)
+        >>> card.match(clue=Clue(5), b=True)
         >>> print(card)
         BGRWYPMC     5
         """
-        if type(clue) == int:
-            self._match_v(clue, b)
+        if clue.category == Clue.VALUE:
+            self._match_v(clue.x, b)
         else:
-            self._match_c(clue, b)
+            self._match_c(clue.x, b)
 
 
 if __name__ == '__main__':
@@ -168,33 +168,33 @@ if __name__ == '__main__':
 
     print('\nIt is not red, then it is blue:')
     print(my_card.colored())
-    my_card.match(clue=Color.RED, b=False)
+    my_card.match(clue=Clue(Color.RED), b=False)
     print(my_card.colored())
-    my_card.match(clue=Color.BLUE, b=True)
+    my_card.match(clue=Clue(Color.BLUE), b=True)
     print(my_card.colored())
 
     print('\nIt is blue, then it is not red:')
     my_card = CardPublic(Configuration.EIGHT_COLORS)
     print(my_card.colored())
-    my_card.match(clue=Color.BLUE, b=True)
+    my_card.match(clue=Clue(Color.BLUE), b=True)
     print(my_card.colored())
-    my_card.match(clue=Color.RED, b=False)
+    my_card.match(clue=Clue(Color.RED), b=False)
     print(my_card.colored())
 
     print('\nIt is not 3, then it is 5:')
     my_card = CardPublic(Configuration.EIGHT_COLORS)
     print(my_card.colored())
-    my_card.match(clue=3, b=False)
+    my_card.match(clue=Clue(3), b=False)
     print(my_card.colored())
-    my_card.match(clue=5, b=True)
+    my_card.match(clue=Clue(5), b=True)
     print(my_card.colored())
 
     print('\nIt is 5, then it is not 3:')
     my_card = CardPublic(Configuration.EIGHT_COLORS)
     print(my_card.colored())
-    my_card.match(clue=5, b=True)
+    my_card.match(clue=Clue(5), b=True)
     print(my_card.colored())
-    my_card.match(clue=3, b=False)
+    my_card.match(clue=Clue(3), b=False)
     print(my_card.colored())
 
     import doctest

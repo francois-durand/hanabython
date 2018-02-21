@@ -19,6 +19,7 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import Iterable, Union, List
+from hanabython.Classes.Clue import Clue
 from hanabython.Classes.Colored import Colored
 from hanabython.Classes.Card import Card
 from hanabython.Classes.Color import Color
@@ -91,19 +92,19 @@ class Hand(Colored, list):
         """
         return self.pop(k)
 
-    def match(self, clue: Union[int, Color]) -> List[bool]:
+    def match(self, clue: Clue) -> List[bool]:
         """
         React to a clue.
 
-        :param clue: the clue (value or color).
+        :param clue: the clue.
 
         :return: a list of booleans. The `i`-th coefficient is `True`
             iff the `i`-th card of the hand matches the clue given.
 
         >>> hand = Hand(['G2', 'Y3', 'M1', 'B2', 'R4'])
-        >>> hand.match(Color.RED)
+        >>> hand.match(Clue(Color.RED))
         [False, False, True, False, True]
-        >>> hand.match(2)
+        >>> hand.match(Clue(2))
         [True, False, False, True, False]
         """
         return [card.match(clue) for card in self]
@@ -123,10 +124,10 @@ if __name__ == '__main__':
     print(my_hand.colored())
 
     print('\nMatch red clue:')
-    print(my_hand.match(Color.RED))
+    print(my_hand.match(Clue(Color.RED)))
 
     print('\nMatch clue 2:')
-    print(my_hand.match(2))
+    print(my_hand.match(Clue(2)))
     # print(hand.bool_list_from_clue(Action(
     #     category=Action.INFORM, clue_type=Action.VALUE, clue=2
     # )))
