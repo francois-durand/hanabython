@@ -32,6 +32,6 @@ from .Modules.Hand import Hand
 from .Modules.HandPublic import HandPublic
 from .Modules.Player import Player
 from .Modules.PlayerBase import PlayerBase
-from .Modules.PlayerHuman import PlayerHuman
+from .Modules.PlayerHumanText import PlayerHumanText
 from .Modules.StringAnsi import StringAnsi
 from .Modules.StringUtils import uncolor, title

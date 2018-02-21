@@ -29,7 +29,10 @@ from IPython.display import clear_output
 from time import sleep
 
 
-class PlayerHuman(PlayerBase):
+class PlayerHumanText(PlayerBase):
+    """
+    User interface for a human player in text mode.
+    """
 
     def choose_action(self) -> Action:
         """

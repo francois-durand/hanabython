@@ -28,7 +28,7 @@ from hanabython.Modules.Configuration import Configuration
 from hanabython.Modules.ConfigurationEmptyClueRule \
     import ConfigurationEmptyClueRule
 from hanabython.Modules.ConfigurationEndRule import ConfigurationEndRule
-from hanabython.Modules.PlayerHuman import PlayerHuman
+from hanabython.Modules.PlayerHumanText import PlayerHumanText
 from hanabython.Modules.Board import Board
 from hanabython.Modules.DrawPile import DrawPile
 from hanabython.Modules.DiscardPile import DiscardPile
@@ -334,9 +334,9 @@ if __name__ == '__main__':
         format='%(levelname)s - %(module)s - %(message)s',
         level=logging.DEBUG
     )
-    fanfan = PlayerHuman(name='Fanfan')
-    emilie = PlayerHuman(name='Emilie')
-    pek = PlayerHuman(name='PEK')
+    fanfan = PlayerHumanText(name='Fanfan')
+    emilie = PlayerHumanText(name='Emilie')
+    pek = PlayerHumanText(name='PEK')
     game = Game(Configuration.W_MULTICOLOR_SHORT, [fanfan, emilie, pek])
     game.play()
     # print(game.hands[alice])
