@@ -162,7 +162,7 @@ class Game(Colored):
         """
         logging.debug('Check legality and inform the active player.')
         if self.n_clues == self.cfg.n_clues:
-            self.active.receive_action_is_illegal(
+            self.active.receive_action_illegal(
                 'You cannot discard because you have all the clue chips.')
             return False
         self.active.receive_action_legal()
@@ -223,23 +223,23 @@ class Game(Colored):
         """
         logging.debug('Check legality and inform the active player.')
         if self.n_clues == 0:
-            self.active.receive_action_is_illegal(
+            self.active.receive_action_illegal(
                 'You cannot give a clue because you have do not have any clue '
                 'chip.')
             return False
         if i_clued == self.i_active:
-            self.active.receive_action_is_illegal(
+            self.active.receive_action_illegal(
                 'You cannot give a clue to yourself.')
             return False
         if (clue.category == Clue.COLOR
                 and clue.x.clue_behavior != ColorClueBehavior.NORMAL):
-            self.active.receive_action_is_illegal(
+            self.active.receive_action_illegal(
                 'You cannot clue this color: %s.' % clue.x.colored())
             return False
         bool_list = self.hands[i_clued].match(clue)
         if self.cfg.empty_clue_rule == ConfigurationEmptyClueRule.FORBIDDEN:
             if not any(bool_list):
-                self.active.receive_action_is_illegal(
+                self.active.receive_action_illegal(
                     'You cannot give this clue because it does not correspond '
                     'to any card.')
                 return False

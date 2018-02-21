@@ -46,6 +46,8 @@ class Player(Colored):
     def colored(self) -> str:
         return self.name
 
+    # *** Game start ***
+
     def receive_init(self, cfg: Configuration, player_names: List[str]) -> None:
         """
         Receive a message: the game starts.
@@ -72,17 +74,7 @@ class Player(Colored):
         """
         pass
 
-    def receive_remaining_turns(self, remaining_turns: int) -> None:
-        """
-        Receive a message: the number of remaining turns is now known.
-
-        This happens with the normal rule for end of game: as soon as the
-        discard pile is empty, we know how many turns are left. "Turn" means
-        that one player gets to play (not all of them).
-
-        :param remaining_turns: the number of turns left.
-        """
-        pass
+    # *** Drawing cards ***
 
     def receive_i_draw(self) -> None:
         """
@@ -92,76 +84,19 @@ class Player(Colored):
         """
         pass
 
-    def receive_partner_draws(self, i_drawer: int, card: Card) -> None:
+    def receive_partner_draws(self, i_active: int, card: Card) -> None:
         """
         Receive a message: another player tries to draw a card.
 
         A card is actually drawn only if the draw pile is not empty.
 
-        :param i_drawer: the position of the player who draws (relatively
+        :param i_active: the position of the player who draws (relatively
             to this player).
         :param card: the card drawn.
         """
         pass
 
-    def receive_someone_throws(self, i_thrower: int, k: int,
-                               card: Card) -> None:
-        """
-        Receive a message: a player throws (discards a card willingly).
-
-        It is not necessary to check whether this action is legal: the Game
-        will only send this message when it is the case.
-
-        :param i_thrower: the position of the player who throws (relatively
-            to this player).
-        :param k: position of the card in the hand.
-        :param card: the card thrown.
-        """
-        pass
-
-    def receive_someone_plays_card(
-        self, i_player: int, k: int, card: Card
-    ) -> None:
-        """
-        Receive a message: a player tries to play a card on the board.
-
-        This can be a success or a misfire.
-
-        :param i_player: the position of the player who plays the card
-            (relatively to this player).
-        :param k: position of the card in the hand.
-        :param card: the card played.
-        """
-        pass
-
-    def receive_someone_clues(
-        self, i_cluer: int, i_clued: int, clue: Clue,
-        bool_list: List[bool]
-    ) -> None:
-        """
-        Receive a message: a player gives a clue to another.
-
-        It is not necessary to check whether this action is legal: the Game
-        will only send this message when it is the case.
-
-        :param i_cluer: the position of the player who gives the clue
-            (relatively to this player).
-        :param i_clued: the position of the player who receives the clue
-            (relatively to this player).
-        :param clue: the clue.
-        :param bool_list: a list of boolean that indicates what cards
-            match the clue given.
-        """
-        pass
-
-    def receive_someone_forfeits(self, i_forfeiter: int) -> None:
-        """
-        Receive a message: a player forfeits.
-
-        :param i_forfeiter: the position of the player who forfeits
-            (relatively to this player).
-        """
-        pass
+    # *** General methods about actions ***
 
     # noinspection PyMethodMayBeStatic
     def choose_action(self) -> Action:
@@ -178,9 +113,11 @@ class Player(Colored):
         """
         pass
 
-    def receive_action_is_illegal(self, str) -> None:
+    def receive_action_illegal(self, s: str) -> None:
         """
-        Receive a message: the action chosen is not legal.
+        Receive a message: the action chosen is illegal.
+
+        :param s: a message explaining why the action is illegal.
         """
         pass
 
@@ -190,22 +127,104 @@ class Player(Colored):
         """
         pass
 
+    # *** Manage the 4 types of actions ***
+
+    def receive_someone_throws(self, i_active: int, k: int,
+                               card: Card) -> None:
+        """
+        Receive a message: a player throws (discards a card willingly).
+
+        It is not necessary to check whether this action is legal: the
+        :attr:`Game` will only send this message when it is the case.
+
+        :param i_active: the position of the player who throws (relatively
+            to this player).
+        :param k: position of the card in the hand.
+        :param card: the card thrown.
+        """
+        pass
+
+    def receive_someone_plays_card(
+        self, i_active: int, k: int, card: Card
+    ) -> None:
+        """
+        Receive a message: a player tries to play a card on the board.
+
+        This can be a success or a misfire.
+
+        :param i_active: the position of the player who plays the card
+            (relatively to this player).
+        :param k: position of the card in the hand.
+        :param card: the card played.
+        """
+        pass
+
+    def receive_someone_clues(
+        self, i_active: int, i_clued: int, clue: Clue, bool_list: List[bool]
+    ) -> None:
+        """
+        Receive a message: a player gives a clue to another.
+
+        It is not necessary to check whether this action is legal: the
+        :attr:`Game` will only send this message when it is the case.
+
+        :param i_active: the position of the player who gives the clue
+            (relatively to this player).
+        :param i_clued: the position of the player who receives the clue
+            (relatively to this player).
+        :param clue: the clue.
+        :param bool_list: a list of boolean that indicates what cards
+            match the clue given.
+        """
+        pass
+
+    def receive_someone_forfeits(self, i_active: int) -> None:
+        """
+        Receive a message: a player forfeits.
+
+        :param i_active: the position of the player who forfeits
+            (relatively to this player).
+        """
+        pass
+
+    # *** End of game ***
+
+    def receive_remaining_turns(self, remaining_turns: int) -> None:
+        """
+        Receive a message: the number of remaining turns is now known.
+
+        This happens with the normal rule for end of game: as soon as the
+        discard pile is empty, we know how many turns are left. N.B.:
+        a  "turn" means that one player gets to play (not all of them).
+
+        :param remaining_turns: the number of turns left.
+        """
+        pass
+
     def receive_lose(self, score: int) -> None:
         """
         Receive a message: the game is lost (misfires or forfeit).
+
+        :param score: the final score (0 in that case).
         """
         pass
 
     def receive_game_exhausted(self, score: int) -> None:
         """
         Receive a message: the game is over and is neither really lost
-        (misfires, forfeit) nor a total victory (maximal score).
+        (misfires, forfeit) nor a total victory (maximal score). Typically,
+        this happens a bit after the deck ran out of cards (it depends on the
+        end-of-game rule that is used).
+
+        :param score: the final score.
         """
         pass
 
     def receive_win(self, score: int) -> None:
         """
         Receive a message: the game is won (total victory).
+
+        :param score: the final score.
         """
         pass
 

@@ -333,26 +333,26 @@ class PlayerBase(Player):
         self.hands_public[0].receive()
         self.log('%s draws a card.\n' % self.name)
 
-    def receive_partner_draws(self, i_drawer: int, card: Card) -> None:
+    def receive_partner_draws(self, i_active: int, card: Card) -> None:
         """
         Receive a message: another player tries to draw a card.
 
         A card is actually drawn only if the draw pile is not empty.
 
-        :param i_drawer: the position of the player who draws (relatively
+        :param i_active: the position of the player who draws (relatively
             to this player).
         :param card: the card drawn.
         """
         if card is None:
             return
         self.draw_pile.give()
-        self.hands[i_drawer].receive(card)
-        self.hands_public[i_drawer].receive()
+        self.hands[i_active].receive(card)
+        self.hands_public[i_active].receive()
         self.log('%s draws %s.\n' % (
-            self.player_names[i_drawer], card.colored()))
+            self.player_names[i_active], card.colored()))
 
     def receive_someone_throws(
-        self, i_thrower: int, k: int, card: Card
+        self, i_active: int, k: int, card: Card
     ) -> None:
         """
         Receive a message: a player throws (discards a card willingly).
@@ -360,39 +360,39 @@ class PlayerBase(Player):
         It is not necessary to check whether this action is legal: the Game
         will only send this message when it is the case.
 
-        :param i_thrower: the position of the player who throws (relatively
+        :param i_active: the position of the player who throws (relatively
             to this player).
         :param k: position of the card in the hand.
         :param card: the card thrown.
         """
-        self.hands_public[i_thrower].give(k)
-        if i_thrower != 0:
-            self.hands[i_thrower].give(k)
+        self.hands_public[i_active].give(k)
+        if i_active != 0:
+            self.hands[i_active].give(k)
         self.discard_pile.receive(card)
         self.n_clues += 1
         self.log('%s discards %s.\n' % (
-            self.player_names[i_thrower], card.colored()))
+            self.player_names[i_active], card.colored()))
 
     def receive_someone_plays_card(
-        self, i_player: int, k: int, card: Card
+        self, i_active: int, k: int, card: Card
     ) -> None:
         """
         Receive a message: a player tries to play a card on the board.
 
         This can be a success or a misfire.
 
-        :param i_player: the position of the player who plays the card
+        :param i_active: the position of the player who plays the card
             (relatively to this player).
         :param k: position of the card in the hand.
         :param card: the card played.
         """
-        self.hands_public[i_player].give(k)
-        if i_player != 0:
-            self.hands[i_player].give(k)
+        self.hands_public[i_active].give(k)
+        if i_active != 0:
+            self.hands[i_active].give(k)
         success = self.board.try_to_play(card)
         if success:
             self.log('%s plays %s' % (
-                self.player_names[i_player], card.colored()))
+                self.player_names[i_active], card.colored()))
             if (card.v == self.cfg.highest[self.cfg.i_from_c(card.c)]
                     and self.n_clues < self.cfg.n_clues):
                 self.n_clues += 1
@@ -403,10 +403,10 @@ class PlayerBase(Player):
             self.discard_pile.receive(card)
             self.n_misfires += 1
             self.log('%s tries to play %s and misfires.\n' % (
-                self.player_names[i_player], card.colored()))
+                self.player_names[i_active], card.colored()))
 
     def receive_someone_clues(
-        self, i_cluer: int, i_clued: int, clue: Clue, bool_list: List[bool]
+        self, i_active: int, i_clued: int, clue: Clue, bool_list: List[bool]
     ) -> None:
         """
         Receive a message: a player gives a clue to another.
@@ -414,7 +414,7 @@ class PlayerBase(Player):
         It is not necessary to check whether this action is legal: the Game
         will only send this message when it is the case.
 
-        :param i_cluer: the position of the player who gives the clue
+        :param i_active: the position of the player who gives the clue
             (relatively to this player).
         :param i_clued: the position of the player who receives the clue
             (relatively to this player).
@@ -430,16 +430,16 @@ class PlayerBase(Player):
             # noinspection PyUnresolvedReferences
             clue_str = clue.colored()
         self.log('%s clues %s about %s.\n' % (
-            self.player_names[i_cluer], self.player_names[i_clued], clue_str))
+            self.player_names[i_active], self.player_names[i_clued], clue_str))
 
-    def receive_someone_forfeits(self, i_forfeiter: int) -> None:
+    def receive_someone_forfeits(self, i_active: int) -> None:
         """
         Receive a message: a player forfeits.
 
-        :param i_forfeiter: the position of the player who forfeits
+        :param i_active: the position of the player who forfeits
             (relatively to this player).
         """
-        self.log('%s forfeits.\n' % self.player_names[i_forfeiter])
+        self.log('%s forfeits.\n' % self.player_names[i_active])
 
     def receive_action_legal(self) -> None:
         """
@@ -489,17 +489,17 @@ class PlayerBase(Player):
             my_hand.receive(card=draw_pile.give())
             self.receive_i_draw()
             for i in range(1, self.n_players):
-                self.receive_partner_draws(i_drawer=i, card=draw_pile.give())
+                self.receive_partner_draws(i_active=i, card=draw_pile.give())
         self.receive_end_dealing()
         self.receive_someone_clues(
-            i_cluer=0, i_clued=1, clue=Clue(1),
+            i_active=0, i_clued=1, clue=Clue(1),
             bool_list=self.hands[1].match(Clue(1)))
         self.receive_someone_clues(
-            i_cluer=1, i_clued=0, clue=Clue(1),
+            i_active=1, i_clued=0, clue=Clue(1),
             bool_list=my_hand.match(Clue(1)))
-        self.receive_someone_throws(i_thrower=2, k=4, card=self.hands[2][4])
-        self.receive_partner_draws(i_drawer=2, card=draw_pile.give())
-        self.receive_someone_plays_card(i_player=0, k=1, card=my_hand[1])
+        self.receive_someone_throws(i_active=2, k=4, card=self.hands[2][4])
+        self.receive_partner_draws(i_active=2, card=draw_pile.give())
+        self.receive_someone_plays_card(i_active=0, k=1, card=my_hand[1])
         my_hand.receive(card=draw_pile.give())
         self.receive_i_draw()
         # print(my_hand.colored())
