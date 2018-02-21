@@ -107,6 +107,7 @@ class PlayerHumanText(PlayerBase):
         print(self.recent_events)
         if len(self.recent_events) > 0:
             input("Your turn is over (hit Enter).\n")
+        self.log_forget()
         super().receive_action_finished()
 
     def receive_lose(self, score: int) -> None:
@@ -115,6 +116,7 @@ class PlayerHumanText(PlayerBase):
         """
         super().receive_lose(score)
         print(self.recent_events)
+        self.log_forget()
 
     def receive_game_exhausted(self, score: int) -> None:
         """
@@ -123,6 +125,7 @@ class PlayerHumanText(PlayerBase):
         """
         super().receive_game_exhausted(score)
         print(self.recent_events)
+        self.log_forget()
 
     def receive_win(self, score: int) -> None:
         """
@@ -130,3 +133,4 @@ class PlayerHumanText(PlayerBase):
         """
         super().receive_win(score)
         print(self.recent_events)
+        self.log_forget()
