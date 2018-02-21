@@ -145,7 +145,7 @@ class PlayerBase(Player):
 
         >>> antoine = PlayerBase('Antoine')
         >>> antoine.demo_game()
-        >>> from Modules.StringUtils import uncolor
+        >>> from hanabython import uncolor
         >>> print(uncolor(antoine.colored_hands()))
         Antoine
         [BGRWY 12345, BGRWY  2345, BGRWY 1    , BGRWY 1    , BGRWY  2345]
@@ -186,7 +186,7 @@ class PlayerBase(Player):
 
         :return: the large string.
 
-        >>> from Modules.Card import Card
+        >>> from hanabython import Card
         >>> antoine = PlayerBase('Antoine')
         >>> antoine.receive_init(cfg=Configuration.STANDARD,
         ...                      player_names=['Antoine', 'Donald'])

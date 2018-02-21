@@ -32,7 +32,7 @@ class DrawPilePublic(Colored):
 
     :param cfg: the configuration of the game.
 
-    >>> from Modules.Configuration import Configuration
+    >>> from hanabython import Configuration
     >>> draw_pile = DrawPilePublic(cfg=Configuration.STANDARD)
     >>> print(draw_pile)
     50 cards left
@@ -54,7 +54,7 @@ class DrawPilePublic(Colored):
 
         Updates the internal variables of the pile.
 
-        >>> from Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> draw_pile = DrawPilePublic(cfg=Configuration.STANDARD)
         >>> print(draw_pile)
         50 cards left

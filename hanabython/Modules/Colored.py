@@ -25,7 +25,7 @@ class Colored:
     r"""
     An object with a colored string representation.
 
-    >>> from Modules.StringAnsi import StringAnsi
+    >>> from hanabython import StringAnsi
     >>> class MyClass(Colored):
     ...     def colored(self):
     ...         return StringAnsi.RED + 'some text' + StringAnsi.RESET
@@ -78,7 +78,8 @@ class Colored:
 
 
 if __name__ == '__main__':
-    from Modules.StringAnsi import StringAnsi
+    from hanabython.Modules.StringAnsi import StringAnsi
+
     class TestClass(Colored):
         def colored(self):
             return StringAnsi.RED + 'some text' + StringAnsi.RESET

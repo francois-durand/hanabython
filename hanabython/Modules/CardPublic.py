@@ -45,7 +45,7 @@ class CardPublic(Colored):
     :var np.array yes_clued_v: a coefficient is True iff the card was
         explicitly clued as value v.
 
-    >>> from Modules.Configuration import Configuration
+    >>> from hanabython import Configuration
     >>> card = CardPublic(Configuration.EIGHT_COLORS)
     >>> print(card)
     BGRWYPMC 12345
@@ -145,7 +145,7 @@ class CardPublic(Colored):
 
         Now with clues by value:
 
-        >>> from Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> card = CardPublic(Configuration.EIGHT_COLORS)
         >>> print(card)
         BGRWYPMC 12345

@@ -54,7 +54,7 @@ if __name__ == '__main__':
     my_action.test_str()
 
     print()
-    from Modules.Color import Color
+    from hanabython.Modules.Color import Color
     my_action = ActionClue(i=1, clue=Clue(Color.BLUE))
     my_action.test_str()
 

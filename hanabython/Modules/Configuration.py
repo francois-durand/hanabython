@@ -165,7 +165,7 @@ class Configuration(Colored):
 
         :return: the corresponding index.
 
-        >>> from Modules.Color import Color
+        >>> from hanabython import Color
         >>> Configuration.STANDARD.i_from_c(Color.BLUE)
         0
         """
@@ -228,7 +228,8 @@ if __name__ == '__main__':
     print(Configuration.W_MULTICOLOR_SHORT.colored() + '\n')
 
     print('\nA manual configuration: ')
-    from Modules.ConfigurationColorContents import ConfigurationColorContents
+    from hanabython.Modules.ConfigurationColorContents \
+        import ConfigurationColorContents
     my_cfg = Configuration(
         deck=ConfigurationDeck(contents=[
             (Color.BLUE, ConfigurationColorContents([3, 2, 1, 1])),

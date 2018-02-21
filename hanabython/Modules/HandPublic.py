@@ -44,7 +44,7 @@ class HandPublic(Colored, list):
         a game, the hand should be initialized with 0 cards, because cards will
         be given one by one to the players during the initial dealing of hands.
 
-    >>> from Modules.Configuration import Configuration
+    >>> from hanabython import Configuration
     >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
     >>> print(hand)
     [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
@@ -64,7 +64,7 @@ class HandPublic(Colored, list):
 
         An unknown card is added on the left, i.e. at the beginning of the list.
 
-        >>> from Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=Clue(5), bool_list=[True, True, False, False])
         >>> print(hand)
@@ -83,7 +83,7 @@ class HandPublic(Colored, list):
 
         The card is simply suppressed from the hand.
 
-        >>> from Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=Clue(5), bool_list=[False, True, False, False])
         >>> hand.match(clue=Clue(4), bool_list=[True, False, False, False])
@@ -105,12 +105,12 @@ class HandPublic(Colored, list):
 
         Updates the internal variables of the hand.
 
-        >>> from Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=Clue(3), bool_list=[False, True, False, False])
         >>> print(hand)
         [BGRWY 12 45, BGRWY   3  , BGRWY 12 45, BGRWY 12 45]
-        >>> from Modules.Color import Color
+        >>> from hanabython import Color
         >>> hand.match(clue=Clue(Color.RED),
         ...            bool_list=[False, True, False, False])
         >>> print(hand)
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     my_hand = HandPublic(cfg=Configuration(), n_cards=4)
     my_hand.test_str()
 
-    from Modules.Color import Color
+    from hanabython.Modules.Color import Color
     print("\nLet's give some clues: ")
     print(my_hand.colored())
     my_hand.match(clue=Clue(Color.RED),
