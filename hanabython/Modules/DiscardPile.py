@@ -20,10 +20,10 @@ This file is part of Hanabython.
 """
 from typing import List
 import numpy as np
-from hanabython.Classes.Colored import Colored
-from hanabython.Classes.StringUtils import uncolor
-from hanabython.Classes.Configuration import Configuration
-from hanabython.Classes.Card import Card
+from hanabython.Modules.Colored import Colored
+from hanabython.Modules.StringUtils import uncolor
+from hanabython.Modules.Configuration import Configuration
+from hanabython.Modules.Card import Card
 
 
 class DiscardPile(Colored):
@@ -32,7 +32,7 @@ class DiscardPile(Colored):
 
     :param cfg: the configuration of the game.
 
-    >>> from Classes.Configuration import Configuration
+    >>> from Modules.Configuration import Configuration
     >>> discard_pile = DiscardPile(Configuration.STANDARD)
     >>> print(discard_pile)
     No card discarded yet
@@ -57,7 +57,7 @@ class DiscardPile(Colored):
             one used for the standard method :meth:`__str__` (this behavior
             might be modified in the future).
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -90,7 +90,7 @@ class DiscardPile(Colored):
 
         :return: a representation of the discard pile.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -124,7 +124,7 @@ class DiscardPile(Colored):
 
         :return: a representation of the discard pile.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -147,7 +147,7 @@ class DiscardPile(Colored):
 
         :return: a representation of the discard pile.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -173,7 +173,7 @@ class DiscardPile(Colored):
         :return: the list of discarded cards, by lexicographic order. The order
             on the colors is the one specified in :attr:`cfg`.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -195,7 +195,7 @@ class DiscardPile(Colored):
 
         Update the internal variables of the discard pile.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> print(discard_pile)

@@ -19,10 +19,10 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import Union
-from hanabython.Classes.Colored import Colored
+from hanabython.Modules.Colored import Colored
 from random import shuffle
-from hanabython.Classes.Configuration import Configuration
-from hanabython.Classes.Card import Card
+from hanabython.Modules.Configuration import Configuration
+from hanabython.Modules.Card import Card
 
 
 class DrawPile(Colored, list):
@@ -39,7 +39,7 @@ class DrawPile(Colored, list):
     but it could have an influence someday in some not-yet-implemented
     non-official variants).
 
-    >>> from Classes.Configuration import Configuration
+    >>> from Modules.Configuration import Configuration
     >>> draw_pile = DrawPile(Configuration.STANDARD)
     """
 
@@ -61,7 +61,7 @@ class DrawPile(Colored, list):
 
         :return: the number of cards.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> draw_pile = DrawPile(Configuration.STANDARD)
         >>> draw_pile.n_cards
         50
@@ -74,11 +74,11 @@ class DrawPile(Colored, list):
 
         :return: the card drawn. If the pile is empty, return None.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> draw_pile = DrawPile(cfg=Configuration.STANDARD)
         >>> card = draw_pile.give()
         >>> type(card)
-        <class 'hanabython.Classes.Card.Card'>
+        <class 'hanabython.Modules.Card.Card'>
         >>> while draw_pile.n_cards >= 1:
         ...     _ = draw_pile.give()
         >>> print(draw_pile.give())

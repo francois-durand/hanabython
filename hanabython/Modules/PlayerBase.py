@@ -19,19 +19,19 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import List
-from hanabython.Classes.Clue import Clue
-from hanabython.Classes.Card import Card
-from hanabython.Classes.StringUtils import uncolor, title
-from hanabython.Classes.Configuration import Configuration
-from hanabython.Classes.ConfigurationEndRule import ConfigurationEndRule
-from hanabython.Classes.Board import Board
-from hanabython.Classes.DiscardPile import DiscardPile
-from hanabython.Classes.DrawPilePublic import DrawPilePublic
-from hanabython.Classes.DrawPile import DrawPile
-from hanabython.Classes.Hand import Hand
-from hanabython.Classes.HandPublic import HandPublic
-from hanabython.Classes.StringAnsi import StringAnsi
-from hanabython.Classes.Player import Player
+from hanabython.Modules.Clue import Clue
+from hanabython.Modules.Card import Card
+from hanabython.Modules.StringUtils import uncolor, title
+from hanabython.Modules.Configuration import Configuration
+from hanabython.Modules.ConfigurationEndRule import ConfigurationEndRule
+from hanabython.Modules.Board import Board
+from hanabython.Modules.DiscardPile import DiscardPile
+from hanabython.Modules.DrawPilePublic import DrawPilePublic
+from hanabython.Modules.DrawPile import DrawPile
+from hanabython.Modules.Hand import Hand
+from hanabython.Modules.HandPublic import HandPublic
+from hanabython.Modules.StringAnsi import StringAnsi
+from hanabython.Modules.Player import Player
 
 
 class PlayerBase(Player):
@@ -145,7 +145,7 @@ class PlayerBase(Player):
 
         >>> antoine = PlayerBase('Antoine')
         >>> antoine.demo_game()
-        >>> from Classes.StringUtils import uncolor
+        >>> from Modules.StringUtils import uncolor
         >>> print(uncolor(antoine.colored_hands()))
         Antoine
         [BGRWY 12345, BGRWY  2345, BGRWY 1    , BGRWY 1    , BGRWY  2345]
@@ -186,7 +186,7 @@ class PlayerBase(Player):
 
         :return: the large string.
 
-        >>> from Classes.Card import Card
+        >>> from Modules.Card import Card
         >>> antoine = PlayerBase('Antoine')
         >>> antoine.receive_init(cfg=Configuration.STANDARD,
         ...                      player_names=['Antoine', 'Donald'])

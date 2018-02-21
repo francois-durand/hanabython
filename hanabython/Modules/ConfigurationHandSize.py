@@ -19,7 +19,7 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import Callable
-from hanabython.Classes.Colored import Colored
+from hanabython.Modules.Colored import Colored
 
 
 class ConfigurationHandSize(Colored):

@@ -20,11 +20,11 @@ This file is part of Hanabython.
 """
 import numpy as np
 from typing import List, Dict
-from hanabython.Classes.Colored import Colored
-from hanabython.Classes.Color import Color
-from hanabython.Classes.ConfigurationDeck import ConfigurationDeck
-from hanabython.Classes.ConfigurationHandSize import ConfigurationHandSize
-from hanabython.Classes.ConfigurationEndRule import ConfigurationEndRule
+from hanabython.Modules.Colored import Colored
+from hanabython.Modules.Color import Color
+from hanabython.Modules.ConfigurationDeck import ConfigurationDeck
+from hanabython.Modules.ConfigurationHandSize import ConfigurationHandSize
+from hanabython.Modules.ConfigurationEndRule import ConfigurationEndRule
 
 
 class Configuration(Colored):
@@ -165,7 +165,7 @@ class Configuration(Colored):
 
         :return: the corresponding index.
 
-        >>> from Classes.Color import Color
+        >>> from Modules.Color import Color
         >>> Configuration.STANDARD.i_from_c(Color.BLUE)
         0
         """
@@ -228,7 +228,7 @@ if __name__ == '__main__':
     print(Configuration.W_MULTICOLOR_SHORT.colored() + '\n')
 
     print('\nA manual configuration: ')
-    from Classes.ConfigurationColorContents import ConfigurationColorContents
+    from Modules.ConfigurationColorContents import ConfigurationColorContents
     my_cfg = Configuration(
         deck=ConfigurationDeck(contents=[
             (Color.BLUE, ConfigurationColorContents([3, 2, 1, 1])),

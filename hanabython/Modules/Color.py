@@ -18,9 +18,9 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from hanabython.Classes.Colored import Colored
-from hanabython.Classes.StringAnsi import StringAnsi
-from hanabython.Classes.ColorClueBehavior import ColorClueBehavior
+from hanabython.Modules.Colored import Colored
+from hanabython.Modules.StringAnsi import StringAnsi
+from hanabython.Modules.ColorClueBehavior import ColorClueBehavior
 
 
 class Color(Colored):

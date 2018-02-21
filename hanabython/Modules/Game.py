@@ -21,17 +21,17 @@ This file is part of Hanabython.
 import logging
 from copy import copy
 from typing import List
-from hanabython.Classes.Clue import Clue
-from hanabython.Classes.Colored import Colored
-from hanabython.Classes.Configuration import Configuration
-from hanabython.Classes.ConfigurationEndRule import ConfigurationEndRule
-from hanabython.Classes.PlayerHuman import PlayerHuman
-from hanabython.Classes.Board import Board
-from hanabython.Classes.DrawPile import DrawPile
-from hanabython.Classes.DiscardPile import DiscardPile
-from hanabython.Classes.Hand import Hand
-from hanabython.Classes.Action import Action
-from hanabython.Classes.Player import Player
+from hanabython.Modules.Clue import Clue
+from hanabython.Modules.Colored import Colored
+from hanabython.Modules.Configuration import Configuration
+from hanabython.Modules.ConfigurationEndRule import ConfigurationEndRule
+from hanabython.Modules.PlayerHuman import PlayerHuman
+from hanabython.Modules.Board import Board
+from hanabython.Modules.DrawPile import DrawPile
+from hanabython.Modules.DiscardPile import DiscardPile
+from hanabython.Modules.Hand import Hand
+from hanabython.Modules.Action import Action
+from hanabython.Modules.Player import Player
 
 
 class Game(Colored):

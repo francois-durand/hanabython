@@ -18,14 +18,14 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from hanabython.Classes.StringUtils import uncolor
+from hanabython.Modules.StringUtils import uncolor
 
 
 class Colored:
     r"""
     An object with a colored string representation.
 
-    >>> from Classes.StringAnsi import StringAnsi
+    >>> from Modules.StringAnsi import StringAnsi
     >>> class MyClass(Colored):
     ...     def colored(self):
     ...         return StringAnsi.RED + 'some text' + StringAnsi.RESET
@@ -78,7 +78,7 @@ class Colored:
 
 
 if __name__ == '__main__':
-    from Classes.StringAnsi import StringAnsi
+    from Modules.StringAnsi import StringAnsi
     class TestClass(Colored):
         def colored(self):
             return StringAnsi.RED + 'some text' + StringAnsi.RESET

@@ -18,32 +18,29 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from hanabython.Classes.Action import Action
+from hanabython.Modules.Action import Action
+from hanabython.Modules.StringAnsi import StringAnsi
 
 
-class ActionDiscard(Action):
+class ActionForfeit(Action):
     """
-    An action of a player: discard.
+    An action of a player: forfeit (lose the game immediately).
 
-    :param k: position of the card in the hand (between 0 and `#cards - 1`).
-        Be careful: as of now, :attr:`__str__` expresses the position in
-        "user-friendly" format, i.e. between 1 and `#cards` (this behavior might
-        change in the future).
-
-    >>> action = ActionDiscard(k=2)
+    >>> action = ActionForfeit()
     >>> print(action)
-    Discard card in position 3
+    Forfeit
     """
-    def __init__(self, k: int):
-        super().__init__(Action.DISCARD)
-        self.k = k
+
+    def __init__(self):
+        super().__init__(Action.FORFEIT)
 
     def colored(self) -> str:
-        return 'Discard card in position %s' % (self.k + 1)
+        return (StringAnsi.RED + StringAnsi.STYLE_BOLD
+                + 'Forfeit' + StringAnsi.RESET)
 
 
 if __name__ == '__main__':
-    my_action = ActionDiscard(k=2)
+    my_action = ActionForfeit()
     my_action.test_str()
 
     import doctest

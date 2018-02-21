@@ -18,9 +18,9 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from hanabython.Classes.Clue import Clue
-from hanabython.Classes.Colored import Colored
-from hanabython.Classes.Color import Color
+from hanabython.Modules.Clue import Clue
+from hanabython.Modules.Colored import Colored
+from hanabython.Modules.Color import Color
 
 
 class Card(Colored):
@@ -106,7 +106,7 @@ class Card(Colored):
 
         :return: whether the card should be pointed when giving this clue.
 
-        >>> from Classes.Color import Color
+        >>> from Modules.Color import Color
         >>> card_blue = Card('B3')
         >>> card_blue.match(Clue(Color.BLUE))
         True

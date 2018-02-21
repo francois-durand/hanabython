@@ -19,11 +19,11 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from hanabython.Classes.Clue import Clue
-from hanabython.Classes.Colored import Colored
-from hanabython.Classes.Configuration import Configuration
-from hanabython.Classes.Color import Color
-from hanabython.Classes.StringAnsi import StringAnsi
+from hanabython.Modules.Clue import Clue
+from hanabython.Modules.Colored import Colored
+from hanabython.Modules.Configuration import Configuration
+from hanabython.Modules.Color import Color
+from hanabython.Modules.StringAnsi import StringAnsi
 
 
 class CardPublic(Colored):
@@ -45,7 +45,7 @@ class CardPublic(Colored):
     :var np.array yes_clued_v: a coefficient is True iff the card was
         explicitly clued as value v.
 
-    >>> from Classes.Configuration import Configuration
+    >>> from Modules.Configuration import Configuration
     >>> card = CardPublic(Configuration.EIGHT_COLORS)
     >>> print(card)
     BGRWYPMC 12345
@@ -145,7 +145,7 @@ class CardPublic(Colored):
 
         Now with clues by value:
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> card = CardPublic(Configuration.EIGHT_COLORS)
         >>> print(card)
         BGRWYPMC 12345

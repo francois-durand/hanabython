@@ -19,10 +19,10 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import Iterable, Union, List
-from hanabython.Classes.Clue import Clue
-from hanabython.Classes.Colored import Colored
-from hanabython.Classes.Card import Card
-from hanabython.Classes.Color import Color
+from hanabython.Modules.Clue import Clue
+from hanabython.Modules.Colored import Colored
+from hanabython.Modules.Card import Card
+from hanabython.Modules.Color import Color
 
 
 class Hand(Colored, list):

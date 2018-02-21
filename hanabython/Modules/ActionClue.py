@@ -18,8 +18,8 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
-from hanabython.Classes.Action import Action
-from hanabython.Classes.Clue import Clue
+from hanabython.Modules.Action import Action
+from hanabython.Modules.Clue import Clue
 
 
 class ActionClue(Action):
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     my_action.test_str()
 
     print()
-    from Classes.Color import Color
+    from Modules.Color import Color
     my_action = ActionClue(i=1, clue=Clue(Color.BLUE))
     my_action.test_str()
 

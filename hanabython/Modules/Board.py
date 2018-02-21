@@ -19,11 +19,11 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 import numpy as np
-from hanabython.Classes.Colored import Colored
-from hanabython.Classes.StringUtils import uncolor
-from hanabython.Classes.Configuration import Configuration
-from hanabython.Classes.Color import Color
-from hanabython.Classes.Card import Card
+from hanabython.Modules.Colored import Colored
+from hanabython.Modules.StringUtils import uncolor
+from hanabython.Modules.Configuration import Configuration
+from hanabython.Modules.Color import Color
+from hanabython.Modules.Card import Card
 
 
 class Board(Colored):
@@ -37,7 +37,7 @@ class Board(Colored):
         of the highest card played in color ``c``. The correspondence between
         colors and indexes is the one provided by :attr:`cfg`.
 
-    >>> from Classes.Configuration import Configuration
+    >>> from Modules.Configuration import Configuration
     >>> board = Board(Configuration.STANDARD)
     >>> print(board.altitude)
     [0 0 0 0 0]
@@ -59,7 +59,7 @@ class Board(Colored):
 
         :return: a representation of the board.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -84,7 +84,7 @@ class Board(Colored):
 
         :return: a representation of the board.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -109,7 +109,7 @@ class Board(Colored):
 
         :return: a representation of the board.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -137,7 +137,7 @@ class Board(Colored):
 
         :return: a representation of the board.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -167,7 +167,7 @@ class Board(Colored):
 
         :return: a representation of the cards played in this color.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
@@ -191,7 +191,7 @@ class Board(Colored):
 
         :return: a representation of the cards played in this color.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
@@ -214,8 +214,8 @@ class Board(Colored):
         :return: True if the card is successfully played on the board, False
             otherwise (i.e. if it leads to a misfire).
 
-        >>> from Classes.Configuration import Configuration
-        >>> from Classes.Card import Card
+        >>> from Modules.Configuration import Configuration
+        >>> from Modules.Card import Card
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['B1', 'B2', 'Y1', 'Y3', 'B1']:
         ...     board.try_to_play(Card(s))
@@ -241,7 +241,7 @@ class Board(Colored):
 
         :return: the sum of the altitudes reached in all colors.
 
-        >>> from Classes.Configuration import Configuration
+        >>> from Modules.Configuration import Configuration
         >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:

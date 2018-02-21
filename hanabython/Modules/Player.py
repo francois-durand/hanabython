@@ -19,11 +19,11 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import List
-from hanabython.Classes.Clue import Clue
-from hanabython.Classes.Action import Action
-from hanabython.Classes.Card import Card
-from hanabython.Classes.Colored import Colored
-from hanabython.Classes.Configuration import Configuration
+from hanabython.Modules.Clue import Clue
+from hanabython.Modules.Action import Action
+from hanabython.Modules.Card import Card
+from hanabython.Modules.Colored import Colored
+from hanabython.Modules.Configuration import Configuration
 
 
 class Player(Colored):

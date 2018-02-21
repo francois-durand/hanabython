@@ -19,9 +19,9 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import Iterable, Tuple
-from hanabython.Classes.Colored import Colored
-from hanabython.Classes.Color import Color
-from hanabython.Classes.ConfigurationColorContents \
+from hanabython.Modules.Colored import Colored
+from hanabython.Modules.Color import Color
+from hanabython.Modules.ConfigurationColorContents \
     import ConfigurationColorContents
 from collections import OrderedDict
 
