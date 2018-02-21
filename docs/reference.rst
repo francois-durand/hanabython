@@ -36,6 +36,9 @@ Configuration
 .. autoclass:: hanabython.ConfigurationDeck
     :members:
 
+.. autoclass:: hanabython.ConfigurationEmptyClueRule
+    :members:
+
 .. autoclass:: hanabython.ConfigurationEndRule
     :members:
 
