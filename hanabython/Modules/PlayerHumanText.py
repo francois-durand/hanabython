@@ -31,12 +31,19 @@ from time import sleep
 
 class PlayerHumanText(PlayerBase):
     """
-    User interface for a human player in text mode.
+    User interface for a human player in text mode (terminal or notebook).
+
+    :param ipython: use `True` when using the player in a notebook. This
+        fixes a problem between ``clear_output`` and ``input``.
+
+    >>> antoine = PlayerHumanText('Antoine', ipython=True)
     """
 
     def __init__(self, name: str, ipython=False):
         super().__init__(name)
         self.ipython = ipython
+
+    # *** General methods about actions ***
 
     def choose_action(self) -> Action:
         """
@@ -44,7 +51,7 @@ class PlayerHumanText(PlayerBase):
 
         :return: the action chosen by the player.
         """
-        #TODO: clean this function a bit and write a decent docstring.
+        # TODO: clean this function a bit and write a decent docstring.
         print('\n' * 40)
         if self.ipython:
             clear_output()
@@ -101,19 +108,52 @@ class PlayerHumanText(PlayerBase):
                 return ActionThrow(k=k)
         return ActionForfeit()
 
+    def receive_action_legal(self) -> None:
+        """
+        We forget the previous events.
+
+        >>> from hanabython import Configuration
+        >>> antoine = PlayerHumanText('Antoine')
+        >>> antoine.receive_init(Configuration.STANDARD,
+        ...                      player_names=['Antoine', 'Donald X'])
+        >>> antoine.log_forget()
+        >>> antoine.log('Donald does something.')
+        >>> antoine.recent_events
+        'Donald does something.'
+        >>> # Here, Antoine would choose his own action. Then...
+        >>> antoine.receive_action_legal()
+        >>> antoine.log("Antoine's action has such and such consequences.")
+        >>> antoine.recent_events
+        "Antoine's action has such and such consequences."
+        """
+        self.log_forget()
+
     def receive_action_finished(self) -> None:
         """
-        Receive a message: the action of the player is finished.
+        We inform the player of the most recent events (consequences
+        of her actions). Then, unless this string was empty, we pause.
+        Finally, we forget the previous events.
         """
         print(self.recent_events)
-        if len(self.recent_events) > 0:
+        if not self.recent_events:
             input("Your turn is over (hit Enter).\n")
         self.log_forget()
-        super().receive_action_finished()
+
+    # *** End of game ***
 
     def receive_lose(self, score: int) -> None:
         """
-        Receive a message: the game is lost (misfires or forfeit).
+        We print and forget the recent (unfortunate) events.
+
+        >>> from hanabython import Configuration
+        >>> antoine = PlayerHumanText('Antoine')
+        >>> antoine.receive_init(Configuration.STANDARD,
+        ...                      player_names=['Antoine', 'Donald X'])
+        >>> antoine.log_forget()
+        >>> antoine.receive_lose(score=0)
+        Antoine's team loses.
+        Score: 0.
+        <BLANKLINE>
         """
         super().receive_lose(score)
         print(self.recent_events)
@@ -121,8 +161,17 @@ class PlayerHumanText(PlayerBase):
 
     def receive_game_exhausted(self, score: int) -> None:
         """
-        Receive a message: the game is over and is neither really lost
-        (misfires, forfeit) nor a total victory (maximal score).
+        We print and forget the recent events.
+
+        >>> from hanabython import Configuration
+        >>> antoine = PlayerHumanText('Antoine')
+        >>> antoine.receive_init(Configuration.STANDARD,
+        ...                      player_names=['Antoine', 'Donald X'])
+        >>> antoine.log_forget()
+        >>> antoine.receive_game_exhausted(score=23)
+        Antoine's team has reached the end of the game.
+        Score: 23.
+        <BLANKLINE>
         """
         super().receive_game_exhausted(score)
         print(self.recent_events)
@@ -130,8 +179,23 @@ class PlayerHumanText(PlayerBase):
 
     def receive_win(self, score: int) -> None:
         """
-        Receive a message: the game is won (total victory).
+        We print and forget the recent (cheerful) events.
+
+        >>> from hanabython import Configuration
+        >>> antoine = PlayerHumanText('Antoine')
+        >>> antoine.receive_init(Configuration.STANDARD,
+        ...                      player_names=['Antoine', 'Donald X'])
+        >>> antoine.log_forget()
+        >>> antoine.receive_win(score=25)
+        Antoine's team wins!
+        Score: 25.
+        <BLANKLINE>
         """
         super().receive_win(score)
         print(self.recent_events)
         self.log_forget()
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()

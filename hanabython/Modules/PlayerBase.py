@@ -470,36 +470,6 @@ class PlayerBase(Player):
         self.log('%s draws %s.\n' % (
             self.player_names[i_active], card.colored()))
 
-    # *** General methods about actions ***
-
-    def receive_action_legal(self) -> None:
-        """
-        We forget the previous events.
-
-        >>> antoine = PlayerBase('Antoine')
-        >>> antoine.receive_init(Configuration.STANDARD,
-        ...                      player_names=['Antoine', 'Donald X'])
-        >>> antoine.log_forget()
-        >>> antoine.log('Donald does something.')
-        >>> antoine.recent_events
-        'Donald does something.'
-        >>> # Here, Antoine would choose his own action. Then...
-        >>> antoine.receive_action_legal()
-        >>> antoine.log("Antoine's action has such and such consequences.")
-        >>> antoine.recent_events
-        "Antoine's action has such and such consequences."
-        >>> antoine.receive_action_finished()
-        >>> antoine.recent_events
-        ''
-        """
-        self.log_forget()
-
-    def receive_action_finished(self) -> None:
-        """
-        We forget the previous events. Cf. :meth:`receive_action_legal`.
-        """
-        self.log_forget()
-
     # *** Manage the 4 types of actions ***
 
     def receive_someone_throws(
