@@ -44,6 +44,7 @@ class PlayerHumanText(PlayerBase):
 
         :return: the action chosen by the player.
         """
+        #TODO: clean this function a bit and write a decent docstring.
         print('\n' * 40)
         if self.ipython:
             clear_output()

@@ -117,7 +117,7 @@ Players
 .. autoclass:: hanabython.PlayerBase
     :members:
 
-.. autoclass:: hanabython.PlayerHuman
+.. autoclass:: hanabython.PlayerHumanText
     :members:
 
 Game

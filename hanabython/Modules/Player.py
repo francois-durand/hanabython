@@ -70,7 +70,7 @@ class Player(Colored):
 
         The hands themselves are not communicated in this message. Drawing
         cards, including for the initial hands, is always handled by
-        :meth:`receive_i_draw` and :meth:`receive_partner_draws`.
+        :meth:`receive_i_draw` or :meth:`receive_partner_draws`.
         """
         pass
 
@@ -163,7 +163,7 @@ class Player(Colored):
         self, i_active: int, i_clued: int, clue: Clue, bool_list: List[bool]
     ) -> None:
         """
-        Receive a message: a player gives a clue to another.
+        Receive a message: a player gives a clue to another one.
 
         It is not necessary to check whether this action is legal: the
         :attr:`Game` will only send this message when it is the case.
@@ -195,7 +195,7 @@ class Player(Colored):
 
         This happens with the normal rule for end of game: as soon as the
         discard pile is empty, we know how many turns are left. N.B.:
-        a  "turn" means that one player gets to play (not all of them).
+        the word  "turn" means that one player gets to play (not all of them).
 
         :param remaining_turns: the number of turns left.
         """
