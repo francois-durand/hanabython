@@ -34,9 +34,9 @@ class PlayerHumanText(PlayerBase):
     User interface for a human player in text mode.
     """
 
-    def __init__(self, name: str, ipython_workaround=False):
+    def __init__(self, name: str, ipython=False):
         super().__init__(name)
-        self.ipython_workaround = ipython_workaround
+        self.ipython = ipython
 
     def choose_action(self) -> Action:
         """
@@ -45,7 +45,7 @@ class PlayerHumanText(PlayerBase):
         :return: the action chosen by the player.
         """
         print('\n' * 40)
-        if self.ipython_workaround:
+        if self.ipython:
             clear_output()
             sleep(0.5)  # Essential line to prevent strange behavior in Jupyter!
         input('%s is going to play (hit Enter).\n' % self.name)
