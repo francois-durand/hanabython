@@ -47,8 +47,8 @@ class PlayerBase(Player):
     does not share access to its internal variables with the players.
 
     Note also that most methods are not supposed to work before
-    :meth:`receive_init` is run at least once, which initializes all variables
-    for a new game.
+    :meth:`receive_init` is run at least once, which initializes all the
+    variables for a new game.
 
     :param str name: the name of the player.
 
