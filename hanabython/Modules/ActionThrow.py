@@ -21,29 +21,31 @@ This file is part of Hanabython.
 from hanabython.Modules.Action import Action
 
 
-class ActionDiscard(Action):
+class ActionThrow(Action):
     """
-    An action of a player: discard.
+    An action of a player: throw (discard willingly).
 
     :param k: position of the card in the hand (between 0 and `#cards - 1`).
         Be careful: as of now, :attr:`__str__` expresses the position in
         "user-friendly" format, i.e. between 1 and `#cards` (this behavior might
         change in the future).
 
-    >>> action = ActionDiscard(k=2)
+    >>> action = ActionThrow(k=2)
     >>> print(action)
     Discard card in position 3
     """
     def __init__(self, k: int):
-        super().__init__(Action.DISCARD)
+        super().__init__(Action.THROW)
         self.k = k
 
     def colored(self) -> str:
+        # Reminded: in end-user interfaces (including ``colored`` methods),
+        # we say 'discard'.
         return 'Discard card in position %s' % (self.k + 1)
 
 
 if __name__ == '__main__':
-    my_action = ActionDiscard(k=2)
+    my_action = ActionThrow(k=2)
     my_action.test_str()
 
     import doctest

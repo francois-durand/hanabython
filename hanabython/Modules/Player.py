@@ -107,7 +107,7 @@ class Player(Colored):
     def receive_someone_throws(self, i_thrower: int, k: int,
                                card: Card) -> None:
         """
-        Receive a message: a player willingly discards a card.
+        Receive a message: a player throws (discards a card willingly).
 
         It is not necessary to check whether this action is legal: the Game
         will only send this message when it is the case.
@@ -119,7 +119,9 @@ class Player(Colored):
         """
         pass
 
-    def receive_someone_plays(self, i_player: int, k: int, card: Card) -> None:
+    def receive_someone_plays_card(
+        self, i_player: int, k: int, card: Card
+    ) -> None:
         """
         Receive a message: a player tries to play a card on the board.
 

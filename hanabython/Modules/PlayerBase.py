@@ -355,7 +355,7 @@ class PlayerBase(Player):
         self, i_thrower: int, k: int, card: Card
     ) -> None:
         """
-        Receive a message: a player willingly discards a card.
+        Receive a message: a player throws (discards a card willingly).
 
         It is not necessary to check whether this action is legal: the Game
         will only send this message when it is the case.
@@ -373,7 +373,9 @@ class PlayerBase(Player):
         self.log('%s discards %s.\n' % (
             self.player_names[i_thrower], card.colored()))
 
-    def receive_someone_plays(self, i_player: int, k: int, card: Card) -> None:
+    def receive_someone_plays_card(
+        self, i_player: int, k: int, card: Card
+    ) -> None:
         """
         Receive a message: a player tries to play a card on the board.
 
@@ -497,7 +499,7 @@ class PlayerBase(Player):
             bool_list=my_hand.match(Clue(1)))
         self.receive_someone_throws(i_thrower=2, k=4, card=self.hands[2][4])
         self.receive_partner_draws(i_drawer=2, card=draw_pile.give())
-        self.receive_someone_plays(i_player=0, k=1, card=my_hand[1])
+        self.receive_someone_plays_card(i_player=0, k=1, card=my_hand[1])
         my_hand.receive(card=draw_pile.give())
         self.receive_i_draw()
         # print(my_hand.colored())
@@ -527,9 +529,9 @@ if __name__ == '__main__':
     # alice.receive_someone_throws(i_thrower=1, k=2, card=Card('B5'))
     # alice.receive_someone_throws(i_thrower=0, k=2, card=Card('Y2'))
     # alice.receive_i_draw()
-    # alice.receive_someone_plays(i_player=1, k=3, card=Card('B1'))
-    # alice.receive_someone_plays(i_player=1, k=2, card=Card('B2'))
-    # alice.receive_someone_plays(i_player=0, k=0, card=Card('Y1'))
+    # alice.receive_someone_plays_card(i_player=1, k=3, card=Card('B1'))
+    # alice.receive_someone_plays_card(i_player=1, k=2, card=Card('B2'))
+    # alice.receive_someone_plays_card(i_player=0, k=0, card=Card('Y1'))
     # alice.receive_remaining_turns(3)
     # # print(alice)
     # print(alice.colored())

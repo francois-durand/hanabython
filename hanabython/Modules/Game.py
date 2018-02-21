@@ -35,9 +35,9 @@ from hanabython.Modules.DiscardPile import DiscardPile
 from hanabython.Modules.Hand import Hand
 from hanabython.Modules.Action import Action
 from hanabython.Modules.ActionClue import ActionClue
-from hanabython.Modules.ActionDiscard import ActionDiscard
+from hanabython.Modules.ActionThrow import ActionThrow
 from hanabython.Modules.ActionForfeit import ActionForfeit
-from hanabython.Modules.ActionPlay import ActionPlay
+from hanabython.Modules.ActionPlayCard import ActionPlayCard
 from hanabython.Modules.Player import Player
 
 
@@ -126,9 +126,9 @@ class Game(Colored):
         """
         if isinstance(action, ActionForfeit):
             return self.execute_forfeit()
-        if isinstance(action, ActionDiscard):
+        if isinstance(action, ActionThrow):
             return self.execute_throw(k=action.k)
-        if isinstance(action, ActionPlay):
+        if isinstance(action, ActionPlayCard):
             return self.execute_play_card(k=action.k)
         if isinstance(action, ActionClue):
             return self.execute_clue(
@@ -166,7 +166,7 @@ class Game(Colored):
                 'You cannot discard because you have all the clue chips.')
             return False
         self.active.receive_action_legal()
-        logging.debug('Perform the discard action.')
+        logging.debug('Perform the throw action.')
         card = self.hands[self.i_active].give(k)
         self.discard_pile.receive(card)
         self.n_clues += 1
@@ -186,10 +186,10 @@ class Game(Colored):
         :return: True (meaning that this action is always legal). It does not
             mean that the action is a success (it can lead to a misfire).
         """
-        logging.debug('Check legality: play is always legal.')
+        logging.debug('Check legality: play a card is always legal.')
         logging.debug('Inform the active player that it is legal.')
         self.active.receive_action_legal()
-        logging.debug('Perform the play action.')
+        logging.debug('Perform the "play a card" action.')
         card = self.hands[self.i_active].give(k)
         success = self.board.try_to_play(card)
         if success:
@@ -205,7 +205,8 @@ class Game(Colored):
                 self._lose = True
         logging.debug('Inform all players of the result of the action.')
         for i, p in enumerate(self.players):
-            p.receive_someone_plays(self.rel(self.i_active, i), k, copy(card))
+            p.receive_someone_plays_card(
+                self.rel(self.i_active, i), k, copy(card))
         logging.debug('Draw a card')
         if not self._lose:
             self.draw()

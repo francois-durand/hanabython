@@ -21,7 +21,7 @@ This file is part of Hanabython.
 from hanabython.Modules.Action import Action
 
 
-class ActionPlay(Action):
+class ActionPlayCard(Action):
     """
     An action of a player: try to play a card on the board.
 
@@ -30,12 +30,12 @@ class ActionPlay(Action):
         "user-friendly" format, i.e. between 1 and `#cards` (this behavior might
         change in the future).
 
-    >>> action = ActionPlay(k=2)
+    >>> action = ActionPlayCard(k=2)
     >>> print(action)
     Try to play card in position 3
     """
     def __init__(self, k: int):
-        super().__init__(Action.PLAY)
+        super().__init__(Action.PLAY_CARD)
         self.k = k
 
     def colored(self) -> str:
@@ -43,7 +43,7 @@ class ActionPlay(Action):
 
 
 if __name__ == '__main__':
-    my_action = ActionPlay(k=2)
+    my_action = ActionPlayCard(k=2)
     my_action.test_str()
 
     import doctest

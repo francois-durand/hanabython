@@ -23,27 +23,33 @@ from hanabython.Modules.Colored import Colored
 
 class Action(Colored):
     """
-    An action performed by a player (Discard, Play, Clue or Forfeit).
+    An action performed by a player (Throw, Play a card, Clue or Forfeit).
 
-    :param category: can be :attr:`Action.DISCARD`, :attr:`Action.PLAY`,
+    In the end-user interfaces (including methods ``colored``), "throw" should
+    be called "discard" and "play a card" can be called "play" (to be consistent
+    with the official rules). In the code however, we prefer to use "throw"
+    (to distinguish from other forms of discards, for example after a misfire)
+    and "play a card" (to distinguish from simply playing in general).
+
+    :param category: can be :attr:`Action.THROW`, :attr:`Action.PLAY_CARD`,
         :attr:`Action.CLUE` or :attr:`Action.FORFEIT`.
 
-    Generally, only subclasses are instantiated. Cf. :class:`ActionDiscard`,
-    :class:`ActionPlay`, :class:`ActionClue` and :class:`ActionForfeit`.
+    Generally, only subclasses are instantiated. Cf. :class:`ActionThrow`,
+    :class:`ActionPlayCard`, :class:`ActionClue` and :class:`ActionForfeit`.
     """
 
     #:
-    DISCARD = 0
+    THROW = 0
     #:
-    PLAY = 1
+    PLAY_CARD = 1
     #:
     CLUE = 2
     #:
     FORFEIT = 3
     #: Possibles categories of action.
-    CATEGORIES = {DISCARD, PLAY, CLUE, FORFEIT}
+    CATEGORIES = {THROW, PLAY_CARD, CLUE, FORFEIT}
 
     def __init__(self, category: int):
-        self.category = category
         if category not in Action.CATEGORIES:
             raise ValueError('Unknown action category: ', category)
+        self.category = category

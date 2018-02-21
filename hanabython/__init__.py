@@ -8,9 +8,9 @@ __version__ = '0.1.0'
 
 from .Modules.Action import Action
 from .Modules.ActionClue import ActionClue
-from .Modules.ActionDiscard import ActionDiscard
+from .Modules.ActionThrow import ActionThrow
 from .Modules.ActionForfeit import ActionForfeit
-from .Modules.ActionPlay import ActionPlay
+from .Modules.ActionPlayCard import ActionPlayCard
 from .Modules.Board import Board
 from .Modules.Card import Card
 from .Modules.CardPublic import CardPublic

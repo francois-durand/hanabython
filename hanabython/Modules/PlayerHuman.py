@@ -21,8 +21,8 @@ This file is part of Hanabython.
 from hanabython.Modules.PlayerBase import PlayerBase
 from hanabython.Modules.Action import Action
 from hanabython.Modules.ActionClue import ActionClue
-from hanabython.Modules.ActionPlay import ActionPlay
-from hanabython.Modules.ActionDiscard import ActionDiscard
+from hanabython.Modules.ActionPlayCard import ActionPlayCard
+from hanabython.Modules.ActionThrow import ActionThrow
 from hanabython.Modules.ActionForfeit import ActionForfeit
 from hanabython.Modules.Clue import Clue
 from IPython.display import clear_output
@@ -48,8 +48,8 @@ class PlayerHuman(PlayerBase):
             cat_str = input('\nWhat action? (C = Clue, P = Play, '
                             'D = Discard, F = Forfeit)\n')
             try:
-                cat = {'C': Action.CLUE, 'P': Action.PLAY,
-                       'D': Action.DISCARD, 'F': Action.FORFEIT}[
+                cat = {'C': Action.CLUE, 'P': Action.PLAY_CARD,
+                       'D': Action.THROW, 'F': Action.FORFEIT}[
                     cat_str[0].capitalize()
                 ]
                 break
@@ -80,7 +80,7 @@ class PlayerHuman(PlayerBase):
                 except IndexError:
                     pass
             return ActionClue(i=i, clue=clue)
-        if cat in {Action.PLAY, Action.DISCARD}:
+        if cat in {Action.PLAY_CARD, Action.THROW}:
             while True:
                 k_str = input('What card? (1 = leftmost, etc.)\n')
                 try:
@@ -88,10 +88,10 @@ class PlayerHuman(PlayerBase):
                     break
                 except ValueError:
                     pass
-            if cat == Action.PLAY:
-                return ActionPlay(k=k)
+            if cat == Action.PLAY_CARD:
+                return ActionPlayCard(k=k)
             else:
-                return ActionDiscard(k=k)
+                return ActionThrow(k=k)
         return ActionForfeit()
 
     def receive_action_finished(self) -> None:
