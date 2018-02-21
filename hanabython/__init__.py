@@ -21,6 +21,7 @@ from .Modules.Colored import Colored
 from .Modules.Configuration import Configuration
 from .Modules.ConfigurationColorContents import ConfigurationColorContents
 from .Modules.ConfigurationDeck import ConfigurationDeck
+from .Modules.ConfigurationEmptyClueRule import ConfigurationEmptyClueRule
 from .Modules.ConfigurationEndRule import ConfigurationEndRule
 from .Modules.ConfigurationHandSize import ConfigurationHandSize
 from .Modules.DiscardPile import DiscardPile

@@ -23,6 +23,8 @@ from typing import List, Dict
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Color import Color
 from hanabython.Modules.ConfigurationDeck import ConfigurationDeck
+from hanabython.Modules.ConfigurationEmptyClueRule \
+    import ConfigurationEmptyClueRule
 from hanabython.Modules.ConfigurationHandSize import ConfigurationHandSize
 from hanabython.Modules.ConfigurationEndRule import ConfigurationEndRule
 
@@ -39,6 +41,7 @@ class Configuration(Colored):
         game).
     :param hand_size_rule: the rule used for the initial
         size of the hands.
+    :param empty_clue_rule: the rule used about empty clues.
     :param end_rule: the rule used to determine when
         then game is finished.
 
@@ -64,6 +67,7 @@ class Configuration(Colored):
     Deck: with short multicolor (5 cards).
     Number of clues: 8.
     Number of misfires: 3.
+    Clues rule: empty clues are forbidden.
     End rule: normal.
     >>> print(cfg.hand_size_rule)
     normal
@@ -94,6 +98,7 @@ class Configuration(Colored):
     >>> from hanabython import ConfigurationDeck
     >>> from hanabython import Color
     >>> from hanabython import ConfigurationColorContents
+    >>> from hanabython import ConfigurationEmptyClueRule
     >>> cfg = Configuration(
     ...     deck=ConfigurationDeck(contents=[
     ...         (Color.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
@@ -102,12 +107,14 @@ class Configuration(Colored):
     ...     n_clues=4,
     ...     n_misfires=1,
     ...     hand_size_rule=ConfigurationHandSize.VARIANT_6_3,
+    ...     empty_clue_rule=ConfigurationEmptyClueRule.ALLOWED,
     ...     end_rule=ConfigurationEndRule.CROWNING_PIECE
     ... )
     >>> print(cfg)
     Deck: B [3, 2, 1, 1], R [2, 1].
     Number of clues: 4.
     Number of misfires: 1.
+    Clues rule: empty clues are allowed.
     End rule: Crowning Piece.
     """
     def __init__(
@@ -116,6 +123,8 @@ class Configuration(Colored):
         n_clues: int = 8,
         n_misfires: int = 3,
         hand_size_rule: ConfigurationHandSize = ConfigurationHandSize.NORMAL,
+        empty_clue_rule: ConfigurationEmptyClueRule
+        = ConfigurationEmptyClueRule.FORBIDDEN,
         end_rule: ConfigurationEndRule = ConfigurationEndRule.NORMAL
     ):
         # Parameters
@@ -123,6 +132,7 @@ class Configuration(Colored):
         self.n_clues = n_clues
         self.n_misfires = n_misfires
         self.hand_size_rule = hand_size_rule
+        self.empty_clue_rule = empty_clue_rule
         self.end_rule = end_rule
         # Other attributes
         self.colors = list(deck.keys())                     # type: List[Color]
@@ -144,9 +154,9 @@ class Configuration(Colored):
     def __repr__(self) -> str:
         return (
             '<Configuration: %r, n_clues=%s, n_misfires=%s, '
-            '%r, %r>'
+            '%r, %r, %r>'
             % (self.deck, self.n_clues, self.n_misfires,
-               self.hand_size_rule, self.end_rule)
+               self.hand_size_rule, self.empty_clue_rule, self.end_rule)
         )
 
     def colored(self) -> str:
@@ -154,6 +164,7 @@ class Configuration(Colored):
             'Deck: %s.' % self.deck.colored(),
             'Number of clues: %s.' % self.n_clues,
             'Number of misfires: %s.' % self.n_misfires,
+            'Clues rule: %s.' % self.empty_clue_rule.colored(),
             'End rule: %s.' % self.end_rule.colored()
         ])
 
@@ -238,6 +249,7 @@ if __name__ == '__main__':
         n_clues=4,
         n_misfires=1,
         hand_size_rule=ConfigurationHandSize.VARIANT_6_3,
+        empty_clue_rule=ConfigurationEmptyClueRule.ALLOWED,
         end_rule=ConfigurationEndRule.CROWNING_PIECE
     )
     print(my_cfg.colored())

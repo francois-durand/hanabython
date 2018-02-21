@@ -460,7 +460,7 @@ class PlayerBase(Player):
         self.log("%s's team loses.\n" % self.name)
         self.log('Score: %s.\n' % score)
 
-    def receive_game_over(self, score: int) -> None:
+    def receive_game_exhausted(self, score: int) -> None:
         """
         Receive a message: the game is over and is neither really lost
         (misfires, forfeit) nor a total victory (maximal score).

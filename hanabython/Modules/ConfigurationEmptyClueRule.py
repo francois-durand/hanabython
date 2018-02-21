@@ -21,9 +21,12 @@ This file is part of Hanabython.
 from hanabython.Modules.Colored import Colored
 
 
-class ConfigurationEndRule(Colored):
+class ConfigurationEmptyClueRule(Colored):
     """
-    A rule for the end of game in Hanabi.
+    A rule for "empty clues" in Hanabi.
+
+    An empty clue is a clue that corresponds to 0 cards in the hand of the
+    concerned partner.
 
     This class does not implement the rules themselves: they are hardcoded in
     the class :class:`Game`.
@@ -31,15 +34,14 @@ class ConfigurationEndRule(Colored):
     :param i: a unique identifier of the rule.
     :param name: the name of the configuration.
         Should not be capitalized (e.g. "my favorite configuration" and not
-        "My favorite configuration"), except if it is seen as a title
-        (e.g. "Crowning Piece").
+        "My favorite configuration").
 
-    >>> cfg = ConfigurationEndRule.NORMAL
+    >>> cfg = ConfigurationEmptyClueRule.FORBIDDEN
     >>> print(cfg)
-    normal
-    >>> print(cfg==ConfigurationEndRule.NORMAL)
+    empty clues are forbidden
+    >>> print(cfg==ConfigurationEmptyClueRule.FORBIDDEN)
     True
-    >>> print(cfg==ConfigurationEndRule.CROWNING_PIECE)
+    >>> print(cfg==ConfigurationEmptyClueRule.ALLOWED)
     False
     """
 
@@ -50,27 +52,27 @@ class ConfigurationEndRule(Colored):
     def colored(self) -> str:
         return self.name
 
-    def __eq__(self, other: 'ConfigurationEndRule') -> bool:
+    def __eq__(self, other: 'ConfigurationEmptyClueRule') -> bool:
         return self.i == other.i
 
-    #: Default rule for the end of game. When a player draws the last card,
-    #: all players play one last time (her included).
-    NORMAL = None
-    #: "Crowning piece" variant for the end of game. The game stops when a
-    #: player starts her turn with no card in hand.
-    CROWNING_PIECE = None
+    #:
+    FORBIDDEN = None
+    #:
+    ALLOWED = None
 
 
-ConfigurationEndRule.NORMAL = ConfigurationEndRule(0, 'normal')
-ConfigurationEndRule.CROWNING_PIECE = ConfigurationEndRule(1, 'Crowning Piece')
+ConfigurationEmptyClueRule.FORBIDDEN = ConfigurationEmptyClueRule(
+    0, 'empty clues are forbidden')
+ConfigurationEmptyClueRule.ALLOWED = ConfigurationEmptyClueRule(
+    1, 'empty clues are allowed')
 
 
 if __name__ == '__main__':
-    cfg = ConfigurationEndRule.NORMAL
+    cfg = ConfigurationEmptyClueRule.ALLOWED
     cfg.test_str()
 
-    print('\nIs it normal?', cfg == ConfigurationEndRule.NORMAL)
-    print('Is it Crowning Piece?', cfg == ConfigurationEndRule.CROWNING_PIECE)
+    print('\nIs it allowed?', cfg == ConfigurationEmptyClueRule.ALLOWED)
+    print('Is it forbidden?', cfg == ConfigurationEmptyClueRule.FORBIDDEN)
 
     import doctest
     doctest.testmod()

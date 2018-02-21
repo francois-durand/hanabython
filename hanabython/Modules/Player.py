@@ -176,6 +176,12 @@ class Player(Colored):
         """
         pass
 
+    def receive_action_is_illegal(self, str) -> None:
+        """
+        Receive a message: the action chosen is not legal.
+        """
+        pass
+
     def receive_action_finished(self) -> None:
         """
         Receive a message: the action of the player is finished.
@@ -188,7 +194,7 @@ class Player(Colored):
         """
         pass
 
-    def receive_game_over(self, score: int) -> None:
+    def receive_game_exhausted(self, score: int) -> None:
         """
         Receive a message: the game is over and is neither really lost
         (misfires, forfeit) nor a total victory (maximal score).

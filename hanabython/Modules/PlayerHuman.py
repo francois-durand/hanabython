@@ -110,12 +110,12 @@ class PlayerHuman(PlayerBase):
         super().receive_lose(score)
         print(self.recent_events)
 
-    def receive_game_over(self, score: int) -> None:
+    def receive_game_exhausted(self, score: int) -> None:
         """
         Receive a message: the game is over and is neither really lost
         (misfires, forfeit) nor a total victory (maximal score).
         """
-        super().receive_game_over(score)
+        super().receive_game_exhausted(score)
         print(self.recent_events)
 
     def receive_win(self, score: int) -> None:
