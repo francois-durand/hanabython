@@ -33,5 +33,6 @@ from .Modules.HandPublic import HandPublic
 from .Modules.Player import Player
 from .Modules.PlayerBase import PlayerBase
 from .Modules.PlayerHumanText import PlayerHumanText
+from .Modules.PlayerPuppet import PlayerPuppet
 from .Modules.StringAnsi import StringAnsi
 from .Modules.StringUtils import uncolor, title

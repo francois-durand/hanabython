@@ -120,6 +120,9 @@ Players
 .. autoclass:: hanabython.PlayerHumanText
     :members:
 
+.. autoclass:: hanabython.PlayerPuppet
+    :members:
+
 Game
 ----
 

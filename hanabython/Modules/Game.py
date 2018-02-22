@@ -21,7 +21,6 @@ This file is part of Hanabython.
 import logging
 from copy import copy
 from typing import List
-from hanabython.Modules.StringUtils import title
 from hanabython.Modules.Clue import Clue
 from hanabython.Modules.ColorClueBehavior import ColorClueBehavior
 from hanabython.Modules.Colored import Colored
@@ -30,6 +29,7 @@ from hanabython.Modules.ConfigurationEmptyClueRule \
     import ConfigurationEmptyClueRule
 from hanabython.Modules.ConfigurationEndRule import ConfigurationEndRule
 from hanabython.Modules.PlayerHumanText import PlayerHumanText
+from hanabython.Modules.PlayerPuppet import PlayerPuppet
 from hanabython.Modules.Board import Board
 from hanabython.Modules.DrawPile import DrawPile
 from hanabython.Modules.DiscardPile import DiscardPile
@@ -317,6 +317,30 @@ class Game(Colored):
         Execute the action: forfeit.
 
         :return: True (meaning that this action is always legal).
+
+        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerHumanText('Uwe')])
+        Donald X: The game starts
+        Donald X: cfg = Deck: normal.
+        Number of clues: 8.
+        Number of misfires: 3.
+        Clues rule: empty clues are forbidden.
+        End rule: normal.
+        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        >>> game.i_active = 1
+        >>> is_legal = game.execute_forfeit()
+        Donald X: The action chosen is legal.
+        Donald X: A player forfeits.
+        Donald X: i_active = 0
+        >>> is_legal
+        True
+        >>> game.i_active = 2
+        >>> is_legal = game.execute_forfeit()
+        Donald X: A player forfeits.
+        Donald X: i_active = 1
+        >>> is_legal
+        True
         """
         logging.debug('Check legality: forfeit is always legal.')
         logging.debug('Inform the active player that it is legal.')
