@@ -61,7 +61,6 @@ class PlayerHumanText(PlayerBase):
         """
         The human player gets to choose an action.
         """
-        # TODO: clean this function a bit and write a decent docstring.
         category = None             # type: int
         i = None                    # type: int
         cat_dico = {'C': Action.CLUE, 'P': Action.PLAY_CARD,
