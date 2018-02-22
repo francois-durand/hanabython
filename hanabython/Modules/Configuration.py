@@ -161,7 +161,7 @@ class Configuration(Colored):
 
     def __repr__(self) -> str:
         if self.name:
-            return self.name
+            return '<Configuration: %s>' % self.name
         return (
             '<Configuration: %r, n_clues=%s, n_misfires=%s, '
             '%r, %r, %r>'
@@ -205,17 +205,11 @@ class Configuration(Colored):
         """
         return v - 1
 
-    #: Standard configuration.
     STANDARD = None
-    #: Configuration with long sixth color.
     W_SIXTH = None
-    #: Configuration with short sixth color.
     W_SIXTH_SHORT = None
-    #: Configuration with long multicolor.
     W_MULTICOLOR = None
-    #: Configuration with short multicolor.
     W_MULTICOLOR_SHORT = None
-    #: Configuration with 8 long colors (6 normal + multicolor + colorless).
     EIGHT_COLORS = None
 
 
