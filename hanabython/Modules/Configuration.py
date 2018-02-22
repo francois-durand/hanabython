@@ -45,6 +45,9 @@ class Configuration(Colored):
     :param empty_clue_rule: the rule used about empty clues.
     :param end_rule: the rule used to determine when
         then game is finished.
+    :param name: the name of the configuration. Can be None (default value).
+        Should not be capitalized (e.g. "my favorite configuration" and not
+        "My favorite configuration").
 
     :var list colors: a list of Color objects. It is the list of keys
         of :attr:`deck`.
@@ -64,6 +67,8 @@ class Configuration(Colored):
         configuration).
 
     >>> cfg = Configuration.W_MULTICOLOR_SHORT
+    >>> print(cfg.name)
+    with short multicolor (5 cards)
     >>> print(cfg)
     Deck: with short multicolor (5 cards).
     Number of clues: 8.
@@ -126,7 +131,8 @@ class Configuration(Colored):
         hand_size_rule: ConfigurationHandSize = ConfigurationHandSize.NORMAL,
         empty_clue_rule: ConfigurationEmptyClueRule
         = ConfigurationEmptyClueRule.FORBIDDEN,
-        end_rule: ConfigurationEndRule = ConfigurationEndRule.NORMAL
+        end_rule: ConfigurationEndRule = ConfigurationEndRule.NORMAL,
+        name: str = None
     ):
         # Parameters
         self.deck = deck
@@ -135,6 +141,7 @@ class Configuration(Colored):
         self.hand_size_rule = hand_size_rule
         self.empty_clue_rule = empty_clue_rule
         self.end_rule = end_rule
+        self.name = name
         # Other attributes
         self.colors = list(deck.keys())                     # type: List[Color]
         self.n_colors = len(self.colors)                    # type: int
@@ -153,6 +160,8 @@ class Configuration(Colored):
         }                                               # type: Dict[Color, int]
 
     def __repr__(self) -> str:
+        if self.name:
+            return self.name
         return (
             '<Configuration: %r, n_clues=%s, n_misfires=%s, '
             '%r, %r, %r>'
@@ -210,17 +219,22 @@ class Configuration(Colored):
     EIGHT_COLORS = None
 
 
-Configuration.STANDARD = Configuration()
+Configuration.STANDARD = Configuration(name='standard')
 Configuration.W_SIXTH = Configuration(
-    deck=ConfigurationDeck.W_SIXTH)
+    deck=ConfigurationDeck.W_SIXTH,
+    name=ConfigurationDeck.W_SIXTH.name)
 Configuration.W_SIXTH_SHORT = Configuration(
-    deck=ConfigurationDeck.W_SIXTH_SHORT)
+    deck=ConfigurationDeck.W_SIXTH_SHORT,
+    name=ConfigurationDeck.W_SIXTH_SHORT.name)
 Configuration.W_MULTICOLOR = Configuration(
-    deck=ConfigurationDeck.W_MULTICOLOR)
+    deck=ConfigurationDeck.W_MULTICOLOR,
+    name=ConfigurationDeck.W_MULTICOLOR.name)
 Configuration.W_MULTICOLOR_SHORT = Configuration(
-    deck=ConfigurationDeck.W_MULTICOLOR_SHORT)
+    deck=ConfigurationDeck.W_MULTICOLOR_SHORT,
+    name=ConfigurationDeck.W_MULTICOLOR_SHORT.name)
 Configuration.EIGHT_COLORS = Configuration(
-    deck=ConfigurationDeck.EIGHT_COLORS)
+    deck=ConfigurationDeck.EIGHT_COLORS,
+    name=ConfigurationDeck.EIGHT_COLORS.name)
 
 
 if __name__ == '__main__':
