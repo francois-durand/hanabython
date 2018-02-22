@@ -277,6 +277,11 @@ class Game(Colored):
         """
         Execute the action (by the active player).
 
+        :param action: the action.
+
+        :return: True iff the action is legal. If not, it will be necessary
+            to choose another action.
+
         This method dispatches to the auxiliary methods :meth:`execute_clue`,
         :meth:`execute_forfeit`, :meth:`execute_play_card` and
         :meth:`execute_throw`. Each of these methods has the responsability to:
@@ -288,18 +293,13 @@ class Game(Colored):
         * Perform the action,
 
         * Update the relevant variables, in particular :attr:`_lose` and
-        :attr:`_win`,
+            :attr:`_win`,
 
         * Inform all players of the result of the action,
 
         * Make the active player draw a new card if necessary,
 
         * Return the boolean stating whether the action is legal.
-
-        :param action: the action.
-
-        :return: True iff the action is legal. If not, it will be necessary
-            to choose another action.
         """
         if isinstance(action, ActionForfeit):
             return self.execute_forfeit()
