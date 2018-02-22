@@ -85,6 +85,9 @@ class PlayerPuppet(Player):
 
     # noinspection PyMethodMayBeStatic
     def choose_action(self) -> Action:
+        """
+        :return: the value of :attr:`next_action`
+        """
         self.ack('Choose an action')
         self.ack('action = %s' % self.next_action)
         return self.next_action
@@ -111,16 +114,6 @@ class PlayerPuppet(Player):
     def receive_someone_plays_card(
         self, i_active: int, k: int, card: Card
     ) -> None:
-        """
-        Receive a message: a player tries to play a card on the board.
-
-        This can be a success or a misfire.
-
-        :param i_active: the position of the player who plays the card
-            (relatively to this player).
-        :param k: position of the card in the hand.
-        :param card: the card played.
-        """
         self.ack('A player tries to play a card on the board.')
         self.ack('i_active = %s' % i_active)
         self.ack('k = %s' % k)

@@ -110,7 +110,7 @@ class Game(Colored):
         """
         Index of the active player.
 
-        :return: this index is automatically modulo the number of players.
+        :return: this index is automatically set modulo the number of players.
         >>> game = Game(players=[PlayerHumanText('Antoine'),
         ...                      PlayerHumanText('Donald X'),
         ...                      PlayerHumanText('Uwe')])
@@ -158,7 +158,7 @@ class Game(Colored):
 
     #: Number of attempts that a player has to choose her action. If she
     #: provides illegal actions as many times, she is automatically considered
-    #: to forfeit.
+    #: to forfeit (and this issues a warning).
     ATTEMPTS_BEFORE_FORFEIT = 100
 
     def play(self) -> int:
@@ -210,9 +210,10 @@ class Game(Colored):
         * Draw a card and put it in hand (unless the discard pile is empty).
 
         * If the discard pile becomes empty, launch countdown for end of game
-        by setting variable :attr:`remaining_turns` to value :n_players: - 1.
-        It will be decremented at the beginning of next player's turn (before
-        testing the end-of-game condition). Cf. :meth:`check_game_exhausted`.
+          by setting variable :attr:`remaining_turns` to value
+          :attr:`n_players` - 1. It will be decremented at the beginning of
+          next player's turn (before testing the end-of-game condition).
+          Cf. :meth:`check_game_exhausted`.
 
         >>> game = Game(players=[PlayerHumanText('Antoine'),
         ...                      PlayerHumanText('Donald X'),
@@ -423,11 +424,10 @@ class Game(Colored):
 
         :param k: the index of the card in the active player's hand.
 
-        :return: True (meaning that this action is always legal). It does not
-            mean that the action is a success (it can lead to a misfire).
+        :return: True (meaning that this action is always legal).
 
-        The action can fail (but it is still legal). If it leads to the last
-        misfire, then the players lose.
+        The action can fail, in the sense that it leads to a misfire, but it
+        is legal anyway. If it leads to the last misfire, then the players lose:
 
         >>> import random
         >>> random.seed(0)
@@ -457,7 +457,7 @@ class Game(Colored):
         >>> game.b_lose
         True
 
-        If it is the highest card in a color, gain a clue.
+        If the highest card in a color is played, then the players gain a clue:
 
         >>> import random
         >>> random.seed(0)
@@ -488,7 +488,8 @@ class Game(Colored):
         >>> game.n_clues
         4
 
-        Do not gain a clue if the maximum is already reached.
+        But players cannot gain a clue if they already have the maximum
+        number of clues:
 
         >>> import random
         >>> random.seed(0)
@@ -520,7 +521,7 @@ class Game(Colored):
         >>> game.n_clues
         8
 
-        If it is the last card ever, players win.
+        If the card completes the board, then the players win the game.
 
         >>> import random
         >>> random.seed(0)
@@ -664,15 +665,17 @@ any card.
         """
         Check if the game is exhausted.
 
-        Typically, this happens a bit after the deck ran out of cards (it
-        depends on the end-of-game rule that is used). This method is called
-        at the beginning of each player's turn.
+        Typically, the game end by exhaustion a bit after the deck ran out of
+        cards (the exact moment depends on the end-of-game rule that is used).
+
+        This method is called at the beginning of each player's turn.
 
         :return: True iff the game must end.
 
-        If the normal end-of-game rule is used, and :attr:'remaining_turns'
+        If the normal end-of-game rule is used, and :attr:`remaining_turns`
         is an integer: it is updated, then the end-of-game condition is
         checked.
+
         >>> game = Game(players=[PlayerPuppet('Antoine'),
         ...                      PlayerPuppet('Donald X'),
         ...                      PlayerPuppet('Uwe')])
@@ -686,8 +689,8 @@ any card.
         >>> print(game.remaining_turns)
         0
 
-        If the normal end-of-game rule is used: :attr:'remaining_turns'
-        is not updated when it is `None` (the final countdown has not started).
+        If the normal end-of-game rule is used, and :attr:`remaining_turns`
+        is `None`: it is not updated (the final countdown has not started).
 
         >>> game = Game(players=[PlayerPuppet('Antoine'),
         ...                      PlayerPuppet('Donald X'),
