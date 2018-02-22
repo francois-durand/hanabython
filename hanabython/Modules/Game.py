@@ -293,7 +293,7 @@ class Game(Colored):
         * Perform the action,
 
         * Update the relevant variables, in particular :attr:`_lose` and
-            :attr:`_win`,
+          :attr:`_win`,
 
         * Inform all players of the result of the action,
 
