@@ -32,22 +32,73 @@ class DiscardPile(Colored):
 
     :param cfg: the configuration of the game.
 
+    :var list chronological: a list a cards discarded, by chronological order.
+    :var np.array array: each row represents a color, each column a card value.
+        The coefficient is the number of copies of this card in the discard
+        pile.
+    :var np.array not_discarded: is equal to :attr:`Configuration.deck_array`
+        - :attr:`array`. Number of copies left for each card (including
+        everything except the discard pile: the draw pile, the players' hand and
+        the board).
+    :var np.array scorable: each row represents a color, each column a
+        card value. The coefficient is True it is possible to have a such
+        card on the board at the end of the game (whether it is already on the
+        board or not). For example, if the two G4's are discarded, then G4 and
+        G5 are not "scorable". Note that a 1 always is considered "scorable",
+        whether it is on the board or not.
+
     >>> from hanabython import Configuration
     >>> discard_pile = DiscardPile(Configuration.STANDARD)
     >>> print(discard_pile)
     No card discarded yet
+
+    Check that scorable cards are counted correctly with unusual configurations:
+    >>> from hanabython import Configuration, ConfigurationDeck
+    >>> from hanabython import Color, ConfigurationColorContents
+    >>> discard_pile = DiscardPile(Configuration(
+    ...     deck=ConfigurationDeck(contents=[
+    ...         (Color.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
+    ...         (Color.RED, ConfigurationColorContents([2, 1])),
+    ...     ])
+    ... ))
+    >>> print(discard_pile)
+    No card discarded yet
+    >>> print(discard_pile.array)
+    [[0 0 0 0]
+     [0 0 0 0]]
+    >>> print(discard_pile.not_discarded)
+    [[3 2 1 1]
+     [2 1 0 0]]
+    >>> print(discard_pile.scorable)
+    [[ True  True  True  True]
+     [ True  True False False]]
+    >>> print(discard_pile.max_score_possible)
+    6
     """
 
     def __init__(self, cfg: Configuration):
         self.cfg = cfg
         self.chronological = []
         self.array = np.zeros(cfg.deck_array.shape, dtype=int)
+        self.not_discarded = np.copy(cfg.deck_array)
+        # This formula below is valid only at the beginning because there is no
+        # "holes" (zeros) in the middle of some rows.
+        self.scorable = (cfg.deck_array > 0)
 
     def __repr__(self) -> str:
         return '<DiscardPile: %s>' % self.str_as_chronological()
 
     def colored(self) -> str:
         return self.colored_fancy()
+
+    @property
+    def max_score_possible(self):
+        """
+        Maximum possible score, considering the discard pile.
+
+        :return: the maximum score that is still possible.
+        """
+        return np.sum(self.scorable)
 
     def str_fancy(self) -> str:
         """
@@ -198,11 +249,32 @@ class DiscardPile(Colored):
         >>> from hanabython import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
-        >>> print(discard_pile)
-        B3
+        >>> discard_pile.receive(Card('B2'))
+        >>> discard_pile.receive(Card('B3'))
+        >>> print(discard_pile.chronological)
+        B3 B2 B3
+        >>> print(discard_pile.not_discarded)
+        [[3 1 0 2 1]
+         [3 2 2 2 1]
+         [3 2 2 2 1]
+         [3 2 2 2 1]
+         [3 2 2 2 1]]
+        >>> print(discard_pile.scorable)
+        [[ True  True False False False]
+         [ True  True  True  True  True]
+         [ True  True  True  True  True]
+         [ True  True  True  True  True]
+         [ True  True  True  True  True]]
+        >>> print(discard_pile.max_score_possible)
+        22
         """
         self.chronological.append(card)
-        self.array[self.cfg.i_from_c(card.c), self.cfg.i_from_v(card.v)] += 1
+        i = self.cfg.i_from_c(card.c)
+        j = self.cfg.i_from_v(card.v)
+        self.array[i, j] += 1
+        self.not_discarded[i, j] -= 1
+        if self.not_discarded[i, j] == 0:
+            self.scorable[i, j:] = False
 
 
 if __name__ == '__main__':
