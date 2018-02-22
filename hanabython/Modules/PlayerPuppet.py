@@ -25,34 +25,36 @@ from hanabython.Modules.ActionForfeit import ActionForfeit
 from hanabython.Modules.Card import Card
 from hanabython.Modules.Configuration import Configuration
 from hanabython.Modules.Player import Player
+from hanabython.Modules.StringUtils import uncolor
 
 
 class PlayerPuppet(Player):
     """
     A player for Hanabi that serves only for testing purposes.
 
-    When this player receives a message, she will simply prints a
-    acknowledgement.
+    :param speak: if True, then each time this player receives a message, she
+        prints a acknowledgement.
 
     :var Action next_action: this variable makes it possible to control
         this player's action.
 
     >>> from hanabython import ActionThrow
-    >>> antoine = PlayerPuppet('Antoine')
+    >>> antoine = PlayerPuppet('Antoine', speak=True)
     >>> antoine.next_action = ActionThrow(k=4)
     >>> _ = antoine.choose_action()
     Antoine: Choose an action
     Antoine: action = Discard card in position 5
     """
 
-    def __init__(self, name):
+    def __init__(self, name, speak=False):
         super().__init__(name)
         self.next_action = ActionForfeit()              # type: Action
         self.dealing_is_ongoing = False                 # type: bool
+        self.speak = speak                              # type: bool
 
     def ack(self, o):
-        if not self.dealing_is_ongoing:
-            print('%s: %s' % (self.name, o))
+        if self.speak and not self.dealing_is_ongoing:
+            print(uncolor('%s: %s' % (self.name, o)))
 
     # *** Game start ***
 

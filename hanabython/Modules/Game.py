@@ -24,6 +24,7 @@ from typing import List
 from hanabython.Modules.Card import Card
 from hanabython.Modules.Clue import Clue
 from hanabython.Modules.ColorClueBehavior import ColorClueBehavior
+from hanabython.Modules.Color import Color
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Configuration import Configuration
 from hanabython.Modules.ConfigurationEmptyClueRule \
@@ -64,6 +65,8 @@ class Game(Colored):
     :var int remaining_turns: the number of remaining turns (once the draw pile
         is empty, in the normal rule for end of game). As long as the draw pile
         contains cards, this variable is `None`.
+    :var bool b_lose: the game is lost.
+    :var bool b_win: the game is won.
     :var int i_active: the index of the active player.
     :var Player active: the active player. It is automatically updated when
         :attr:`i_active` is updated.
@@ -88,8 +91,8 @@ class Game(Colored):
         self.hand_size = cfg.hand_size_rule.f(self.n_players)  # type: int
         self.hands = [Hand() for _ in self.players]         # type: List[Hand]
         self.remaining_turns = None                         # type: int
-        self._lose = False                                  # type: bool
-        self._win = False                                   # type: bool
+        self.b_lose = False                                 # type: bool
+        self.b_win = False                                  # type: bool
         # Active player
         self.active = None                                  # type: Player
         self._i_active = None                               # type: int
@@ -193,9 +196,9 @@ class Game(Colored):
                          % self.active.name)
             self.active.receive_action_finished()
             logging.info("Check win-or-lose condition.")
-            if self._lose:
+            if self.b_lose:
                 return self.lose()
-            if self._win:
+            if self.b_win:
                 return self.win()
 
     # *** Drawing cards ***
@@ -293,8 +296,8 @@ class Game(Colored):
 
         * Perform the action,
 
-        * Update the relevant variables, in particular :attr:`_lose` and
-          :attr:`_win`,
+        * Update the relevant variables, in particular :attr:`b_lose` and
+          :attr:`b_win`,
 
         * Inform all players of the result of the action,
 
@@ -319,16 +322,10 @@ class Game(Colored):
 
         :return: True (meaning that this action is always legal).
 
-        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
         ...                      PlayerPuppet('Donald X'),
-        ...                      PlayerHumanText('Uwe')])
-        Donald X: The game starts
-        Donald X: cfg = Deck: normal.
-        Number of clues: 8.
-        Number of misfires: 3.
-        Clues rule: empty clues are forbidden.
-        End rule: normal.
-        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        ...                      PlayerPuppet('Uwe')])
+        >>> game.players[1].speak = True
         >>> game.i_active = 1
         >>> is_legal = game.execute_forfeit()
         Donald X: The action chosen is legal.
@@ -336,18 +333,22 @@ class Game(Colored):
         Donald X: i_active = 0
         >>> is_legal
         True
+        >>> game.b_lose
+        True
         >>> game.i_active = 2
         >>> is_legal = game.execute_forfeit()
         Donald X: A player forfeits.
         Donald X: i_active = 1
         >>> is_legal
         True
+        >>> game.b_lose
+        True
         """
         logging.debug('Check legality: forfeit is always legal.')
         logging.debug('Inform the active player that it is legal.')
         self.active.receive_action_legal()
         logging.debug('Perform the action.')
-        self._lose = True
+        self.b_lose = True
         logging.debug('Inform all players of the result of the action.')
         for i, p in enumerate(self.players):
             p.receive_someone_forfeits(self.rel(self.i_active, i))
@@ -364,16 +365,10 @@ class Game(Colored):
 
         >>> import random
         >>> random.seed(0)
-        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
         ...                      PlayerPuppet('Donald X'),
-        ...                      PlayerHumanText('Uwe')])
-        Donald X: The game starts
-        Donald X: cfg = Deck: normal.
-        Number of clues: 8.
-        Number of misfires: 3.
-        Clues rule: empty clues are forbidden.
-        End rule: normal.
-        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        ...                      PlayerPuppet('Uwe')])
+        >>> game.players[1].speak = True
         >>> game.i_active = 1
         >>> game.draw()
         Donald X: This player tries to draw a card.
@@ -431,28 +426,21 @@ class Game(Colored):
         :return: True (meaning that this action is always legal). It does not
             mean that the action is a success (it can lead to a misfire).
 
-        The action can fail (but it is still legal).
+        The action can fail (but it is still legal). If it leads to the last
+        misfire, then the players lose.
 
         >>> import random
         >>> random.seed(0)
-        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
         ...                      PlayerPuppet('Donald X'),
-        ...                      PlayerHumanText('Uwe')])
-        Donald X: The game starts
-        Donald X: cfg = Deck: normal.
-        Number of clues: 8.
-        Number of misfires: 3.
-        Clues rule: empty clues are forbidden.
-        End rule: normal.
-        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        ...                      PlayerPuppet('Uwe')])
         >>> game.i_active = -1
         >>> game.deal()
-        Donald X: the initial dealing of hands begins.
-        Donald X: The initial dealing of hands is over.
         >>> game.i_active = 2
         >>> game.n_misfires = 2
         >>> print(game.hands[2])
         [B4, W4, G5, W1, R3]
+        >>> game.players[1].speak = True
         >>> is_legal = game.execute_play_card(2)
         Donald X: A player tries to play a card on the board.
         Donald X: i_active = 1
@@ -466,33 +454,25 @@ class Game(Colored):
         G5
         >>> game.n_misfires
         3
-        >>> game._lose
+        >>> game.b_lose
         True
 
         If it is the highest card in a color, gain a clue.
 
         >>> import random
         >>> random.seed(0)
-        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
         ...                      PlayerPuppet('Donald X'),
-        ...                      PlayerHumanText('Uwe')])
-        Donald X: The game starts
-        Donald X: cfg = Deck: normal.
-        Number of clues: 8.
-        Number of misfires: 3.
-        Clues rule: empty clues are forbidden.
-        End rule: normal.
-        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        ...                      PlayerPuppet('Uwe')])
         >>> game.i_active = -1
         >>> game.deal()
-        Donald X: the initial dealing of hands begins.
-        Donald X: The initial dealing of hands is over.
         >>> for s in ['G1', 'G2', 'G3', 'G4']:
         ...     _ = game.board.try_to_play(card=Card(s))
         >>> game.n_clues = 3
         >>> game.i_active = 2
         >>> print(game.hands[2])
         [B4, W4, G5, W1, R3]
+        >>> game.players[1].speak = True
         >>> is_legal = game.execute_play_card(2)
         Donald X: A player tries to play a card on the board.
         Donald X: i_active = 1
@@ -512,20 +492,11 @@ class Game(Colored):
 
         >>> import random
         >>> random.seed(0)
-        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
         ...                      PlayerPuppet('Donald X'),
-        ...                      PlayerHumanText('Uwe')])
-        Donald X: The game starts
-        Donald X: cfg = Deck: normal.
-        Number of clues: 8.
-        Number of misfires: 3.
-        Clues rule: empty clues are forbidden.
-        End rule: normal.
-        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        ...                      PlayerPuppet('Uwe')])
         >>> game.i_active = -1
         >>> game.deal()
-        Donald X: the initial dealing of hands begins.
-        Donald X: The initial dealing of hands is over.
         >>> for s in ['G1', 'G2', 'G3', 'G4']:
         ...     _ = game.board.try_to_play(card=Card(s))
         >>> game.n_clues
@@ -533,6 +504,7 @@ class Game(Colored):
         >>> game.i_active = 2
         >>> print(game.hands[2])
         [B4, W4, G5, W1, R3]
+        >>> game.players[1].speak = True
         >>> is_legal = game.execute_play_card(2)
         Donald X: A player tries to play a card on the board.
         Donald X: i_active = 1
@@ -552,20 +524,11 @@ class Game(Colored):
 
         >>> import random
         >>> random.seed(0)
-        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
         ...                      PlayerPuppet('Donald X'),
-        ...                      PlayerHumanText('Uwe')])
-        Donald X: The game starts
-        Donald X: cfg = Deck: normal.
-        Number of clues: 8.
-        Number of misfires: 3.
-        Clues rule: empty clues are forbidden.
-        End rule: normal.
-        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        ...                      PlayerPuppet('Uwe')])
         >>> game.i_active = -1
         >>> game.deal()
-        Donald X: the initial dealing of hands begins.
-        Donald X: The initial dealing of hands is over.
         >>> for c in ['B', 'R', 'W', 'Y']:
         ...     for v in range(1, 6):
         ...         _ = game.board.try_to_play(card=Card(c + str(v)))
@@ -574,6 +537,7 @@ class Game(Colored):
         >>> game.i_active = 2
         >>> print(game.hands[2])
         [B4, W4, G5, W1, R3]
+        >>> game.players[1].speak = True
         >>> _ = game.execute_play_card(2)
         Donald X: A player tries to play a card on the board.
         Donald X: i_active = 1
@@ -584,7 +548,7 @@ class Game(Colored):
         Donald X: card = G4
         >>> print(game.board)
         B 1 2 3 4 5 G 1 2 3 4 5 R 1 2 3 4 5 W 1 2 3 4 5 Y 1 2 3 4 5
-        >>> game._win
+        >>> game.b_win
         True
         """
         logging.debug('Check legality: play a card is always legal.')
@@ -597,19 +561,19 @@ class Game(Colored):
             if card.v == self.cfg.highest[self.cfg.i_from_c(card.c)]:
                 self.n_clues = min(self.n_clues + 1, self.cfg.n_clues)
             if self.board.score == self.cfg.max_score:
-                self._win = True
+                self.b_win = True
             # TODO: terminer la partie quand il n'y a plus aucune carte posable.
         else:
             self.discard_pile.receive(card)
             self.n_misfires += 1
             if self.n_misfires == self.cfg.n_misfires:
-                self._lose = True
+                self.b_lose = True
         logging.debug('Inform all players of the result of the action.')
         for i, p in enumerate(self.players):
             p.receive_someone_plays_card(
                 self.rel(self.i_active, i), k, copy(card))
         logging.debug('Draw a card')
-        if not self._lose:
+        if not self.b_lose:
             self.draw()
         return True
 
@@ -621,6 +585,47 @@ class Game(Colored):
         :param clue: the clue.
 
         :return: True iff the action is legal.
+
+        >>> import random
+        >>> random.seed(0)
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerPuppet('Uwe')])
+        >>> game.i_active = -1
+        >>> game.deal()
+        >>> print(game.hands[2])
+        [B4, W4, G5, W1, R3]
+        >>> game.players[1].speak = True
+        >>> game.i_active = 1
+        >>> game.n_clues = 0
+        >>> game.execute_clue(2, Clue(1))
+        Donald X: The action chosen is illegal.
+        Donald X: You cannot give a clue because you have do not have any clue \
+chip.
+        False
+        >>> game.n_clues = 3
+        >>> game.execute_clue(1, Clue(1))
+        Donald X: The action chosen is illegal.
+        Donald X: You cannot give a clue to yourself.
+        False
+        >>> game.execute_clue(2, Clue(Color.from_symbol('M')))
+        Donald X: The action chosen is illegal.
+        Donald X: You cannot clue this color: M.
+        False
+        >>> game.execute_clue(2, Clue(2))
+        Donald X: The action chosen is illegal.
+        Donald X: You cannot give this clue because it does not correspond to \
+any card.
+        False
+        >>> game.execute_clue(2, Clue(1))
+        Donald X: A player gives a clue to another one.
+        Donald X: i_active = 0
+        Donald X: i_clued = 1
+        Donald X: clue = 1
+        Donald X: bool_list = [False, False, False, True, False]
+        True
+        >>> game.n_clues
+        2
         """
         logging.debug('Check legality and inform the active player.')
         if self.n_clues == 0:
@@ -655,7 +660,61 @@ class Game(Colored):
 
     # *** End of game ***
 
-    def check_game_exhausted(self):
+    def check_game_exhausted(self) -> bool:
+        """
+        Check if the game is exhausted.
+
+        Typically, this happens a bit after the deck ran out of cards (it
+        depends on the end-of-game rule that is used). This method is called
+        at the beginning of each player's turn.
+
+        :return: True iff the game must end.
+
+        If the normal end-of-game rule is used, and :attr:'remaining_turns'
+        is an integer: it is updated, then the end-of-game condition is
+        checked.
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerPuppet('Uwe')])
+        >>> game.players[1].speak = True
+        >>> game.remaining_turns = 1
+        >>> # Here, previous player would play her turn.. Then...
+        >>> game.check_game_exhausted()
+        Donald X: The number of remaining turns is now known.
+        Donald X: remaining_turns = 0
+        True
+        >>> print(game.remaining_turns)
+        0
+
+        If the normal end-of-game rule is used: :attr:'remaining_turns'
+        is not updated when it is `None` (the final countdown has not started).
+
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerPuppet('Uwe')])
+        >>> game.players[1].speak = True
+        >>> game.check_game_exhausted()
+        False
+        >>> print(game.remaining_turns)
+        None
+
+        If "Crowning piece" rule is used: if the active player has no card in
+        hand, the game is over.
+
+        >>> game = Game(
+        ...     players=[PlayerPuppet('Antoine'),
+        ...              PlayerPuppet('Donald X'),
+        ...              PlayerPuppet('Uwe')],
+        ...     cfg=Configuration(end_rule=ConfigurationEndRule.CROWNING_PIECE)
+        ... )
+        >>> game.players[1].speak = True
+        >>> game.i_active = 1
+        >>> game.check_game_exhausted()
+        True
+        >>> game.hands[1].receive(Card('B1'))
+        >>> game.check_game_exhausted()
+        False
+        """
         if self.cfg.end_rule == ConfigurationEndRule.NORMAL:
             if self.remaining_turns is not None:
                 self.remaining_turns -= 1
@@ -669,22 +728,81 @@ class Game(Colored):
         return False
 
     def lose(self) -> int:
+        """
+        Lose the game (forfeit or too many misfires).
+
+        Inform the players.
+
+        :return: the final score, i.e. 0.
+
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerPuppet('Uwe')])
+        >>> game.players[1].speak = True
+        >>> score = game.lose()
+        Donald X: The game is lost.
+        Donald X: score = 0
+        >>> score
+        0
+        """
         for i, p in enumerate(self.players):
             p.receive_lose(score=0)
         return 0
 
     def game_exhausted(self) -> int:
+        """
+        The game is exhausted.
+
+        Inform the players. The game is over and is neither really lost
+        (misfires, forfeit) nor a total victory (maximal score). Typically,
+        this happens a bit after the deck ran out of cards (it depends on the
+        end-of-game rule that is used).
+
+        :return: the final score.
+
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerPuppet('Uwe')])
+        >>> _ = game.board.try_to_play(Card('B1'))
+        >>> game.players[1].speak = True
+        >>> score = game.game_exhausted()
+        Donald X: The game is exhausted.
+        Donald X: score = 1
+        >>> score
+        1
+        """
         for i, p in enumerate(self.players):
             p.receive_game_exhausted(score=self.board.score)
         return self.board.score
 
     def win(self) -> int:
+        """
+        Win the game (maximum score).
+
+        Inform the players.
+
+        :return: the final score.
+
+        >>> game = Game(players=[PlayerPuppet('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerPuppet('Uwe')])
+        >>> for c in ['B', 'G', 'R', 'W', 'Y']:
+        ...     for v in range(1, 6):
+        ...         _ = game.board.try_to_play(card=Card(c + str(v)))
+        >>> game.players[1].speak = True
+        >>> score = game.win()
+        Donald X: The game is won.
+        Donald X: score = 25
+        >>> score
+        25
+        """
         for i, p in enumerate(self.players):
             p.receive_win(score=self.board.score)
         return self.board.score
 
 
 if __name__ == '__main__':
+
     # log_file = 'Game.log'
     # open(log_file, 'w').close()  # Flush the contents of the file
     # logging.basicConfig(
@@ -692,6 +810,7 @@ if __name__ == '__main__':
     #     format='%(levelname)s - %(module)s - %(message)s',
     #     level=logging.DEBUG
     # )
+
     fanfan = PlayerHumanText(name='Fanfan')
     emilie = PlayerHumanText(name='Emilie')
     pek = PlayerHumanText(name='PEK')
