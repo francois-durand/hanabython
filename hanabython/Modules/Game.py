@@ -617,6 +617,7 @@ chip.
 any card.
         False
         >>> game.execute_clue(2, Clue(1))
+        Donald X: The action chosen is legal.
         Donald X: A player gives a clue to another one.
         Donald X: i_active = 0
         Donald X: i_clued = 1

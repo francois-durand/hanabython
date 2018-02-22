@@ -88,6 +88,7 @@ class PlayerHumanText(PlayerBase):
                 except ValueError:
                     pass
                 try:
+                    clue_str = clue_str[0].capitalize()
                     clue = Clue([
                         c for c in self.cfg.colors if c.symbol == clue_str][0])
                     break
