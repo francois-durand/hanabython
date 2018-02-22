@@ -47,9 +47,7 @@ class PlayerHumanText(PlayerBase):
 
     def choose_action(self) -> Action:
         """
-        Choose an action.
-
-        :return: the action chosen by the player.
+        The human player gets to choose an action.
         """
         # TODO: clean this function a bit and write a decent docstring.
         print('\n' * 40)
@@ -130,9 +128,9 @@ class PlayerHumanText(PlayerBase):
 
     def receive_action_finished(self) -> None:
         """
-        We inform the player of the most recent events (consequences
-        of her actions). Then, unless this string was empty, we pause.
-        Finally, we forget the previous events.
+        We inform the player of the most recent events, i.e. the consequences
+        of her actions. Then we pause (unless this string was empty).
+        Finally, we forget these recent events.
         """
         print(self.recent_events)
         if not self.recent_events:
@@ -154,6 +152,8 @@ class PlayerHumanText(PlayerBase):
         Antoine's team loses.
         Score: 0.
         <BLANKLINE>
+        >>> antoine.recent_events
+        ''
         """
         super().receive_lose(score)
         print(self.recent_events)
@@ -172,6 +172,8 @@ class PlayerHumanText(PlayerBase):
         Antoine's team has reached the end of the game.
         Score: 23.
         <BLANKLINE>
+        >>> antoine.recent_events
+        ''
         """
         super().receive_game_exhausted(score)
         print(self.recent_events)
@@ -190,6 +192,8 @@ class PlayerHumanText(PlayerBase):
         Antoine's team wins!
         Score: 25.
         <BLANKLINE>
+        >>> antoine.recent_events
+        ''
         """
         super().receive_win(score)
         print(self.recent_events)
