@@ -83,6 +83,9 @@ class PlayerPuppet(Player):
 
     # *** General methods about actions ***
 
+    def receive_turn_begin(self) -> None:
+        self.ack('The turn of the player begins.')
+
     # noinspection PyMethodMayBeStatic
     def choose_action(self) -> Action:
         """
@@ -99,7 +102,7 @@ class PlayerPuppet(Player):
         self.ack('The action chosen is illegal.')
         self.ack(s)
 
-    def receive_action_finished(self) -> None:
+    def receive_turn_finished(self) -> None:
         self.ack('The action of the player is finished.')
 
     # *** Manage the 4 types of actions ***

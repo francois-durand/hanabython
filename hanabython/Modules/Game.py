@@ -177,10 +177,11 @@ class Game(Colored):
         logging.info("The game begins.")
         while True:
             self.i_active += 1
-            logging.info("%s's turn begins" % self.active.name)
             logging.info("Check game-exhaustion condition.")
             if self.check_game_exhausted():
                 return self.game_exhausted()
+            logging.info("%s's turn begins" % self.active.name)
+            self.active.receive_turn_begin()
             logging.info("Ask %s for an action." % self.active.name)
             for _ in range(Game.ATTEMPTS_BEFORE_FORFEIT):
                 action = self.active.choose_action()
@@ -194,7 +195,7 @@ class Game(Colored):
                 self.execute_action(ActionForfeit())
             logging.info("Inform %s that his/her turn is over."
                          % self.active.name)
-            self.active.receive_action_finished()
+            self.active.receive_turn_finished()
             logging.info("Check win-or-lose condition.")
             if self.b_win:
                 return self.win()
@@ -403,7 +404,7 @@ class Game(Colored):
         >>> print(game.hands[2])
         [R3]
         """
-        logging.debug('Check legality and inform the active player.')
+        logging.debug('Discard: Check legality and inform the active player.')
         if self.n_clues == self.cfg.n_clues:
             self.active.receive_action_illegal(
                 'You cannot discard because you have all the clue chips.')
@@ -607,6 +608,10 @@ chip.
         Donald X: The action chosen is illegal.
         Donald X: You cannot give a clue to yourself.
         False
+        >>> game.execute_clue(2, Clue(6))
+        Donald X: The action chosen is illegal.
+        Donald X: This value does not exist: 6.
+        False
         >>> game.execute_clue(2, Clue(Color.from_symbol('M')))
         Donald X: The action chosen is illegal.
         Donald X: You cannot clue this color: M.
@@ -637,6 +642,16 @@ any card.
             self.active.receive_action_illegal(
                 'You cannot give a clue to yourself.')
             return False
+        if (clue.category == Clue.VALUE
+                and clue.x not in self.cfg.values):
+            self.active.receive_action_illegal(
+                'This value does not exist: %s.' % clue.x)
+            return False
+        # if (clue.category == Clue.COLOR
+        #         and clue.x not in self.cfg.colors):
+        #     self.active.receive_action_illegal(
+        #         'This color is not in the deck: %s.' % clue.x)
+        #     return False
         if (clue.category == Clue.COLOR
                 and clue.x.clue_behavior != ColorClueBehavior.NORMAL):
             self.active.receive_action_illegal(
@@ -811,13 +826,13 @@ any card.
 
 if __name__ == '__main__':
 
-    # log_file = 'Game.log'
-    # open(log_file, 'w').close()  # Flush the contents of the file
-    # logging.basicConfig(
-    #     filename=log_file,
-    #     format='%(levelname)s - %(module)s - %(message)s',
-    #     level=logging.DEBUG
-    # )
+    log_file = 'Game.log'
+    open(log_file, 'w').close()  # Flush the contents of the file
+    logging.basicConfig(
+        filename=log_file,
+        format='%(levelname)s - %(module)s - %(message)s',
+        level=logging.DEBUG
+    )
 
     from hanabython.Modules.ConfigurationDeck import ConfigurationDeck
     from hanabython.Modules.ConfigurationColorContents \
@@ -832,7 +847,7 @@ if __name__ == '__main__':
     # pek = PlayerHumanText(name='PEK')
     game = Game([fanfan, emilie], cfg_test)
     # game.test_str()
-    game.play()
+    # game.play()
 
     import doctest
     doctest.testmod()

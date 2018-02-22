@@ -98,6 +98,12 @@ class Player(Colored):
 
     # *** General methods about actions ***
 
+    def receive_turn_begin(self) -> None:
+        """
+        Receive a message: the turn of the player begins.
+        """
+        pass
+
     # noinspection PyMethodMayBeStatic
     def choose_action(self) -> Action:
         """
@@ -121,9 +127,9 @@ class Player(Colored):
         """
         pass
 
-    def receive_action_finished(self) -> None:
+    def receive_turn_finished(self) -> None:
         """
-        Receive a message: the action of the player is finished.
+        Receive a message: the turn of the player is finished.
         """
         pass
 
