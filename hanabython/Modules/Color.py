@@ -29,9 +29,9 @@ class Color(Colored):
     :param name: The full name of the color. In a game, two distinct
         colors must have different names.
     :param symbol: The short name of the color. For standard colors
-        (defined as constants in this class), it is always 1 character, and
-        no two standard colors have the same symbol. For user-defined colors,
-        it is recommended to do the same, but not necessary.
+        (defined as constants in :class:`ColorBook`), it is always 1 character,
+        and no two standard colors have the same symbol. For user-defined
+        colors, it is recommended to do the same, but not necessary.
     :param print_color: an ANSI escape code that modifies the printing
         color. See :class:`StringAnsi`.
 

@@ -21,7 +21,7 @@ Colors
 .. autoclass:: hanabython.Color
     :members:
 
-.. autoclass:: hanabython.ColorMultiColor
+.. autoclass:: hanabython.ColorMulticolor
     :members:
 
 .. autoclass:: hanabython.ColorColorless
