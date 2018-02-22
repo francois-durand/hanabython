@@ -67,8 +67,6 @@ class Game(Colored):
         contains cards, this variable is `None`.
     :var bool b_lose: the game is lost.
     :var bool b_win: the game is won.
-    :var bool b_game_exhausted: the game is over for another reason (end
-        of draw pile or last scorable card is played).
     :var int i_active: the index of the active player.
     :var Player active: the active player. It is automatically updated when
         :attr:`i_active` is updated.
@@ -95,7 +93,6 @@ class Game(Colored):
         self.remaining_turns = None                         # type: int
         self.b_lose = False                                 # type: bool
         self.b_win = False                                  # type: bool
-        self.b_game_exhausted = False                       # type: bool
         # Active player
         self.active = None                                  # type: Player
         self._i_active = None                               # type: int
@@ -203,7 +200,7 @@ class Game(Colored):
                 return self.win()
             if self.b_lose:
                 return self.lose()
-            if self.b_game_exhausted:
+            if self.board.score == self.discard_pile.max_score_possible:
                 return self.game_exhausted()
 
     # *** Drawing cards ***
@@ -302,8 +299,8 @@ class Game(Colored):
 
         * Perform the action,
 
-        * Update the relevant variables, in particular :attr:`b_lose`,
-          :attr:`b_win` and :attr:`b_game_exhausted`.
+        * Update the relevant variables, in particular :attr:`b_lose` and
+          :attr:`b_win`.
 
         * Inform all players of the result of the action,
 
@@ -553,31 +550,6 @@ class Game(Colored):
         B 1 2 3 4 5 G 1 2 3 4 5 R 1 2 3 4 5 W 1 2 3 4 5 Y 1 2 3 4 5
         >>> game.b_win
         True
-
-        If the card was the last card playable, it also ends the game.
-
-        >>> import random
-        >>> random.seed(0)
-        >>> game = Game(players=[PlayerPuppet('Antoine'),
-        ...                      PlayerPuppet('Donald X'),
-        ...                      PlayerPuppet('Uwe')])
-        >>> game.i_active = -1
-        >>> game.deal()
-        >>> for s in ['B1', 'R1', 'W1', 'Y1'] * 3 + ['G2'] * 2:
-        ...     game.discard_pile.receive(Card(s))
-        >>> game.i_active = 2
-        >>> print(game.hands[2])
-        [B4, W4, G5, W1, R3]
-        >>> game.players[1].speak = True
-        >>> _ = game.execute_play_card(3)
-        Donald X: A player tries to play a card on the board.
-        Donald X: i_active = 1
-        Donald X: k = 3
-        Donald X: card = W1
-        >>> print(game.board)  #doctest: +NORMALIZE_WHITESPACE
-        B -         G -         R -         W 1         Y -
-        >>> game.b_game_exhausted
-        True
         """
         logging.debug('Check legality: play a card is always legal.')
         logging.debug('Inform the active player that it is legal.')
@@ -590,8 +562,6 @@ class Game(Colored):
                 self.n_clues = min(self.n_clues + 1, self.cfg.n_clues)
             if self.board.score == self.cfg.max_score:
                 self.b_win = True
-            elif self.board.score == self.discard_pile.max_score_possible:
-                self.b_game_exhausted = True
         else:
             self.discard_pile.receive(card)
             self.n_misfires += 1
@@ -601,7 +571,7 @@ class Game(Colored):
         for i, p in enumerate(self.players):
             p.receive_someone_plays_card(
                 self.rel(self.i_active, i), k, copy(card))
-        if not self.b_lose and not self.b_win and not self.b_game_exhausted:
+        if not self.b_lose and not self.b_win:
             logging.debug('Draw a card')
             self.draw()
         return True
@@ -678,6 +648,8 @@ any card.
                     'You cannot give this clue because it does not correspond '
                     'to any card.')
                 return False
+        logging.debug('Inform the active player that the action is legal.')
+        self.active.receive_action_legal()
         logging.debug('Perform the clue action.')
         self.n_clues -= 1
         logging.debug('Inform all players of the result of the action.')
@@ -700,8 +672,7 @@ any card.
 
         We do not check here whether the current score is equal to the maximum
         score still possible (considering what is discarded), which would also
-        end the game. This verification is done in :meth:`execute_play_card`,
-        just after a card is successfully played.
+        end the game. This verification is done in :meth:`play`.
 
         :return: True iff the game must end.
 
@@ -757,11 +728,9 @@ any card.
                 for p in self.players:
                     p.receive_remaining_turns(self.remaining_turns)
                 if self.remaining_turns == 0:
-                    self.b_game_exhausted = True  # Not used for the moment
                     return True
         elif self.cfg.end_rule == ConfigurationEndRule.CROWNING_PIECE:
             if len(self.hands[self.i_active]) == 0:
-                self.b_game_exhausted = True  # Not used for the moment
                 return True
         return False
 
@@ -849,10 +818,18 @@ if __name__ == '__main__':
     #     level=logging.DEBUG
     # )
 
+    from hanabython.Modules.ConfigurationDeck import ConfigurationDeck
+    from hanabython.Modules.ConfigurationColorContents \
+        import ConfigurationColorContents
+    cfg_test = Configuration(deck=ConfigurationDeck(contents=[
+        (Color.BLUE, ConfigurationColorContents([3, 2, 2])),
+        (Color.RED, ConfigurationColorContents([3, 2, 2])),
+    ]), end_rule=ConfigurationEndRule.CROWNING_PIECE)
+
     fanfan = PlayerHumanText(name='Fanfan')
     emilie = PlayerHumanText(name='Emilie')
-    pek = PlayerHumanText(name='PEK')
-    game = Game([fanfan, emilie, pek], Configuration.W_MULTICOLOR_SHORT)
+    # pek = PlayerHumanText(name='PEK')
+    game = Game([fanfan, emilie], cfg_test)
     # game.test_str()
     game.play()
 

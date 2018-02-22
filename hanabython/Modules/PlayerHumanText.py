@@ -135,7 +135,7 @@ class PlayerHumanText(PlayerBase):
         Finally, we forget these recent events.
         """
         print(self.recent_events)
-        if not self.recent_events:
+        if self.recent_events:
             input("Your turn is over (hit Enter).\n")
         self.log_forget()
 
