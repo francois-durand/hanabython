@@ -205,11 +205,17 @@ class Configuration(Colored):
         """
         return v - 1
 
+    #:
     STANDARD = None
+    #:
     W_SIXTH = None
+    #:
     W_SIXTH_SHORT = None
+    #:
     W_MULTICOLOR = None
+    #:
     W_MULTICOLOR_SHORT = None
+    #:
     EIGHT_COLORS = None
 
 
