@@ -71,9 +71,9 @@ class Colored:
         """
         print('repr:')
         print(repr(self))
-        print('str:')
+        print('\nstr:')
         print(self)
-        print('colored:')
+        print('\ncolored:')
         print(self.colored())
 
 

@@ -21,6 +21,7 @@ This file is part of Hanabython.
 import logging
 from copy import copy
 from typing import List
+from hanabython.Modules.StringUtils import title
 from hanabython.Modules.Clue import Clue
 from hanabython.Modules.ColorClueBehavior import ColorClueBehavior
 from hanabython.Modules.Colored import Colored
@@ -45,65 +46,184 @@ class Game(Colored):
     """
     A game of Hanabi.
 
-    :param Configuration cfg:
-    :param list players:
+    :param cfg: the configuration.
+    :param players: the list of players. They will play in this order, starting
+        with the first player in this list.
+
+    :var int n_players: the number of players.
+    :var Board board: the board.
+    :var DrawPile draw_pile: the draw pile.
+    :var DiscardPile discard_pile: the discard pile.
+    :var int n_clues: the number of clue chips that players currently have.
+    :var int n_misfires: the number of misfires chips that players currently
+        have.
+    :var int hand_size: the initial size of the hands.
+    :var list hands: a list of :class:`Hand` objects (in the same order as
+        :attr:`players`).
+    :var int remaining_turns: the number of remaining turns (once the draw pile
+        is empty, in the normal rule for end of game). As long as the draw pile
+        contains cards, this variable is `None`.
+    :var int i_active: the index of the active player.
+    :var Player active: the active player. It is automatically updated when
+        :attr:`i_active` is updated.
+
+    >>> game = Game(players=[PlayerHumanText('Antoine'),
+    ...                      PlayerHumanText('Donald X')])
     """
 
-    def __init__(self, cfg: Configuration, players: List[Player]):
-        # General initializations
+    def __init__(self, players: List[Player],
+                 cfg: Configuration = Configuration.STANDARD):
         logging.info('General initializations')
+        # Parameters
         self.players = players
-        self.n_players = len(self.players)
         self.cfg = cfg
-        self.board = Board(cfg)
-        self.draw_pile = DrawPile(cfg)
-        self.discard_pile = DiscardPile(cfg)
-        self.n_clues = cfg.n_clues
-        self.n_misfires = 0
-        self.hand_size = cfg.hand_size_rule.f(self.n_players)
-        self.hands = [Hand() for _ in self.players]
-        self.remaining_turns = None  # For normal end-of-game rule
-        self._lose = False
-        self._win = False
-        self.active = None
-        self._i_active = None
-        self.i_active = -1
-        self.broadcast_init()
-        # Deal
-        logging.info('Dealing cards')
-        self.broadcast_begin_dealing()
-        for _ in range(self.n_players * self.hand_size):
-            self.i_active += 1
-            self.draw()
-        self.broadcast_end_dealing()
-        logging.info('Cards are dealt')
-
-    @property
-    def i_active(self):
-        return self._i_active
-
-    @i_active.setter
-    def i_active(self, value):
-        self._i_active = value % self.n_players
-        self.active = self.players[self._i_active]
-
-    def colored(self) -> str:
-        return 'This is a game of Hanabi.'
-
-    def broadcast_init(self) -> None:
+        # Variables
+        self.n_players = len(self.players)                  # type: int
+        self.board = Board(cfg)                             # type: Board
+        self.draw_pile = DrawPile(cfg)                      # type: DrawPile
+        self.discard_pile = DiscardPile(cfg)                # type: DiscardPile
+        self.n_clues = cfg.n_clues                          # type: int
+        self.n_misfires = 0                                 # type: int
+        self.hand_size = cfg.hand_size_rule.f(self.n_players)  # type: int
+        self.hands = [Hand() for _ in self.players]         # type: List[Hand]
+        self.remaining_turns = None                         # type: int
+        self._lose = False                                  # type: bool
+        self._win = False                                   # type: bool
+        # Active player
+        self.active = None                                  # type: Player
+        self._i_active = None                               # type: int
+        # Inform the players of the initialization
         for i, p in enumerate(self.players):
             p.receive_init(cfg=copy(self.cfg), player_names=(
                 [self.players[j].name for j in range(i, self.n_players)]
                 + [self.players[j].name for j in range(i)]
             ))
 
-    def broadcast_begin_dealing(self) -> None:
+    # *** Utils ***
+
+    @property
+    def i_active(self):
+        """
+        Index of the active player.
+
+        :return: this index is automatically modulo the number of players.
+        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        ...                      PlayerHumanText('Donald X'),
+        ...                      PlayerHumanText('Uwe')])
+        >>> game.i_active = 2
+        >>> game.i_active += 1
+        >>> print(game.i_active)
+        0
+        """
+        return self._i_active
+
+    @i_active.setter
+    def i_active(self, value):
+        """
+        Updates also :attr:`active`.
+        """
+        self._i_active = value % self.n_players
+        self.active = self.players[self._i_active]
+
+    def rel(self, who: int, fro: int) -> int:
+        """
+        Relative position of a player from the point of view of another one.
+
+        :param who: the player we talk about.
+        :param fro: the player to whom we talk.
+
+        :return: the relative position of :attr:`who` from the point of view
+            of :attr:`fro`, i.e. :attr:`who` - :attr:`fro` (modulo
+            :attr:`n_players`).
+
+        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        ...                      PlayerHumanText('Donald X'),
+        ...                      PlayerHumanText('Uwe')])
+        >>> game.rel(who=1, fro=2)
+        2
+        """
+        return (who - fro) % self.n_players
+
+    # *** Strings ***
+
+    def colored(self) -> str:
+        return (self.cfg.colored()
+                + '\nPlayers: %s.' % ', '.join([p.name for p in self.players]))
+
+    # *** Main method: play the game ***
+
+    #: Number of attempts that a player has to choose her action. If she
+    #: provides illegal actions as many times, she is automatically considered
+    #: to forfeit.
+    ATTEMPTS_BEFORE_FORFEIT = 100
+
+    def play(self) -> int:
+        """
+        Main method: play the game.
+
+        Note: it is only possible to "play" once with a :class:`Game` object. If
+        you want to launch a game with the same player, it is necessary
+        to define a new :class:`Game`.
+
+        :return: the final score of the game.
+        """
+        logging.info("Begin dealing.")
+        self.i_active = -1
+        self.deal()
+        logging.info("The game begins.")
+        while True:
+            self.i_active += 1
+            logging.info("%s's turn begins" % self.active.name)
+            logging.info("Check game-exhaustion condition.")
+            if self.check_game_exhausted():
+                return self.game_exhausted()
+            logging.info("Ask %s for an action." % self.active.name)
+            for _ in range(Game.ATTEMPTS_BEFORE_FORFEIT):
+                action = self.active.choose_action()
+                is_legal = self.execute_action(action)
+                if is_legal:
+                    break
+            else:  # i.e. if all the attempts were without a legal action
+                logging.warning(
+                    "%s failed 100 times to choose an action. Automatic "
+                    "forfeit is applied." % self.active.name)
+                self.execute_action(ActionForfeit())
+            logging.info("Inform %s that his/her turn is over."
+                         % self.active.name)
+            self.active.receive_action_finished()
+            logging.info("Check win-or-lose condition.")
+            if self._lose:
+                return self.lose()
+            if self._win:
+                return self.win()
+
+    # *** Drawing cards ***
+
+    def draw(self) -> None:
+        # TODO: I am here in the preparation of the doc
+        card = self.draw_pile.give()
+        if card is not None:
+            self.hands[self.i_active].receive(card)
+        if (self.cfg.end_rule == ConfigurationEndRule.NORMAL
+                and self.draw_pile.n_cards == 0
+                and self.remaining_turns is None):
+            self.remaining_turns = self.n_players + 1
+        for i, p in enumerate(self.players):
+            if i == self.i_active:
+                p.receive_i_draw()
+            else:
+                p.receive_partner_draws(self.rel(self.i_active, i), copy(card))
+
+    def deal(self) -> None:
         for p in self.players:
             p.receive_begin_dealing()
-
-    def broadcast_end_dealing(self) -> None:
+        for _ in range(self.n_players * self.hand_size):
+            self.i_active += 1
+            self.draw()
         for p in self.players:
             p.receive_end_dealing()
+
+    # *** Manage the 4 types of actions ***
 
     def execute_action(self, action: Action) -> bool:
         """
@@ -252,22 +372,20 @@ class Game(Colored):
                 copy(bool_list))
         return True
 
-    def draw(self) -> None:
-        card = self.draw_pile.give()
-        if card is not None:
-            self.hands[self.i_active].receive(card)
-        if (self.cfg.end_rule == ConfigurationEndRule.NORMAL
-                and self.draw_pile.n_cards == 0
-                and self.remaining_turns is None):
-            self.remaining_turns = self.n_players + 1
-        for i, p in enumerate(self.players):
-            if i == self.i_active:
-                p.receive_i_draw()
-            else:
-                p.receive_partner_draws(self.rel(self.i_active, i), copy(card))
+    # *** End of game ***
 
-    def rel(self, who: int, fro: int) -> int:
-        return (who - fro) % self.n_players
+    def check_game_exhausted(self):
+        if self.cfg.end_rule == ConfigurationEndRule.NORMAL:
+            if self.remaining_turns is not None:
+                self.remaining_turns -= 1
+                for p in self.players:
+                    p.receive_remaining_turns(self.remaining_turns)
+                if self.remaining_turns == 0:
+                    return True
+        elif self.cfg.end_rule == ConfigurationEndRule.CROWNING_PIECE:
+            if len(self.hands[self.i_active]) == 0:
+                return True
+        return False
 
     def lose(self) -> int:
         for i, p in enumerate(self.players):
@@ -284,63 +402,21 @@ class Game(Colored):
             p.receive_win(score=self.board.score)
         return self.board.score
 
-    def check_game_exhausted(self):
-        if self.cfg.end_rule == ConfigurationEndRule.NORMAL:
-            if self.remaining_turns is not None:
-                self.remaining_turns -= 1
-                for p in self.players:
-                    p.receive_remaining_turns(self.remaining_turns)
-                if self.remaining_turns == 0:
-                    return True
-        elif self.cfg.end_rule == ConfigurationEndRule.CROWNING_PIECE:
-            if len(self.hands[self.active]) == 0:
-                return True
-        return False
-
-    def play(self) -> int:
-        logging.info("The game begins.")
-        while True:
-            self.i_active += 1
-            logging.info("%s's turn begins" % self.active.name)
-            logging.info("Check game-exhaustion condition.")
-            if self.check_game_exhausted():
-                return self.game_exhausted()
-            logging.info("Ask %s for an action." % self.active.name)
-            for _ in range(100):  # 100 attempts before automatic forfeit
-                action = self.active.choose_action()
-                is_legal = self.execute_action(action)
-                if is_legal:
-                    break
-            else:
-                logging.warning(
-                    "%s failed 100 times to choose an action. Automatic "
-                    "forfeit is applied." % self.active.name)
-                self.execute_action(ActionForfeit())
-            logging.info("Inform %s that his/her turn is over."
-                         % self.active.name)
-            self.active.receive_action_finished()
-            logging.info("Check win-or-lose condition.")
-            if self._lose:
-                return self.lose()
-            if self._win:
-                return self.win()
-
 
 if __name__ == '__main__':
-    log_file = 'Game.log'
-    open(log_file, 'w').close()  # Flush the contents of the file
-    logging.basicConfig(
-        filename=log_file,
-        format='%(levelname)s - %(module)s - %(message)s',
-        level=logging.DEBUG
-    )
+    # log_file = 'Game.log'
+    # open(log_file, 'w').close()  # Flush the contents of the file
+    # logging.basicConfig(
+    #     filename=log_file,
+    #     format='%(levelname)s - %(module)s - %(message)s',
+    #     level=logging.DEBUG
+    # )
     fanfan = PlayerHumanText(name='Fanfan')
     emilie = PlayerHumanText(name='Emilie')
     pek = PlayerHumanText(name='PEK')
-    game = Game(Configuration.W_MULTICOLOR_SHORT, [fanfan, emilie, pek])
-    game.play()
-    # print(game.hands[alice])
-    # print(game.hands[bob])
-    # print(game.draw_pile)
-    # print(game.discard_pile)
-    # print()
+    game = Game([fanfan, emilie, pek], Configuration.W_MULTICOLOR_SHORT)
+    game.test_str()
+    # game.play()
+
+    import doctest
+    doctest.testmod()
