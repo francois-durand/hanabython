@@ -211,7 +211,7 @@ class Game(Colored):
 
         * If the discard pile becomes empty, launch countdown for end of game
           by setting variable :attr:`remaining_turns` to value
-          :attr:`n_players` - 1. It will be decremented at the beginning of
+          :attr:`n_players` + 1. It will be decremented at the beginning of
           next player's turn (before testing the end-of-game condition).
           Cf. :meth:`check_game_exhausted`.
 

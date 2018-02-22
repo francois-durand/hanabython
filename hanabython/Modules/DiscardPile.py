@@ -53,6 +53,7 @@ class DiscardPile(Colored):
     No card discarded yet
 
     Check that scorable cards are counted correctly with unusual configurations:
+    
     >>> from hanabython import Configuration, ConfigurationDeck
     >>> from hanabython import Color, ConfigurationColorContents
     >>> discard_pile = DiscardPile(Configuration(
