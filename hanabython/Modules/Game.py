@@ -21,6 +21,7 @@ This file is part of Hanabython.
 import logging
 from copy import copy
 from typing import List
+from hanabython.Modules.Card import Card
 from hanabython.Modules.Clue import Clue
 from hanabython.Modules.ColorClueBehavior import ColorClueBehavior
 from hanabython.Modules.Colored import Colored
@@ -360,6 +361,49 @@ class Game(Colored):
 
         :return: True iff the action is legal, i.e. except if players have
             all the clue chips.
+
+        >>> import random
+        >>> random.seed(0)
+        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerHumanText('Uwe')])
+        Donald X: The game starts
+        Donald X: cfg = Deck: normal.
+        Number of clues: 8.
+        Number of misfires: 3.
+        Clues rule: empty clues are forbidden.
+        End rule: normal.
+        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        >>> game.i_active = 1
+        >>> game.draw()
+        Donald X: This player tries to draw a card.
+        >>> is_legal = game.execute_throw(0)
+        Donald X: The action chosen is illegal.
+        Donald X: You cannot discard because you have all the clue chips.
+        >>> is_legal
+        False
+        >>> game.n_clues = 3
+        >>> game.i_active = 2
+        >>> game.draw()
+        Donald X: Another player tries to draw a card.
+        Donald X: i_active = 1
+        Donald X: card = Y4
+        >>> is_legal = game.execute_throw(0)
+        Donald X: A player throws (discards a card willingly).
+        Donald X: i_active = 1
+        Donald X: k = 0
+        Donald X: card = Y4
+        Donald X: Another player tries to draw a card.
+        Donald X: i_active = 1
+        Donald X: card = R3
+        >>> is_legal
+        True
+        >>> game.n_clues
+        4
+        >>> print(game.discard_pile)
+        Y4
+        >>> print(game.hands[2])
+        [R3]
         """
         logging.debug('Check legality and inform the active player.')
         if self.n_clues == self.cfg.n_clues:
@@ -386,6 +430,162 @@ class Game(Colored):
 
         :return: True (meaning that this action is always legal). It does not
             mean that the action is a success (it can lead to a misfire).
+
+        The action can fail (but it is still legal).
+
+        >>> import random
+        >>> random.seed(0)
+        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerHumanText('Uwe')])
+        Donald X: The game starts
+        Donald X: cfg = Deck: normal.
+        Number of clues: 8.
+        Number of misfires: 3.
+        Clues rule: empty clues are forbidden.
+        End rule: normal.
+        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        >>> game.i_active = -1
+        >>> game.deal()
+        Donald X: the initial dealing of hands begins.
+        Donald X: The initial dealing of hands is over.
+        >>> game.i_active = 2
+        >>> game.n_misfires = 2
+        >>> print(game.hands[2])
+        [B4, W4, G5, W1, R3]
+        >>> is_legal = game.execute_play_card(2)
+        Donald X: A player tries to play a card on the board.
+        Donald X: i_active = 1
+        Donald X: k = 2
+        Donald X: card = G5
+        >>> is_legal
+        True
+        >>> print(game.board)  #doctest: +NORMALIZE_WHITESPACE
+        B -         G -         R -         W -         Y -
+        >>> print(game.discard_pile)
+        G5
+        >>> game.n_misfires
+        3
+        >>> game._lose
+        True
+
+        If it is the highest card in a color, gain a clue.
+
+        >>> import random
+        >>> random.seed(0)
+        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerHumanText('Uwe')])
+        Donald X: The game starts
+        Donald X: cfg = Deck: normal.
+        Number of clues: 8.
+        Number of misfires: 3.
+        Clues rule: empty clues are forbidden.
+        End rule: normal.
+        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        >>> game.i_active = -1
+        >>> game.deal()
+        Donald X: the initial dealing of hands begins.
+        Donald X: The initial dealing of hands is over.
+        >>> for s in ['G1', 'G2', 'G3', 'G4']:
+        ...     _ = game.board.try_to_play(card=Card(s))
+        >>> game.n_clues = 3
+        >>> game.i_active = 2
+        >>> print(game.hands[2])
+        [B4, W4, G5, W1, R3]
+        >>> is_legal = game.execute_play_card(2)
+        Donald X: A player tries to play a card on the board.
+        Donald X: i_active = 1
+        Donald X: k = 2
+        Donald X: card = G5
+        Donald X: Another player tries to draw a card.
+        Donald X: i_active = 1
+        Donald X: card = G4
+        >>> is_legal
+        True
+        >>> print(game.board)  #doctest: +NORMALIZE_WHITESPACE
+        B -         G 1 2 3 4 5 R -         W -         Y -
+        >>> game.n_clues
+        4
+
+        Do not gain a clue if the maximum is already reached.
+
+        >>> import random
+        >>> random.seed(0)
+        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerHumanText('Uwe')])
+        Donald X: The game starts
+        Donald X: cfg = Deck: normal.
+        Number of clues: 8.
+        Number of misfires: 3.
+        Clues rule: empty clues are forbidden.
+        End rule: normal.
+        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        >>> game.i_active = -1
+        >>> game.deal()
+        Donald X: the initial dealing of hands begins.
+        Donald X: The initial dealing of hands is over.
+        >>> for s in ['G1', 'G2', 'G3', 'G4']:
+        ...     _ = game.board.try_to_play(card=Card(s))
+        >>> game.n_clues
+        8
+        >>> game.i_active = 2
+        >>> print(game.hands[2])
+        [B4, W4, G5, W1, R3]
+        >>> is_legal = game.execute_play_card(2)
+        Donald X: A player tries to play a card on the board.
+        Donald X: i_active = 1
+        Donald X: k = 2
+        Donald X: card = G5
+        Donald X: Another player tries to draw a card.
+        Donald X: i_active = 1
+        Donald X: card = G4
+        >>> is_legal
+        True
+        >>> print(game.board)  #doctest: +NORMALIZE_WHITESPACE
+        B -         G 1 2 3 4 5 R -         W -         Y -
+        >>> game.n_clues
+        8
+
+        If it is the last card ever, players win.
+
+        >>> import random
+        >>> random.seed(0)
+        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        ...                      PlayerPuppet('Donald X'),
+        ...                      PlayerHumanText('Uwe')])
+        Donald X: The game starts
+        Donald X: cfg = Deck: normal.
+        Number of clues: 8.
+        Number of misfires: 3.
+        Clues rule: empty clues are forbidden.
+        End rule: normal.
+        Donald X: player_names = ['Donald X', 'Uwe', 'Antoine']
+        >>> game.i_active = -1
+        >>> game.deal()
+        Donald X: the initial dealing of hands begins.
+        Donald X: The initial dealing of hands is over.
+        >>> for c in ['B', 'R', 'W', 'Y']:
+        ...     for v in range(1, 6):
+        ...         _ = game.board.try_to_play(card=Card(c + str(v)))
+        >>> for s in ['G1', 'G2', 'G3', 'G4']:
+        ...     _ = game.board.try_to_play(card=Card(s))
+        >>> game.i_active = 2
+        >>> print(game.hands[2])
+        [B4, W4, G5, W1, R3]
+        >>> _ = game.execute_play_card(2)
+        Donald X: A player tries to play a card on the board.
+        Donald X: i_active = 1
+        Donald X: k = 2
+        Donald X: card = G5
+        Donald X: Another player tries to draw a card.
+        Donald X: i_active = 1
+        Donald X: card = G4
+        >>> print(game.board)
+        B 1 2 3 4 5 G 1 2 3 4 5 R 1 2 3 4 5 W 1 2 3 4 5 Y 1 2 3 4 5
+        >>> game._win
+        True
         """
         logging.debug('Check legality: play a card is always legal.')
         logging.debug('Inform the active player that it is legal.')

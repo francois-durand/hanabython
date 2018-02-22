@@ -48,9 +48,11 @@ class PlayerPuppet(Player):
     def __init__(self, name):
         super().__init__(name)
         self.next_action = ActionForfeit()              # type: Action
+        self.dealing_is_ongoing = False                 # type: bool
 
     def ack(self, o):
-        print('%s: %s' % (self.name, o))
+        if not self.dealing_is_ongoing:
+            print('%s: %s' % (self.name, o))
 
     # *** Game start ***
 
@@ -61,8 +63,10 @@ class PlayerPuppet(Player):
 
     def receive_begin_dealing(self) -> None:
         self.ack('the initial dealing of hands begins.')
+        self.dealing_is_ongoing = True
 
     def receive_end_dealing(self) -> None:
+        self.dealing_is_ongoing = False
         self.ack('The initial dealing of hands is over.')
 
     # *** Drawing cards ***
@@ -88,6 +92,7 @@ class PlayerPuppet(Player):
 
     def receive_action_illegal(self, s: str) -> None:
         self.ack('The action chosen is illegal.')
+        self.ack(s)
 
     def receive_action_finished(self) -> None:
         self.ack('The action of the player is finished.')
