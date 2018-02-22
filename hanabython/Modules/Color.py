@@ -20,7 +20,6 @@ This file is part of Hanabython.
 """
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.StringAnsi import StringAnsi
-from hanabython.Modules.ColorClueBehavior import ColorClueBehavior
 
 
 class Color(Colored):
@@ -35,49 +34,20 @@ class Color(Colored):
         it is recommended to do the same, but not necessary.
     :param print_color: an ANSI escape code that modifies the printing
         color. See :class:`StringAnsi`.
-    :param clue_behavior: how this color behaves regarding
-        color clues.
 
-    >>> Color.BLUE.name
-    'Blue'
-    >>> Color.BLUE.symbol
-    'B'
-    >>> Color.BLUE.print_color
-    '\x1b[94m'
-    >>> Color.BLUE.clue_behavior == ColorClueBehavior.NORMAL
-    True
-    >>> Color.MULTICOLOR.clue_behavior == ColorClueBehavior.MULTICOLOR
-    True
+    >>> brown = Color(name='Brown', symbol='N', print_color=StringAnsi.BROWN)
+    >>> brown.name
+    'Brown'
+    >>> brown.symbol
+    'N'
+    >>> brown.print_color
+    '\x1b[33m'
     """
 
-    def __init__(self, name: str, symbol: str, print_color: str,
-                 clue_behavior: ColorClueBehavior = ColorClueBehavior.NORMAL):
+    def __init__(self, name: str, symbol: str, print_color: str):
         self.name = name
         self.symbol = symbol
         self.print_color = print_color
-        self.clue_behavior = clue_behavior
-
-    @classmethod
-    def from_symbol(cls, s: str) -> 'Color':
-        """
-        Find one of the standard colors from its symbol.
-
-        :return: the corresponding color. It must be one of the constants
-            defined in the class Color, e.g. :attr:`BLUE`, :attr:`MULTICOLOR`,
-            etc.
-
-        >>> my_color = Color.from_symbol('B')
-        >>> print(my_color.name)
-        Blue
-        """
-        for k in Color.__dict__.keys():
-            try:
-                symbol = Color.__dict__[k].symbol
-            except AttributeError:
-                continue
-            if symbol == s:
-                return Color.__dict__[k]
-        raise ValueError('Could not find color with symbol: ', s)
 
     def colored(self) -> str:
         return self.color_str(self.symbol)
@@ -91,10 +61,12 @@ class Color(Colored):
         :return: the ``__str__`` of this object, with an ANSI color-modifying
             escape code at the beginning and its cancellation at the end.
 
-        >>> Color.BLUE.color_str('some text')
-        '\x1b[94msome text\x1b[0;0m'
-        >>> Color.BLUE.color_str(42)
-        '\x1b[94m42\x1b[0;0m'
+        >>> brown = Color(name='Brown', symbol='N',
+        ...               print_color=StringAnsi.BROWN)
+        >>> brown.color_str('some text')
+        '\x1b[33msome text\x1b[0;0m'
+        >>> brown.color_str(42)
+        '\x1b[33m42\x1b[0;0m'
         """
         return self.print_color + str(o) + StringAnsi.RESET
 
@@ -105,85 +77,34 @@ class Color(Colored):
         :param clue_color: the color of the clue.
 
         :return: whether a card of the current color should react to a clue of
-            color :attr:`clue_color`.
+            color :attr:`clue_color`. A normal color matches simply if the color
+            of the clue is the same. This is different in
+            :class:`ColorMulticolor` and :class:`ColorColorless`.
 
-        >>> Color.BLUE.match(clue_color=Color.BLUE)
+        >>> brown = Color(name='Brown', symbol='N',
+        ...               print_color=StringAnsi.BROWN)
+        >>> pink = Color(name='Pink', symbol='P',
+        ...              print_color=StringAnsi.MAGENTA)
+        >>> brown.match(clue_color=brown)
         True
-        >>> Color.BLUE.match(clue_color=Color.RED)
-        False
-        >>> Color.MULTICOLOR.match(clue_color=Color.BLUE)
-        True
-        >>> Color.COLORLESS.match(clue_color=Color.BLUE)
+        >>> brown.match(clue_color=pink)
         False
         """
-        if self.clue_behavior == ColorClueBehavior.MULTICOLOR:
-            return True
-        if self.clue_behavior == ColorClueBehavior.COLORLESS:
-            return False
         return self.name == clue_color.name
 
-    #:
-    BLUE = None
-    #:
-    GREEN = None
-    #:
-    RED = None
-    #:
-    WHITE = None
-    #:
-    YELLOW = None
-    #: Use this for the colorless cards. As of now, it is pink but the display
-    #: color might change in future implementations.
-    SIXTH = None
-    #: Use this for multicolor cards. As of now, it is cyan but the display
-    #: color might change in future implementations.
-    MULTICOLOR = None
-    #: Use this for the sixth color. As of now, it is brown but the display
-    #: color might change in future implementations.
-    COLORLESS = None
-
-
-Color.BLUE = Color(name='Blue', symbol='B', print_color=StringAnsi.BLUE)
-Color.GREEN = Color(name='Green', symbol='G', print_color=StringAnsi.GREEN)
-Color.RED = Color(name='Red', symbol='R', print_color=StringAnsi.RED)
-Color.WHITE = Color(name='White', symbol='W', print_color=StringAnsi.WHITE)
-Color.YELLOW = Color(name='Yellow', symbol='Y', print_color=StringAnsi.YELLOW)
-Color.SIXTH = Color(name='Pink', symbol='P', print_color=StringAnsi.MAGENTA)
-Color.MULTICOLOR = Color(
-    name='Multicolor', symbol='M',
-    print_color=(
-        StringAnsi.CYAN + StringAnsi.STYLE_BOLD + StringAnsi.STYLE_UNDERLINE),
-    clue_behavior=ColorClueBehavior.MULTICOLOR
-)
-Color.COLORLESS = Color(
-    name='Colorless', symbol='C',
-    print_color=(
-        StringAnsi.RED + StringAnsi.STYLE_BOLD + StringAnsi.STYLE_UNDERLINE),
-    clue_behavior=ColorClueBehavior.COLORLESS
-)
+    @property
+    def is_cluable(self):
+        """
+        :return: whether this color can be used for clues. For a normal color,
+            it is True. This is different in
+            :class:`ColorMulticolor` and :class:`ColorColorless`.
+        """
+        return True
 
 
 if __name__ == '__main__':
-    Color.BLUE.test_str()
-
-    my_color = Color.from_symbol('B')
-    print('\n' + my_color.colored())
-    try:
-        my_color = Color.from_symbol('Z')
-        print(my_color.colored())
-    except ValueError as e:
-        print(e)
-
-    print('\n' + Color.BLUE.colored())
-    print(Color.GREEN.colored())
-    print(Color.RED.colored())
-    print(Color.WHITE.colored())
-    print(Color.YELLOW.colored())
-    print(Color.SIXTH.colored())
-    print(Color.MULTICOLOR.colored())
-    print(Color.COLORLESS.colored())
-
-    print(Color.__doc__)
+    brown = Color(name='Brown', symbol='N', print_color=StringAnsi.BROWN)
+    brown.test_str()
 
     import doctest
     doctest.testmod()

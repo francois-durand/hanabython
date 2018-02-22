@@ -22,7 +22,7 @@ from typing import Iterable, Union, List
 from hanabython.Modules.Clue import Clue
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Card import Card
-from hanabython.Modules.Color import Color
+from hanabython.Modules.ColorBook import ColorBook
 
 
 class Hand(Colored, list):
@@ -102,7 +102,7 @@ class Hand(Colored, list):
             iff the `i`-th card of the hand matches the clue given.
 
         >>> hand = Hand(['G2', 'Y3', 'M1', 'B2', 'R4'])
-        >>> hand.match(Clue(Color.RED))
+        >>> hand.match(Clue(ColorBook.RED))
         [False, False, True, False, True]
         >>> hand.match(Clue(2))
         [True, False, False, True, False]
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     print(my_hand.colored())
 
     print('\nMatch red clue:')
-    print(my_hand.match(Clue(Color.RED)))
+    print(my_hand.match(Clue(ColorBook.RED)))
 
     print('\nMatch clue 2:')
     print(my_hand.match(Clue(2)))

@@ -23,8 +23,7 @@ from copy import copy
 from typing import List
 from hanabython.Modules.Card import Card
 from hanabython.Modules.Clue import Clue
-from hanabython.Modules.ColorClueBehavior import ColorClueBehavior
-from hanabython.Modules.Color import Color
+from hanabython.Modules.ColorBook import ColorBook
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Configuration import Configuration
 from hanabython.Modules.ConfigurationEmptyClueRule \
@@ -612,7 +611,7 @@ chip.
         Donald X: The action chosen is illegal.
         Donald X: This value does not exist: 6.
         False
-        >>> game.execute_clue(2, Clue(Color.from_symbol('M')))
+        >>> game.execute_clue(2, Clue(ColorBook.MULTICOLOR))
         Donald X: The action chosen is illegal.
         Donald X: You cannot clue this color: M.
         False
@@ -652,8 +651,7 @@ any card.
         #     self.active.receive_action_illegal(
         #         'This color is not in the deck: %s.' % clue.x)
         #     return False
-        if (clue.category == Clue.COLOR
-                and clue.x.clue_behavior != ColorClueBehavior.NORMAL):
+        if clue.category == Clue.COLOR and not clue.x.is_cluable:
             self.active.receive_action_illegal(
                 'You cannot clue this color: %s.' % clue.x.colored())
             return False
@@ -838,8 +836,8 @@ if __name__ == '__main__':
     from hanabython.Modules.ConfigurationColorContents \
         import ConfigurationColorContents
     cfg_test = Configuration(deck=ConfigurationDeck(contents=[
-        (Color.BLUE, ConfigurationColorContents([3, 2, 2])),
-        (Color.RED, ConfigurationColorContents([3, 2, 2])),
+        (ColorBook.BLUE, ConfigurationColorContents([3, 2, 2])),
+        (ColorBook.RED, ConfigurationColorContents([3, 2, 2])),
     ]), end_rule=ConfigurationEndRule.CROWNING_PIECE)
 
     fanfan = PlayerHumanText(name='Fanfan')

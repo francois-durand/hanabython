@@ -22,6 +22,7 @@ import numpy as np
 from typing import List, Dict
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Color import Color
+from hanabython.Modules.ColorBook import ColorBook
 from hanabython.Modules.ConfigurationDeck import ConfigurationDeck
 from hanabython.Modules.ConfigurationEmptyClueRule \
     import ConfigurationEmptyClueRule
@@ -72,7 +73,8 @@ class Configuration(Colored):
     >>> print(cfg.hand_size_rule)
     normal
     >>> print(cfg.colors)
-    [<Color: B>, <Color: G>, <Color: R>, <Color: W>, <Color: Y>, <Color: M>]
+    [<Color: B>, <Color: G>, <Color: R>, <Color: W>, <Color: Y>, \
+<ColorMulticolor: M>]
     >>> print(cfg.n_colors)
     6
     >>> print(cfg.highest)
@@ -96,13 +98,12 @@ class Configuration(Colored):
     Design a configuration manually:
 
     >>> from hanabython import ConfigurationDeck
-    >>> from hanabython import Color
     >>> from hanabython import ConfigurationColorContents
     >>> from hanabython import ConfigurationEmptyClueRule
     >>> cfg = Configuration(
     ...     deck=ConfigurationDeck(contents=[
-    ...         (Color.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
-    ...         (Color.RED, ConfigurationColorContents([2, 1])),
+    ...         (ColorBook.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
+    ...         (ColorBook.RED, ConfigurationColorContents([2, 1])),
     ...     ]),
     ...     n_clues=4,
     ...     n_misfires=1,
@@ -176,8 +177,7 @@ class Configuration(Colored):
 
         :return: the corresponding index.
 
-        >>> from hanabython import Color
-        >>> Configuration.STANDARD.i_from_c(Color.BLUE)
+        >>> Configuration.STANDARD.i_from_c(ColorBook.BLUE)
         0
         """
         return self._i_from_c_name[c.name]
@@ -243,8 +243,8 @@ if __name__ == '__main__':
         import ConfigurationColorContents
     my_cfg = Configuration(
         deck=ConfigurationDeck(contents=[
-            (Color.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
-            (Color.RED, ConfigurationColorContents([2, 1])),
+            (ColorBook.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
+            (ColorBook.RED, ConfigurationColorContents([2, 1])),
         ]),
         n_clues=4,
         n_misfires=1,

@@ -18,26 +18,33 @@ This file is part of Hanabython.
     You should have received a copy of the GNU General Public License
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
+from hanabython.Modules.Color import Color
+from hanabython.Modules.StringAnsi import StringAnsi
 
 
-class ColorClueBehavior:
-    """
-    A type of behavior regarding color clues.
-    """
+class ColorMulticolor(Color):
 
-    #: Normal behavior (you can clue this color, and the card matches only the
-    #: clues of its own color).
-    NORMAL = 0
-    #: Multicolor behavior (you cannot clue this color, and the card matches the
-    #: clues of all colors).
-    MULTICOLOR = 1
-    #: Colorless behavior (you cannot clue this color, and the card matches the
-    #: clues of no color).
-    COLORLESS = 2
+    def match(self, clue_color: Color) -> bool:
+        """
+        Multicolor matches any color clue.
+
+        >>> multicolor = ColorMulticolor(name='Multicolor', symbol='M',
+        ...                              print_color=StringAnsi.MAGENTA)
+        >>> brown = Color(name='Brown', symbol='N',
+        ...               print_color=StringAnsi.BROWN)
+        >>> multicolor.match(clue_color=brown)
+        True
+        """
+        return True
+
+    @property
+    def is_cluable(self):
+        """
+        :return: False. It is not allowed to give "multicolor" as a clue.
+        """
+        return False
 
 
 if __name__ == '__main__':
-    for k in ColorClueBehavior.__dict__.keys():
-        if not k.startswith('_'):
-            print('ColorClueBehavior.%s = %s'
-                  % (k, ColorClueBehavior.__dict__[k]))
+    import doctest
+    doctest.testmod()

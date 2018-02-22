@@ -21,14 +21,17 @@ Colors
 .. autoclass:: hanabython.Color
     :members:
 
-.. autoclass:: hanabython.ColorClueBehavior
+.. autoclass:: hanabython.ColorMultiColor
+    :members:
+
+.. autoclass:: hanabython.ColorColorless
+    :members:
+
+.. autoclass:: hanabython.ColorBook
     :members:
 
 Configuration
 -------------
-
-.. autoclass:: hanabython.Configuration
-    :members:
 
 .. autoclass:: hanabython.ConfigurationColorContents
     :members:
@@ -43,6 +46,9 @@ Configuration
     :members:
 
 .. autoclass:: hanabython.ConfigurationHandSize
+    :members:
+
+.. autoclass:: hanabython.Configuration
     :members:
 
 Clues
@@ -114,13 +120,13 @@ Players
 .. autoclass:: hanabython.Player
     :members:
 
+.. autoclass:: hanabython.PlayerPuppet
+    :members:
+
 .. autoclass:: hanabython.PlayerBase
     :members:
 
 .. autoclass:: hanabython.PlayerHumanText
-    :members:
-
-.. autoclass:: hanabython.PlayerPuppet
     :members:
 
 Game

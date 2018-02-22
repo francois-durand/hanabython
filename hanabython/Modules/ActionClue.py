@@ -30,11 +30,11 @@ class ActionClue(Action):
         (i.e. 1 for next player, 2 for second next player, etc.).
     :param clue: the clue.
 
-    >>> from hanabython import Clue, Color
+    >>> from hanabython import Clue, ColorBook
     >>> action = ActionClue(i=1, clue=Clue(2))
     >>> print(action)
     Clue 2 to player in relative position 1
-    >>> action = ActionClue(i=2, clue=Clue(Color.BLUE))
+    >>> action = ActionClue(i=2, clue=Clue(ColorBook.BLUE))
     >>> print(action)
     Clue B to player in relative position 2
     """
@@ -54,8 +54,8 @@ if __name__ == '__main__':
     my_action.test_str()
 
     print()
-    from hanabython.Modules.Color import Color
-    my_action = ActionClue(i=1, clue=Clue(Color.BLUE))
+    from hanabython.Modules.ColorBook import ColorBook
+    my_action = ActionClue(i=1, clue=Clue(ColorBook.BLUE))
     my_action.test_str()
 
     import doctest

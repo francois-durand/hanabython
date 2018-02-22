@@ -21,6 +21,7 @@ This file is part of Hanabython.
 from hanabython.Modules.Clue import Clue
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Color import Color
+from hanabython.Modules.ColorBook import ColorBook
 
 
 class Card(Colored):
@@ -35,13 +36,13 @@ class Card(Colored):
     You can provide either :attr:`c` and :attr:`v`, or :attr:`s`.
     The constructor accepts several types of syntax, as illustrated below.
 
-    >>> my_card = Card(c=Color.BLUE, v=3)
+    >>> my_card = Card(c=ColorBook.BLUE, v=3)
     >>> print(my_card)
     B3
-    >>> my_card = Card(Color.BLUE, 3)
+    >>> my_card = Card(ColorBook.BLUE, 3)
     >>> print(my_card)
     B3
-    >>> my_card = Card(3, Color.BLUE)
+    >>> my_card = Card(3, ColorBook.BLUE)
     >>> print(my_card)
     B3
     >>> my_card = Card(s='B3')
@@ -87,11 +88,11 @@ class Card(Colored):
         if s is not None:
             try:
                 self.v = int(s[1:])
-                self.c = Color.from_symbol(s[0])
+                self.c = ColorBook.from_symbol(s[0])
             except ValueError:
                 try:
                     self.v = int(s[:-1])
-                    self.c = Color.from_symbol(s[-1])
+                    self.c = ColorBook.from_symbol(s[-1])
                 except ValueError:
                     raise ValueError('Could not interpret as a card: ', s)
 
@@ -106,21 +107,21 @@ class Card(Colored):
 
         :return: whether the card should be pointed when giving this clue.
 
-        >>> from hanabython import Color
+        >>> from hanabython import ColorBook
         >>> card_blue = Card('B3')
-        >>> card_blue.match(Clue(Color.BLUE))
+        >>> card_blue.match(Clue(ColorBook.BLUE))
         True
-        >>> card_blue.match(Clue(Color.RED))
+        >>> card_blue.match(Clue(ColorBook.RED))
         False
         >>> card_blue.match(Clue(3))
         True
         >>> card_blue.match(Clue(4))
         False
         >>> card_multi = Card('M3')
-        >>> card_multi.match(Clue(Color.BLUE))
+        >>> card_multi.match(Clue(ColorBook.BLUE))
         True
         >>> card_colorless = Card('C3')
-        >>> card_colorless.match(Clue(Color.BLUE))
+        >>> card_colorless.match(Clue(ColorBook.BLUE))
         False
         """
         if clue.category == Clue.VALUE:
@@ -130,10 +131,10 @@ class Card(Colored):
 
 
 if __name__ == '__main__':
-    card = Card(c=Color.BLUE, v=3)
+    card = Card(c=ColorBook.BLUE, v=3)
     card.test_str()
 
-    print('\nIs is blue?', card.match(Clue(Color.BLUE)))
+    print('\nIs is blue?', card.match(Clue(ColorBook.BLUE)))
     print('Is it a 4?', card.match(Clue(4)))
 
     import doctest
