@@ -29,6 +29,34 @@ class ColorBook:
     Standard colors in Hanabi.
     """
 
+    #:
+    BLUE = Color(name='Blue', symbol='B', print_color=StringAnsi.BLUE)
+    #:
+    GREEN = Color(name='Green', symbol='G', print_color=StringAnsi.GREEN)
+    #:
+    RED = Color(name='Red', symbol='R', print_color=StringAnsi.RED)
+    #:
+    WHITE = Color(name='White', symbol='W', print_color=StringAnsi.WHITE)
+    #:
+    YELLOW = Color(name='Yellow', symbol='Y', print_color=StringAnsi.YELLOW)
+    #: Use this for the sixth color. As of now, it is pink but the display
+    #: color might change in future implementations.
+    SIXTH = Color(name='Pink', symbol='P', print_color=StringAnsi.MAGENTA)
+    #: Use this for multicolor cards. As of now, it is cyan but the display
+    #: color might change in future implementations.
+    MULTICOLOR = ColorMulticolor(
+        name='Multicolor', symbol='M', print_color=(
+            StringAnsi.CYAN + StringAnsi.STYLE_BOLD + StringAnsi.STYLE_UNDERLINE
+        )
+    )
+    #: Use this for the colorless cards. As of now, it is brown but the display
+    #: color might change in future implementations.
+    COLORLESS = ColorColorless(
+        name='Colorless', symbol='C', print_color=(
+            StringAnsi.RED + StringAnsi.STYLE_BOLD + StringAnsi.STYLE_UNDERLINE
+        )
+    )
+
     @classmethod
     def from_symbol(cls, s: str) -> Color:
         """
@@ -49,44 +77,6 @@ class ColorBook:
                 return ColorBook.__dict__[k]
         raise ValueError('Could not find color with symbol: ', s)
 
-    #:
-    BLUE = None
-    #:
-    GREEN = None
-    #:
-    RED = None
-    #:
-    WHITE = None
-    #:
-    YELLOW = None
-    #: Use this for the sixth color. As of now, it is pink but the display
-    #: color might change in future implementations.
-    SIXTH = None
-    #: Use this for multicolor cards. As of now, it is cyan but the display
-    #: color might change in future implementations.
-    MULTICOLOR = None
-    #: Use this for the colorless cards. As of now, it is brown but the display
-    #: color might change in future implementations.
-    COLORLESS = None
-
-
-ColorBook.BLUE = Color(name='Blue', symbol='B', print_color=StringAnsi.BLUE)
-ColorBook.GREEN = Color(name='Green', symbol='G', print_color=StringAnsi.GREEN)
-ColorBook.RED = Color(name='Red', symbol='R', print_color=StringAnsi.RED)
-ColorBook.WHITE = Color(name='White', symbol='W', print_color=StringAnsi.WHITE)
-ColorBook.YELLOW = Color(name='Yellow', symbol='Y',
-                         print_color=StringAnsi.YELLOW)
-ColorBook.SIXTH = Color(name='Pink', symbol='P', print_color=StringAnsi.MAGENTA)
-ColorBook.MULTICOLOR = ColorMulticolor(
-    name='Multicolor', symbol='M', print_color=(
-        StringAnsi.CYAN + StringAnsi.STYLE_BOLD + StringAnsi.STYLE_UNDERLINE
-    )
-)
-ColorBook.COLORLESS = ColorColorless(
-    name='Colorless', symbol='C', print_color=(
-        StringAnsi.RED + StringAnsi.STYLE_BOLD + StringAnsi.STYLE_UNDERLINE
-    )
-)
 
 if __name__ == '__main__':
     ColorBook.BLUE.test_str()
