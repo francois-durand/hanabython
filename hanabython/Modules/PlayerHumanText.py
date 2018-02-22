@@ -67,6 +67,8 @@ class PlayerHumanText(PlayerBase):
                 break
             except KeyError:
                 pass
+            except IndexError:  # if the string is empty!
+                pass
         if cat == Action.CLUE:
             if self.n_players == 2:
                 i = 1
