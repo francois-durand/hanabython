@@ -589,11 +589,12 @@ class Game(Colored):
         >>> random.seed(0)
         >>> game = Game(players=[PlayerPuppet('Antoine'),
         ...                      PlayerPuppet('Donald X'),
-        ...                      PlayerPuppet('Uwe')])
+        ...                      PlayerPuppet('Uwe')],
+        ...             cfg=Configuration.W_MULTICOLOR)
         >>> game.i_active = -1
         >>> game.deal()
         >>> print(game.hands[2])
-        [B4, W4, G5, W1, R3]
+        [G2, W1, W1, B1, Y4]
         >>> game.players[1].speak = True
         >>> game.i_active = 1
         >>> game.n_clues = 0
@@ -611,11 +612,15 @@ chip.
         Donald X: The action chosen is illegal.
         Donald X: This value does not exist: 6.
         False
+        >>> game.execute_clue(2, Clue(ColorBook.COLORLESS))
+        Donald X: The action chosen is illegal.
+        Donald X: This color is not in the deck: C.
+        False
         >>> game.execute_clue(2, Clue(ColorBook.MULTICOLOR))
         Donald X: The action chosen is illegal.
         Donald X: You cannot clue this color: M.
         False
-        >>> game.execute_clue(2, Clue(2))
+        >>> game.execute_clue(2, Clue(3))
         Donald X: The action chosen is illegal.
         Donald X: You cannot give this clue because it does not correspond to \
 any card.
@@ -626,7 +631,7 @@ any card.
         Donald X: i_active = 0
         Donald X: i_clued = 1
         Donald X: clue = 1
-        Donald X: bool_list = [False, False, False, True, False]
+        Donald X: bool_list = [False, True, True, True, False]
         True
         >>> game.n_clues
         2
@@ -646,11 +651,10 @@ any card.
             self.active.receive_action_illegal(
                 'This value does not exist: %s.' % clue.x)
             return False
-        # if (clue.category == Clue.COLOR
-        #         and clue.x not in self.cfg.colors):
-        #     self.active.receive_action_illegal(
-        #         'This color is not in the deck: %s.' % clue.x)
-        #     return False
+        if clue.category == Clue.COLOR and clue.x not in self.cfg.colors:
+            self.active.receive_action_illegal(
+                'This color is not in the deck: %s.' % clue.x)
+            return False
         if clue.category == Clue.COLOR and not clue.x.is_cluable:
             self.active.receive_action_illegal(
                 'You cannot clue this color: %s.' % clue.x.colored())

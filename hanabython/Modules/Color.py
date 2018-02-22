@@ -70,6 +70,15 @@ class Color(Colored):
         """
         return self.print_color + str(o) + StringAnsi.RESET
 
+    def __eq__(self, other):
+        return isinstance(other, Color) and (
+            (self.name, self.symbol, self.print_color)
+            == (other.name, other.symbol, other.print_color)
+        )
+
+    def __hash__(self):
+        return hash((self.name, self.symbol, self.print_color))
+
     def match(self, clue_color: 'Color') -> bool:
         """
         React to a color clue.
@@ -90,7 +99,7 @@ class Color(Colored):
         >>> brown.match(clue_color=pink)
         False
         """
-        return self.name == clue_color.name
+        return self == clue_color
 
     @property
     def is_cluable(self):
@@ -105,6 +114,16 @@ class Color(Colored):
 if __name__ == '__main__':
     brown = Color(name='Brown', symbol='N', print_color=StringAnsi.BROWN)
     brown.test_str()
+
+    pink = Color(name='Pink', symbol='P', print_color=StringAnsi.MAGENTA)
+    pseudo_pink = Color(name='Pink', symbol='P', print_color=StringAnsi.MAGENTA)
+
+    print('pseudo_pink == pink: ', pseudo_pink == pink)
+    my_set = {brown, pink}
+    print('In the set = ', pseudo_pink in my_set)
+    my_dict = {brown: 'a', pink: 'b'}
+    print('In the dict = ', pseudo_pink in my_dict.keys())
+    print('my_dict[pseudo_pink] = ', my_dict[pseudo_pink])
 
     import doctest
     doctest.testmod()
