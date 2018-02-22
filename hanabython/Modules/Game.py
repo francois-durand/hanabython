@@ -200,14 +200,43 @@ class Game(Colored):
     # *** Drawing cards ***
 
     def draw(self) -> None:
-        # TODO: I am here in the preparation of the doc
+        """
+        The active player draws a card.
+
+        * Draw a card and put it in hand (unless the discard pile is empty).
+
+        * If the discard pile becomes empty, launch countdown for end of game
+        by setting variable :attr:`remaining_turns` to value :n_players: - 1.
+        It will be decremented at the beginning of next player's turn (before
+        testing the end-of-game condition). Cf. :meth:`check_game_exhausted`.
+
+        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        ...                      PlayerHumanText('Donald X'),
+        ...                      PlayerHumanText('Uwe')])
+        >>> game.i_active = -1
+        >>> for _ in range(50):
+        ...     game.i_active += 1
+        ...     game.draw()
+        >>> [len(hand) for hand in game.hands]
+        [17, 17, 16]
+        >>> game.i_active += 1
+        >>> print(game.draw())
+        None
+        >>> game.remaining_turns
+        4
+        """
+        logging.debug('Draw the card from draw pile and put it in the hand '
+                      '(unless the draw pile is empty).')
         card = self.draw_pile.give()
         if card is not None:
             self.hands[self.i_active].receive(card)
+        logging.debug('In normal rule for end of game, check if the countdown'
+                      'for end of game should be launched.')
         if (self.cfg.end_rule == ConfigurationEndRule.NORMAL
                 and self.draw_pile.n_cards == 0
                 and self.remaining_turns is None):
             self.remaining_turns = self.n_players + 1
+        logging.debug('Inform the players that someone drew.')
         for i, p in enumerate(self.players):
             if i == self.i_active:
                 p.receive_i_draw()
@@ -215,11 +244,30 @@ class Game(Colored):
                 p.receive_partner_draws(self.rel(self.i_active, i), copy(card))
 
     def deal(self) -> None:
+        """
+        Deal the initial hands.
+
+        :attr:`i_active` should be -1 before dealing and will be -1 at the end
+        (modulo the number of players).
+
+        >>> game = Game(players=[PlayerHumanText('Antoine'),
+        ...                      PlayerHumanText('Donald X'),
+        ...                      PlayerHumanText('Uwe')])
+        >>> game.i_active = -1
+        >>> game.deal()
+        >>> [len(hand) for hand in game.hands]
+        [5, 5, 5]
+        >>> game.i_active
+        2
+        """
+        logging.debug('Inform the players that dealing begins.')
         for p in self.players:
             p.receive_begin_dealing()
+        logging.debug('Deal cards.')
         for _ in range(self.n_players * self.hand_size):
             self.i_active += 1
             self.draw()
+        logging.debug('Inform the players that dealing is over.')
         for p in self.players:
             p.receive_end_dealing()
 
@@ -229,14 +277,23 @@ class Game(Colored):
         """
         Execute the action (by the active player).
 
-        This function must (as well as any of its auxiliary functions):
+        This method dispatches to the auxiliary methods :meth:`execute_clue`,
+        :meth:`execute_forfeit`, :meth:`execute_play_card` and
+        :meth:`execute_throw`. Each of these methods has the responsability to:
+
         * Check if the action is legal,
+
         * Inform the active player whether it is the case or not,
+
         * Perform the action,
+
         * Update the relevant variables, in particular :attr:`_lose` and
         :attr:`_win`,
+
         * Inform all players of the result of the action,
+
         * Make the active player draw a new card if necessary,
+
         * Return the boolean stating whether the action is legal.
 
         :param action: the action.
