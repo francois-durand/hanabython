@@ -72,6 +72,8 @@ class Board(Colored):
         """
         Colored version of :meth:`str_compact`.
         """
+        if self.score == 0:
+            return 'No card on the board yet'
         return ' '.join([
             c.color_str(self._str_one_color(i, c))
             for i, c in enumerate(self.cfg.colors)
@@ -151,6 +153,8 @@ class Board(Colored):
         """
         Colored version of :meth:`str_multi_line_compact`.
         """
+        if self.score == 0:
+            return 'No card on the board yet'
         return '\n'.join([
             c.color_str(self._str_one_color(i, c))
             for i, c in enumerate(self.cfg.colors)
