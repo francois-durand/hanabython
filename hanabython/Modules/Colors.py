@@ -24,7 +24,7 @@ from hanabython.Modules.ColorMulticolor import ColorMulticolor
 from hanabython.Modules.ColorColorless import ColorColorless
 
 
-class ColorBook:
+class Colors:
     """
     Standard colors in Hanabi.
     """
@@ -64,39 +64,39 @@ class ColorBook:
 
         :return: the corresponding color.
 
-        >>> color = ColorBook.from_symbol('B')
+        >>> color = Colors.from_symbol('B')
         >>> print(color.name)
         Blue
         """
-        for k in ColorBook.__dict__.keys():
+        for k in Colors.__dict__.keys():
             try:
-                symbol = ColorBook.__dict__[k].symbol
+                symbol = Colors.__dict__[k].symbol
             except AttributeError:
                 continue
             if symbol == s:
-                return ColorBook.__dict__[k]
+                return Colors.__dict__[k]
         raise ValueError('Could not find color with symbol: ', s)
 
 
 if __name__ == '__main__':
-    ColorBook.BLUE.test_str()
+    Colors.BLUE.test_str()
 
-    my_color = ColorBook.from_symbol('B')
+    my_color = Colors.from_symbol('B')
     print('\n' + my_color.colored())
     try:
-        my_color = ColorBook.from_symbol('Z')
+        my_color = Colors.from_symbol('Z')
         print(my_color.colored())
     except ValueError as e:
         print(e)
 
-    print('\n' + ColorBook.BLUE.colored())
-    print(ColorBook.GREEN.colored())
-    print(ColorBook.RED.colored())
-    print(ColorBook.WHITE.colored())
-    print(ColorBook.YELLOW.colored())
-    print(ColorBook.SIXTH.colored())
-    print(ColorBook.MULTICOLOR.colored())
-    print(ColorBook.COLORLESS.colored())
+    print('\n' + Colors.BLUE.colored())
+    print(Colors.GREEN.colored())
+    print(Colors.RED.colored())
+    print(Colors.WHITE.colored())
+    print(Colors.YELLOW.colored())
+    print(Colors.SIXTH.colored())
+    print(Colors.MULTICOLOR.colored())
+    print(Colors.COLORLESS.colored())
 
     import doctest
     doctest.testmod()

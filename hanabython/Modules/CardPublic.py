@@ -23,7 +23,7 @@ from hanabython.Modules.Clue import Clue
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Configuration import Configuration
 from hanabython.Modules.Color import Color
-from hanabython.Modules.ColorBook import ColorBook
+from hanabython.Modules.Colors import Colors
 from hanabython.Modules.StringAnsi import StringAnsi
 
 
@@ -156,10 +156,10 @@ class CardPublic(Colored):
         >>> card = CardPublic(cfg)
         >>> print(card)
         BGRWYPMC 12345
-        >>> card.match(clue=Clue(ColorBook.RED), b=False)
+        >>> card.match(clue=Clue(Colors.RED), b=False)
         >>> print(card)  #doctest: +NORMALIZE_WHITESPACE
         BGWYPC 12345
-        >>> card.match(clue=Clue(ColorBook.BLUE), b=True)
+        >>> card.match(clue=Clue(Colors.BLUE), b=True)
         >>> print(card)  #doctest: +NORMALIZE_WHITESPACE
         B 12345
 
@@ -169,10 +169,10 @@ class CardPublic(Colored):
         >>> card = CardPublic(Configuration.EIGHT_COLORS)
         >>> print(card)
         BGRWYPMC 12345
-        >>> card.match(clue=Clue(ColorBook.BLUE), b=True)
+        >>> card.match(clue=Clue(Colors.BLUE), b=True)
         >>> print(card)  #doctest: +NORMALIZE_WHITESPACE
         BM 12345
-        >>> card.match(clue=Clue(ColorBook.RED), b=False)
+        >>> card.match(clue=Clue(Colors.RED), b=False)
         >>> print(card)  #doctest: +NORMALIZE_WHITESPACE
         B 12345
 
@@ -201,17 +201,17 @@ if __name__ == '__main__':
 
     print('\nIt is not red, then it is blue:')
     print(my_card.colored())
-    my_card.match(clue=Clue(ColorBook.RED), b=False)
+    my_card.match(clue=Clue(Colors.RED), b=False)
     print(my_card.colored())
-    my_card.match(clue=Clue(ColorBook.BLUE), b=True)
+    my_card.match(clue=Clue(Colors.BLUE), b=True)
     print(my_card.colored())
 
     print('\nIt is blue, then it is not red:')
     my_card = CardPublic(Configuration.EIGHT_COLORS)
     print(my_card.colored())
-    my_card.match(clue=Clue(ColorBook.BLUE), b=True)
+    my_card.match(clue=Clue(Colors.BLUE), b=True)
     print(my_card.colored())
-    my_card.match(clue=Clue(ColorBook.RED), b=False)
+    my_card.match(clue=Clue(Colors.RED), b=False)
     print(my_card.colored())
 
     print('\nIt is not 3, then it is 5:')

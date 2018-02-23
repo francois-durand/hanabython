@@ -19,7 +19,7 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 from typing import List
-from hanabython.Modules.ColorBook import ColorBook
+from hanabython.Modules.Colors import Colors
 from hanabython.Modules.Clue import Clue
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Configuration import Configuration
@@ -107,7 +107,7 @@ class HandPublic(Colored, list):
         >>> hand.match(clue=Clue(3), bool_list=[False, True, False, False])
         >>> print(hand)  #doctest: +NORMALIZE_WHITESPACE
         BGRWY 1245 ,   BGRWY 3  , BGRWY 1245 , BGRWY 1245
-        >>> hand.match(clue=Clue(ColorBook.RED),
+        >>> hand.match(clue=Clue(Colors.RED),
         ...            bool_list=[False, True, False, False])
         >>> print(hand)  #doctest: +NORMALIZE_WHITESPACE
         BGWY 1245 ,     R3     ,  BGWY 1245 ,  BGWY 1245
@@ -122,10 +122,10 @@ if __name__ == '__main__':
 
     print("\nLet's give some clues: ")
     print(my_hand.colored())
-    my_hand.match(clue=Clue(ColorBook.RED),
+    my_hand.match(clue=Clue(Colors.RED),
                   bool_list=[True, False, True, False, False])
     print(my_hand.colored())
-    my_hand.match(clue=Clue(ColorBook.BLUE),
+    my_hand.match(clue=Clue(Colors.BLUE),
                   bool_list=[False, True, False, False, False])
     print(my_hand.colored())
     my_hand.match(clue=Clue(3),

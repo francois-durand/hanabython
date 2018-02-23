@@ -55,11 +55,11 @@ class DiscardPile(Colored):
     Check that scorable cards are counted correctly with unusual configurations:
 
     >>> from hanabython import Configuration, ConfigurationDeck
-    >>> from hanabython import ColorBook, ConfigurationColorContents
+    >>> from hanabython import Colors, ConfigurationColorContents
     >>> discard_pile = DiscardPile(Configuration(
     ...     deck=ConfigurationDeck(contents=[
-    ...         (ColorBook.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
-    ...         (ColorBook.RED, ConfigurationColorContents([2, 1])),
+    ...         (Colors.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
+    ...         (Colors.RED, ConfigurationColorContents([2, 1])),
     ...     ])
     ... ))
     >>> print(discard_pile)

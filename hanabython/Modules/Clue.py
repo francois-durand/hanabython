@@ -21,7 +21,7 @@ This file is part of Hanabython.
 from typing import Union
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Color import Color
-from hanabython.Modules.ColorBook import ColorBook
+from hanabython.Modules.Colors import Colors
 
 
 class Clue(Colored):
@@ -37,7 +37,7 @@ class Clue(Colored):
     1
     >>> clue.category == Clue.VALUE
     True
-    >>> clue = Clue(ColorBook.RED)
+    >>> clue = Clue(Colors.RED)
     >>> print(clue)
     R
     >>> clue.category == Clue.COLOR
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     my_clue = Clue(1)
     my_clue.test_str()
     print()
-    my_clue = Clue(ColorBook.BLUE)
+    my_clue = Clue(Colors.BLUE)
     my_clue.test_str()
 
     import doctest

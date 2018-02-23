@@ -23,7 +23,7 @@ from copy import copy
 from typing import List
 from hanabython.Modules.Card import Card
 from hanabython.Modules.Clue import Clue
-from hanabython.Modules.ColorBook import ColorBook
+from hanabython.Modules.Colors import Colors
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Configuration import Configuration
 from hanabython.Modules.ConfigurationEmptyClueRule \
@@ -612,11 +612,11 @@ chip.
         Donald X: The action chosen is illegal.
         Donald X: This value does not exist: 6.
         False
-        >>> game.execute_clue(2, Clue(ColorBook.COLORLESS))
+        >>> game.execute_clue(2, Clue(Colors.COLORLESS))
         Donald X: The action chosen is illegal.
         Donald X: This color is not in the deck: C.
         False
-        >>> game.execute_clue(2, Clue(ColorBook.MULTICOLOR))
+        >>> game.execute_clue(2, Clue(Colors.MULTICOLOR))
         Donald X: The action chosen is illegal.
         Donald X: You cannot clue this color: M.
         False
@@ -840,8 +840,8 @@ if __name__ == '__main__':
     # from hanabython.Modules.ConfigurationColorContents \
     #     import ConfigurationColorContents
     # cfg_test = Configuration(deck=ConfigurationDeck(contents=[
-    #     (ColorBook.BLUE, ConfigurationColorContents([3, 2, 2])),
-    #     (ColorBook.RED, ConfigurationColorContents([3, 2, 2])),
+    #     (Colors.BLUE, ConfigurationColorContents([3, 2, 2])),
+    #     (Colors.RED, ConfigurationColorContents([3, 2, 2])),
     # ]), end_rule=ConfigurationEndRule.CROWNING_PIECE)
 
     fanfan = PlayerHumanText(name='Fanfan')

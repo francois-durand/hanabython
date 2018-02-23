@@ -22,7 +22,7 @@ import numpy as np
 from typing import List, Dict
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Color import Color
-from hanabython.Modules.ColorBook import ColorBook
+from hanabython.Modules.Colors import Colors
 from hanabython.Modules.ConfigurationDeck import ConfigurationDeck
 from hanabython.Modules.ConfigurationEmptyClueRule \
     import ConfigurationEmptyClueRule
@@ -107,8 +107,8 @@ class Configuration(Colored):
     >>> from hanabython import ConfigurationEmptyClueRule
     >>> cfg = Configuration(
     ...     deck=ConfigurationDeck(contents=[
-    ...         (ColorBook.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
-    ...         (ColorBook.RED, ConfigurationColorContents([2, 1])),
+    ...         (Colors.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
+    ...         (Colors.RED, ConfigurationColorContents([2, 1])),
     ...     ]),
     ...     n_clues=4,
     ...     n_misfires=1,
@@ -186,7 +186,7 @@ class Configuration(Colored):
 
         :return: the corresponding index.
 
-        >>> Configuration.STANDARD.i_from_c(ColorBook.BLUE)
+        >>> Configuration.STANDARD.i_from_c(Colors.BLUE)
         0
         """
         return self._i_from_c_name[c.name]
@@ -257,8 +257,8 @@ if __name__ == '__main__':
         import ConfigurationColorContents
     my_cfg = Configuration(
         deck=ConfigurationDeck(contents=[
-            (ColorBook.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
-            (ColorBook.RED, ConfigurationColorContents([2, 1])),
+            (Colors.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
+            (Colors.RED, ConfigurationColorContents([2, 1])),
         ]),
         n_clues=4,
         n_misfires=1,

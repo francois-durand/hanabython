@@ -18,7 +18,7 @@ from .Modules.Clue import Clue
 from .Modules.Color import Color
 from .Modules.ColorMulticolor import ColorMulticolor
 from .Modules.ColorColorless import ColorColorless
-from .Modules.ColorBook import ColorBook
+from .Modules.Colors import Colors
 from .Modules.Colored import Colored
 from .Modules.Configuration import Configuration
 from .Modules.ConfigurationColorContents import ConfigurationColorContents

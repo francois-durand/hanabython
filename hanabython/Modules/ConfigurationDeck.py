@@ -21,7 +21,7 @@ This file is part of Hanabython.
 from typing import Iterable, Tuple
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Color import Color
-from hanabython.Modules.ColorBook import ColorBook
+from hanabython.Modules.Colors import Colors
 from hanabython.Modules.ConfigurationColorContents \
     import ConfigurationColorContents
 from collections import OrderedDict
@@ -52,8 +52,8 @@ class ConfigurationDeck(Colored, OrderedDict):
     normal
     >>> cfg = ConfigurationDeck(
     ...     contents=[
-    ...         (ColorBook.BLUE, ConfigurationColorContents.NORMAL),
-    ...         (ColorBook.RED, ConfigurationColorContents([3, 2, 1]))
+    ...         (Colors.BLUE, ConfigurationColorContents.NORMAL),
+    ...         (Colors.RED, ConfigurationColorContents([3, 2, 1]))
     ...     ]
     ... )
     >>> print(cfg.name)
@@ -85,10 +85,10 @@ class ConfigurationDeck(Colored, OrderedDict):
 
         >>> cfg = ConfigurationDeck.NORMAL.copy()
         >>> cfg.name = None
-        >>> del(cfg[ColorBook.WHITE], cfg[ColorBook.YELLOW])
+        >>> del(cfg[Colors.WHITE], cfg[Colors.YELLOW])
         >>> print(cfg)
         B normal, G normal, R normal
-        >>> print(ConfigurationDeck.NORMAL[ColorBook.WHITE])
+        >>> print(ConfigurationDeck.NORMAL[Colors.WHITE])
         normal
         """
         return ConfigurationDeck(contents=self.items(), name=self.name)
@@ -107,8 +107,8 @@ class ConfigurationDeck(Colored, OrderedDict):
         :return: the new configuration.
 
         >>> cfg = ConfigurationDeck.normal_plus(contents=[
-        ...     (ColorBook.SIXTH, ConfigurationColorContents.NORMAL),
-        ...     (ColorBook.MULTICOLOR, ConfigurationColorContents.SHORT)
+        ...     (Colors.SIXTH, ConfigurationColorContents.NORMAL),
+        ...     (Colors.MULTICOLOR, ConfigurationColorContents.SHORT)
         ... ])
         >>> print(cfg)
         B normal, G normal, R normal, W normal, Y normal, P normal, M short
@@ -135,31 +135,31 @@ class ConfigurationDeck(Colored, OrderedDict):
 ConfigurationDeck.NORMAL = ConfigurationDeck(
     contents=[
         (c, ConfigurationColorContents.NORMAL)
-        for c in [ColorBook.BLUE, ColorBook.GREEN, ColorBook.RED,
-                  ColorBook.WHITE, ColorBook.YELLOW]
+        for c in [Colors.BLUE, Colors.GREEN, Colors.RED,
+                  Colors.WHITE, Colors.YELLOW]
     ], name='normal'
 )
 ConfigurationDeck.W_SIXTH = ConfigurationDeck.normal_plus(
-    contents=[(ColorBook.SIXTH, ConfigurationColorContents.NORMAL)],
+    contents=[(Colors.SIXTH, ConfigurationColorContents.NORMAL)],
     name='with normal sixth color (10 cards)'
 )
 ConfigurationDeck.W_SIXTH_SHORT = ConfigurationDeck.normal_plus(
-    contents=[(ColorBook.SIXTH, ConfigurationColorContents.SHORT)],
+    contents=[(Colors.SIXTH, ConfigurationColorContents.SHORT)],
     name='with short sixth color (5 cards)'
 )
 ConfigurationDeck.W_MULTICOLOR = ConfigurationDeck.normal_plus(
-    contents=[(ColorBook.MULTICOLOR, ConfigurationColorContents.NORMAL)],
+    contents=[(Colors.MULTICOLOR, ConfigurationColorContents.NORMAL)],
     name='with normal multicolor (10 cards)'
 )
 ConfigurationDeck.W_MULTICOLOR_SHORT = ConfigurationDeck.normal_plus(
-    contents=[(ColorBook.MULTICOLOR, ConfigurationColorContents.SHORT)],
+    contents=[(Colors.MULTICOLOR, ConfigurationColorContents.SHORT)],
     name='with short multicolor (5 cards)'
 )
 ConfigurationDeck.EIGHT_COLORS = ConfigurationDeck.normal_plus(
     contents=[
-        (ColorBook.SIXTH, ConfigurationColorContents.NORMAL),
-        (ColorBook.MULTICOLOR, ConfigurationColorContents.NORMAL),
-        (ColorBook.COLORLESS, ConfigurationColorContents.NORMAL)
+        (Colors.SIXTH, ConfigurationColorContents.NORMAL),
+        (Colors.MULTICOLOR, ConfigurationColorContents.NORMAL),
+        (Colors.COLORLESS, ConfigurationColorContents.NORMAL)
     ],
     name='with sixth color, multicolor and colorless (10 cards each)'
 )
@@ -173,23 +173,23 @@ if __name__ == '__main__':
     print('\nA deck configuration with no name:')
     my_cfg = ConfigurationDeck(
         contents=[
-            (ColorBook.BLUE, ConfigurationColorContents.NORMAL),
-            (ColorBook.RED, ConfigurationColorContents([3, 2, 1]))
+            (Colors.BLUE, ConfigurationColorContents.NORMAL),
+            (Colors.RED, ConfigurationColorContents([3, 2, 1]))
         ]
     )
     my_cfg.test_str()
 
     print('\nChange a part of the configuration:')
-    my_cfg[ColorBook.BLUE] = ConfigurationColorContents([1, 1])
+    my_cfg[Colors.BLUE] = ConfigurationColorContents([1, 1])
     print(my_cfg.colored())
 
     print('\nTest the copy method:')
     my_cfg = ConfigurationDeck.NORMAL.copy()
     my_cfg.name = None
-    del(my_cfg[ColorBook.BLUE])
+    del(my_cfg[Colors.BLUE])
     print('New configuration:', my_cfg.colored())
     print('Blue in the old configuration:',
-          ConfigurationDeck.NORMAL[ColorBook.BLUE])
+          ConfigurationDeck.NORMAL[Colors.BLUE])
 
     import doctest
     doctest.testmod()
