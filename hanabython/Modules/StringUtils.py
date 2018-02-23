@@ -19,6 +19,7 @@ This file is part of Hanabython.
     along with Hanabython.  If not, see <http://www.gnu.org/licenses/>.
 """
 import re
+from typing import Iterable
 
 
 def uncolor(s: str) -> str:
@@ -64,17 +65,44 @@ def title(s: str, width: int) -> str:
     return '*' * (left - 1) + ' ' + s + ' ' + '*' * (right - 1)
 
 
+def str_from_iterable(l: Iterable) -> str:
+    """
+    Convert a list to a simple string.
+
+    There are two differences with the standard implementation of str:
+
+    #. No brackets.
+
+    #. For each ``item`` of the iterable, ``str_from_iterable`` uses
+    ``str(item)``, whereas ``str`` uses ``repr(item)``.
+
+    :param l: an iterable.
+    :return: a simple string.
+
+    >>> print(str_from_iterable(['a', 'b', 'c']))
+    a b c
+    >>> print(['a', 'b', 'c'])
+    ['a', 'b', 'c']
+    """
+    return ' '.join([str(x) for x in l])
+
+
 if __name__ == "__main__":
     my_s = "\033[0;31mHanabi\033[0;0m by \033[0;94mAntoine Bauza\033[0;0m"
     print(my_s)
     print(uncolor(my_s))
 
+    print()
     print(title(s='Title', width=20))
     print(title(s='123456789012345678', width=20))
     print(title(s='1234567890123456789', width=20))
     print(title(s='12345678901234567890', width=20))
     print(title(s='123456789012345678901', width=20))
     print(title(s='A title that is really too long', width=20))
+
+    print()
+    print(str_from_iterable(['a', 'b', 'c']))
+    print(['a', 'b', 'c'])
 
     import doctest
     doctest.testmod()
