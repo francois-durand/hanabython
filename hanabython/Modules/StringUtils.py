@@ -72,9 +72,8 @@ def str_from_iterable(l: Iterable) -> str:
     There are two differences with the standard implementation of str:
 
     #. No brackets.
-
     #. For each ``item`` of the iterable, ``str_from_iterable`` uses
-    ``str(item)``, whereas ``str`` uses ``repr(item)``.
+       ``str(item)``, whereas ``str`` uses ``repr(item)``.
 
     :param l: an iterable.
     :return: a simple string.
