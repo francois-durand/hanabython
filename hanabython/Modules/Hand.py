@@ -43,10 +43,10 @@ class Hand(Colored, list):
 
     >>> hand = Hand([Card('Y3'), Card('M1'), Card('B2'), Card('R4')])
     >>> print(hand)
-    [Y3, M1, B2, R4]
+    Y3 M1 B2 R4
     >>> hand = Hand(['Y3', 'M1', 'B2', 'R4'])
     >>> print(hand)
-    [Y3, M1, B2, R4]
+    Y3 M1 B2 R4
     """
     def __init__(self, source: Iterable[Union[Card, str]] = None):
         super().__init__()
@@ -58,7 +58,7 @@ class Hand(Colored, list):
                     self.append(item)
 
     def colored(self) -> str:
-        return '[' + ', '.join(card.colored() for card in self) + ']'
+        return ' '.join(card.colored() for card in self)
 
     def receive(self, card: Card) -> None:
         """
@@ -71,7 +71,7 @@ class Hand(Colored, list):
         >>> hand = Hand(['Y3', 'M1', 'B2', 'R4'])
         >>> hand.receive(Card('G2'))
         >>> print(hand)
-        [G2, Y3, M1, B2, R4]
+        G2 Y3 M1 B2 R4
         """
         self.insert(0, card)
 
@@ -88,7 +88,7 @@ class Hand(Colored, list):
         >>> print(card)
         B1
         >>> print(hand)
-        [Y3, M1, B2, R4]
+        Y3 M1 B2 R4
         """
         return self.pop(k)
 

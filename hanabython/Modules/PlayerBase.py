@@ -157,17 +157,18 @@ class PlayerBase(Player):
         >>> antoine = PlayerBase('Antoine')
         >>> antoine.demo_game()
         >>> from hanabython import uncolor
-        >>> print(uncolor(antoine.colored_hands()))
+        >>> print(uncolor(antoine.colored_hands()))  \
+#doctest: +NORMALIZE_WHITESPACE
         Antoine
-        [BGRWY 12345, BGRWY 2345 ,   BGRWY 1  ,   BGRWY 1  , BGRWY 2345 ]
+        BGRWY 12345, BGRWY 2345 ,   BGRWY 1  ,   BGRWY 1  , BGRWY 2345
         <BLANKLINE>
         Donald X
-        [    Y2     ,     R1     ,     R3     ,     G3     ,     Y4     ]
-        [BGRWY 2345 ,   BGRWY 1  , BGRWY 2345 , BGRWY 2345 , BGRWY 2345 ]
+            Y2     ,     R1     ,     R3     ,     G3     ,     Y4
+        BGRWY 2345 ,   BGRWY 1  , BGRWY 2345 , BGRWY 2345 , BGRWY 2345
         <BLANKLINE>
         Uwe
-        [    G4     ,     B4     ,     W4     ,     G5     ,     W1     ]
-        [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
+            G4     ,     B4     ,     W4     ,     G5     ,     W1
+        BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345
         """
         # noinspection PyListCreation
         lines = []
@@ -178,9 +179,9 @@ class PlayerBase(Player):
                 continue
             lines.append('')
             lines.append(name)
-            lines.append('[' + ', '.join([
+            lines.append(', '.join([
                 self._large_card_color(card) for card in self.hands[i]
-            ]) + ']')
+            ]))
             lines.append(self.hands_public[i].colored())
         return '\n'.join(lines)
 
@@ -299,15 +300,15 @@ class PlayerBase(Player):
         ********************** discard_pile ***********************
         No card discarded yet
         ********************** display_width **********************
-        65
+        63
         ************************ draw_pile ************************
         50 cards left
         ************************ hand_size ************************
         5
         ************************** hands **************************
-        [<Hand: []>, <Hand: []>]
+        [<Hand: >, <Hand: >]
         ********************** hands_public ***********************
-        [<HandPublic: []>, <HandPublic: []>]
+        [<HandPublic: >, <HandPublic: >]
         ************************* n_clues *************************
         8
         *********************** n_misfires ************************
@@ -344,7 +345,7 @@ class PlayerBase(Player):
         self.hands_public = [HandPublic(cfg) for _ in player_names]
         self.dealing_is_ongoing = False
         self.display_width = (
-            self.cfg.n_colors + 3 + self.cfg.n_values) * self.hand_size
+            self.cfg.n_colors + 3 + self.cfg.n_values) * self.hand_size - 2
         self.log_init()
         self.log('Configuration\n')
         self.log('-------------\n')
@@ -397,7 +398,7 @@ class PlayerBase(Player):
         >>> print(antoine.draw_pile)
         46 cards left
         >>> print(antoine.hands_public[0])
-        [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
+        BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345
 
         If there are no cards in the draw pile, nothing happens.
 
@@ -437,9 +438,9 @@ class PlayerBase(Player):
         >>> print(antoine.draw_pile)
         45 cards left
         >>> print(antoine.hands[1])
-        [R5, W1, Y1, G3, B1]
+        R5 W1 Y1 G3 B1
         >>> print(antoine.hands_public[1])
-        [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
+        BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345
 
         If there are no cards in the draw pile, nothing happens.
 
@@ -485,12 +486,12 @@ class PlayerBase(Player):
         >>> for s in ['B1', 'G3', 'Y1', 'W1', 'R5']:
         ...     antoine.receive_partner_draws(i_active=1, card=Card(s))
         >>> print(antoine.hands[1])
-        [R5, W1, Y1, G3, B1]
+        R5 W1 Y1 G3 B1
         >>> antoine.receive_someone_throws(i_active=1, k=4, card=Card('B1'))
         >>> print(antoine.hands[1])
-        [R5, W1, Y1, G3]
+        R5 W1 Y1 G3
         >>> print(antoine.hands_public[1])
-        [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
+        BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345
         >>> print(antoine.discard_pile)
         B1
         >>> antoine.n_clues
@@ -516,12 +517,12 @@ class PlayerBase(Player):
         >>> for s in ['B1', 'G3', 'Y1', 'W1', 'R5']:
         ...     antoine.receive_partner_draws(i_active=1, card=Card(s))
         >>> print(antoine.hands[1])
-        [R5, W1, Y1, G3, B1]
+        R5 W1 Y1 G3 B1
         >>> antoine.receive_someone_plays_card(i_active=1, k=1, card=Card('W1'))
         >>> print(antoine.hands[1])
-        [R5, Y1, G3, B1]
+        R5 Y1 G3 B1
         >>> print(antoine.hands_public[1])
-        [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
+        BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345
         >>> print(antoine.board)  #doctest: +NORMALIZE_WHITESPACE
         B -         G -         R -         W 1         Y -
 
@@ -534,12 +535,12 @@ class PlayerBase(Player):
         >>> for s in ['B1', 'G3', 'Y1', 'W1', 'R5']:
         ...     antoine.receive_partner_draws(i_active=1, card=Card(s))
         >>> print(antoine.hands[1])
-        [R5, W1, Y1, G3, B1]
+        R5 W1 Y1 G3 B1
         >>> antoine.receive_someone_plays_card(i_active=1, k=0, card=Card('R5'))
         >>> print(antoine.hands[1])
-        [W1, Y1, G3, B1]
+        W1 Y1 G3 B1
         >>> print(antoine.hands_public[1])
-        [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
+        BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345
         >>> print(antoine.board)  #doctest: +NORMALIZE_WHITESPACE
         B -         G -         R -         W -         Y -
         >>> print(antoine.discard_pile)
@@ -579,14 +580,14 @@ class PlayerBase(Player):
         >>> for s in ['B1', 'G3', 'Y1', 'W1', 'R5']:
         ...     antoine.receive_partner_draws(i_active=1, card=Card(s))
         >>> print(antoine.hands[1])
-        [R5, W1, Y1, G3, B1]
+        R5 W1 Y1 G3 B1
         >>> antoine.n_clues
         8
         >>> antoine.receive_someone_clues(
         ...     i_active=0, i_clued=1, clue=Clue(1),
         ...     bool_list=[False, True, True, False, True])
-        >>> print(antoine.hands_public[1])
-        [BGRWY 2345 ,   BGRWY 1  ,   BGRWY 1  , BGRWY 2345 ,   BGRWY 1  ]
+        >>> print(antoine.hands_public[1])  #doctest: +NORMALIZE_WHITESPACE
+        BGRWY 2345 ,   BGRWY 1  ,   BGRWY 1  , BGRWY 2345 ,   BGRWY 1
         >>> antoine.n_clues
         7
         """

@@ -47,7 +47,7 @@ class HandPublic(Colored, list):
 
     >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
     >>> print(hand)
-    [BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345]
+    BGRWY 12345, BGRWY 12345, BGRWY 12345, BGRWY 12345
     """
     def __init__(self, cfg: Configuration, n_cards: int = 0):
         super().__init__()
@@ -56,7 +56,7 @@ class HandPublic(Colored, list):
             self.receive()
 
     def colored(self) -> str:
-        return '[' + ', '.join([card.colored() for card in self]) + ']'
+        return ', '.join([card.colored() for card in self])
 
     def receive(self) -> None:
         """
@@ -66,11 +66,11 @@ class HandPublic(Colored, list):
 
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=Clue(5), bool_list=[True, True, False, False])
-        >>> print(hand)
-        [  BGRWY 5  ,   BGRWY 5  , BGRWY 1234 , BGRWY 1234 ]
+        >>> print(hand)  #doctest: +NORMALIZE_WHITESPACE
+        BGRWY 5  ,   BGRWY 5  , BGRWY 1234 , BGRWY 1234
         >>> hand.receive()
-        >>> print(hand)
-        [BGRWY 12345,   BGRWY 5  ,   BGRWY 5  , BGRWY 1234 , BGRWY 1234 ]
+        >>> print(hand)  #doctest: +NORMALIZE_WHITESPACE
+        BGRWY 12345,   BGRWY 5  ,   BGRWY 5  , BGRWY 1234 , BGRWY 1234
         """
         self.insert(0, CardPublic(self.cfg))
 
@@ -85,11 +85,11 @@ class HandPublic(Colored, list):
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=Clue(5), bool_list=[False, True, False, False])
         >>> hand.match(clue=Clue(4), bool_list=[True, False, False, False])
-        >>> print(hand)
-        [  BGRWY 4  ,   BGRWY 5  ,  BGRWY 123 ,  BGRWY 123 ]
+        >>> print(hand)  #doctest: +NORMALIZE_WHITESPACE
+        BGRWY 4  ,   BGRWY 5  ,  BGRWY 123 ,  BGRWY 123
         >>> hand.give(1)
-        >>> print(hand)
-        [  BGRWY 4  ,  BGRWY 123 ,  BGRWY 123 ]
+        >>> print(hand)  #doctest: +NORMALIZE_WHITESPACE
+        BGRWY 4  ,  BGRWY 123 ,  BGRWY 123
         """
         self.pop(k)
 
@@ -105,12 +105,12 @@ class HandPublic(Colored, list):
 
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=Clue(3), bool_list=[False, True, False, False])
-        >>> print(hand)
-        [BGRWY 1245 ,   BGRWY 3  , BGRWY 1245 , BGRWY 1245 ]
+        >>> print(hand)  #doctest: +NORMALIZE_WHITESPACE
+        BGRWY 1245 ,   BGRWY 3  , BGRWY 1245 , BGRWY 1245
         >>> hand.match(clue=Clue(ColorBook.RED),
         ...            bool_list=[False, True, False, False])
-        >>> print(hand)
-        [ BGWY 1245 ,     R3     ,  BGWY 1245 ,  BGWY 1245 ]
+        >>> print(hand)  #doctest: +NORMALIZE_WHITESPACE
+        BGWY 1245 ,     R3     ,  BGWY 1245 ,  BGWY 1245
         """
         for i, card in enumerate(self):
             card.match(clue=clue, b=bool_list[i])

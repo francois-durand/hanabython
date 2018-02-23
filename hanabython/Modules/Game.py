@@ -401,7 +401,7 @@ class Game(Colored):
         >>> print(game.discard_pile)
         Y4
         >>> print(game.hands[2])
-        [R3]
+        R3
         """
         logging.debug('Discard: Check legality and inform the active player.')
         if self.n_clues == self.cfg.n_clues:
@@ -441,7 +441,7 @@ class Game(Colored):
         >>> game.i_active = 2
         >>> game.n_misfires = 2
         >>> print(game.hands[2])
-        [B4, W4, G5, W1, R3]
+        B4 W4 G5 W1 R3
         >>> game.players[1].speak = True
         >>> is_legal = game.execute_play_card(2)
         Donald X: A player tries to play a card on the board.
@@ -473,7 +473,7 @@ class Game(Colored):
         >>> game.n_clues = 3
         >>> game.i_active = 2
         >>> print(game.hands[2])
-        [B4, W4, G5, W1, R3]
+        B4 W4 G5 W1 R3
         >>> game.players[1].speak = True
         >>> is_legal = game.execute_play_card(2)
         Donald X: A player tries to play a card on the board.
@@ -506,7 +506,7 @@ class Game(Colored):
         8
         >>> game.i_active = 2
         >>> print(game.hands[2])
-        [B4, W4, G5, W1, R3]
+        B4 W4 G5 W1 R3
         >>> game.players[1].speak = True
         >>> is_legal = game.execute_play_card(2)
         Donald X: A player tries to play a card on the board.
@@ -539,7 +539,7 @@ class Game(Colored):
         ...     _ = game.board.try_to_play(card=Card(s))
         >>> game.i_active = 2
         >>> print(game.hands[2])
-        [B4, W4, G5, W1, R3]
+        B4 W4 G5 W1 R3
         >>> game.players[1].speak = True
         >>> _ = game.execute_play_card(2)
         Donald X: A player tries to play a card on the board.
@@ -594,7 +594,7 @@ class Game(Colored):
         >>> game.i_active = -1
         >>> game.deal()
         >>> print(game.hands[2])
-        [G2, W1, W1, B1, Y4]
+        G2 W1 W1 B1 Y4
         >>> game.players[1].speak = True
         >>> game.i_active = 1
         >>> game.n_clues = 0
