@@ -128,9 +128,9 @@ class PlayerBase(Player):
         lines.append(title('Hands', self.display_width))
         lines.append(self.colored_hands())
         lines.append(title('Board', self.display_width))
-        lines.append(self.board.colored_multi_line_compact())
+        lines.append(self.board.colored_fixed_space())
         lines.append(title('Discard Pile', self.display_width))
-        lines.append(self.discard_pile.colored())
+        lines.append(self.discard_pile.colored_compact_factorized())
         lines.append(title('Status', self.display_width))
         draw_line = 'Draw pile: %s.' % self.draw_pile.colored()
         if (self.cfg.end_rule == ConfigurationEndRule.NORMAL

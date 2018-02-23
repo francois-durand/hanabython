@@ -205,6 +205,38 @@ class DiscardPile(Colored):
             )
         return '\n'.join(to_join)
 
+    def str_compact_factorized(self) -> str:
+        """
+        Convert to nice string.
+
+        :return: a representation of the discard pile.
+
+        >>> from hanabython import Configuration
+        >>> discard_pile = DiscardPile(Configuration.STANDARD)
+        >>> discard_pile.receive(Card('B3'))
+        >>> discard_pile.receive(Card('R4'))
+        >>> discard_pile.receive(Card('B1'))
+        >>> print(discard_pile.str_compact_factorized())
+        B 1 3 R 4
+        """
+        return uncolor(self.colored_compact_factorized())
+
+    def colored_compact_factorized(self) -> str:
+        """
+        Colored version of :meth:`str_multi_line_compact`.
+        """
+        if len(self.chronological) == 0:
+            return 'No card discarded yet'
+        lines = []
+        for i, c in enumerate(self.cfg.colors):
+            if np.sum(self.array[i, :]) == 0:
+                continue
+            words = [str(v)
+                     for j, v in enumerate(self.cfg.values)
+                     for _ in range(self.array[i, j])]
+            lines.append(c.color_str(c.symbol + ' ' + ' '.join(words)))
+        return '  '.join(lines)
+
     def str_compact_ordered(self) -> str:
         """
         Convert to string in a list-style layout, ordered by color and value.
@@ -330,6 +362,8 @@ if __name__ == '__main__':
     print(my_discard_pile.colored_compact_chronological())
     print('\nCompact ordered: ')
     print(my_discard_pile.colored_compact_ordered())
+    print('\nCompact factorized: ')
+    print(my_discard_pile.colored_compact_factorized())
     print('\nMulti-line compact: ')
     print(my_discard_pile.colored_multi_line_compact())
     print('\nMulti-line: ')

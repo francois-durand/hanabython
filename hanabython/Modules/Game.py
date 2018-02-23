@@ -836,20 +836,20 @@ if __name__ == '__main__':
         level=logging.DEBUG
     )
 
-    from hanabython.Modules.ConfigurationDeck import ConfigurationDeck
-    from hanabython.Modules.ConfigurationColorContents \
-        import ConfigurationColorContents
-    cfg_test = Configuration(deck=ConfigurationDeck(contents=[
-        (ColorBook.BLUE, ConfigurationColorContents([3, 2, 2])),
-        (ColorBook.RED, ConfigurationColorContents([3, 2, 2])),
-    ]), end_rule=ConfigurationEndRule.CROWNING_PIECE)
+    # from hanabython.Modules.ConfigurationDeck import ConfigurationDeck
+    # from hanabython.Modules.ConfigurationColorContents \
+    #     import ConfigurationColorContents
+    # cfg_test = Configuration(deck=ConfigurationDeck(contents=[
+    #     (ColorBook.BLUE, ConfigurationColorContents([3, 2, 2])),
+    #     (ColorBook.RED, ConfigurationColorContents([3, 2, 2])),
+    # ]), end_rule=ConfigurationEndRule.CROWNING_PIECE)
 
     fanfan = PlayerHumanText(name='Fanfan')
     emilie = PlayerHumanText(name='Emilie')
-    # pek = PlayerHumanText(name='PEK')
-    game = Game([fanfan, emilie], cfg_test)
+    pek = PlayerHumanText(name='PEK')
+    game = Game([fanfan, emilie])
     # game.test_str()
-    # game.play()
+    game.play()
 
-    import doctest
-    doctest.testmod()
+    # import doctest
+    # doctest.testmod()
