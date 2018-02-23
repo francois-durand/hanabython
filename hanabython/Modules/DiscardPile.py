@@ -21,7 +21,7 @@ This file is part of Hanabython.
 from typing import List
 import numpy as np
 from hanabython.Modules.Colored import Colored
-from hanabython.Modules.StringUtils import uncolor
+from hanabython.Modules.StringUtils import uncolor, str_from_iterable
 from hanabython.Modules.Configuration import Configuration
 from hanabython.Modules.Card import Card
 
@@ -87,10 +87,10 @@ class DiscardPile(Colored):
         self.scorable = (cfg.deck_array > 0)
 
     def __repr__(self) -> str:
-        return '<DiscardPile: %s>' % self.str_as_chronological()
+        return '<DiscardPile: %s>' % self.str_compact_chronological()
 
     def colored(self) -> str:
-        return self.colored_fancy()
+        return self.colored_multi_line_compact()
 
     @property
     def max_score_possible(self):
@@ -101,7 +101,7 @@ class DiscardPile(Colored):
         """
         return np.sum(self.scorable)
 
-    def str_fancy(self) -> str:
+    def str_multi_line_compact(self) -> str:
         """
         Convert to nice string.
 
@@ -114,21 +114,56 @@ class DiscardPile(Colored):
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
         >>> discard_pile.receive(Card('B1'))
-        >>> print(discard_pile.str_fancy())
+        >>> print(discard_pile.str_multi_line_compact())
         B1 B3
         R4
         """
-        return uncolor(self.colored_fancy())
+        return uncolor(self.colored_multi_line_compact())
 
-    def colored_fancy(self) -> str:
+    def colored_multi_line_compact(self) -> str:
         """
-        Colored version of :meth:`str_fancy`.
+        Colored version of :meth:`str_multi_line_compact`.
         """
         if len(self.chronological) == 0:
             return 'No card discarded yet'
         lines = []
         for i, c in enumerate(self.cfg.colors):
             if np.sum(self.array[i, :]) == 0:
+                continue
+            words = [str(Card(c, v))
+                     for j, v in enumerate(self.cfg.values)
+                     for _ in range(self.array[i, j])]
+            lines.append(c.color_str(' '.join(words)))
+        return '\n'.join(lines)
+
+    def str_multi_line(self) -> str:
+        """
+        Convert to nice string.
+
+        :return: a representation of the discard pile.
+
+        >>> from hanabython import Configuration
+        >>> discard_pile = DiscardPile(Configuration.STANDARD)
+        >>> discard_pile.receive(Card('B3'))
+        >>> discard_pile.receive(Card('R4'))
+        >>> discard_pile.receive(Card('B1'))
+        >>> print(discard_pile.str_multi_line())
+        B1 B3
+        -
+        R4
+        -
+        -
+        """
+        return uncolor(self.colored_multi_line())
+
+    def colored_multi_line(self) -> str:
+        """
+        Colored version of :meth:`str_multi_line`.
+        """
+        lines = []
+        for i, c in enumerate(self.cfg.colors):
+            if np.sum(self.array[i, :]) == 0:
+                lines.append(c.color_str('-'))
                 continue
             words = [str(Card(c, v))
                      for j, v in enumerate(self.cfg.values)
@@ -170,7 +205,7 @@ class DiscardPile(Colored):
             )
         return '\n'.join(to_join)
 
-    def str_as_list_ordered(self) -> str:
+    def str_compact_ordered(self) -> str:
         """
         Convert to string in a list-style layout, ordered by color and value.
 
@@ -181,19 +216,21 @@ class DiscardPile(Colored):
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
         >>> discard_pile.receive(Card('B1'))
-        >>> print(discard_pile.str_as_list_ordered())
-        [B1, B3, R4]
+        >>> print(discard_pile.str_compact_ordered())
+        B1 B3 R4
         """
-        return uncolor(self.colored_as_list_ordered())
+        return uncolor(self.colored_compact_ordered())
 
-    def colored_as_list_ordered(self) -> str:
+    def colored_compact_ordered(self) -> str:
         """
-        Colored version of :meth:`str_as_list_ordered`.
+        Colored version of :meth:`str_compact_ordered`.
         """
-        ordered = self.list_reordered
-        return '[' + ', '.join([card.colored() for card in ordered]) + ']'
+        if not self.chronological:
+            return 'No card discarded yet'
+        return str_from_iterable(
+            [card.colored() for card in self.list_reordered])
 
-    def str_as_chronological(self) -> str:
+    def str_compact_chronological(self) -> str:
         """
         Convert to string in a list-style layout, by chronological order.
 
@@ -204,18 +241,19 @@ class DiscardPile(Colored):
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
         >>> discard_pile.receive(Card('B1'))
-        >>> print(discard_pile.str_as_chronological())
-        [B3, R4, B1]
+        >>> print(discard_pile.str_compact_chronological())
+        B3 R4 B1
         """
-        return uncolor(self.colored_as_chronological())
+        return uncolor(self.colored_compact_chronological())
 
-    def colored_as_chronological(self) -> str:
+    def colored_compact_chronological(self) -> str:
         """
-        Colored version of :meth:`str_as_chronological`.
+        Colored version of :meth:`str_compact_chronological`.
         """
-        return '[' + ', '.join([
-            card.colored() for card in self.chronological
-        ]) + ']'
+        if not self.chronological:
+            return 'No card discarded yet'
+        return str_from_iterable(
+            [card.colored() for card in self.chronological])
 
     @property
     def list_reordered(self) -> List[Card]:
@@ -287,18 +325,17 @@ if __name__ == '__main__':
     my_discard_pile.receive(Card('B1'))
     my_discard_pile.test_str()
 
+    print('\nAll layout styles (colored version):')
+    print('Compact chronological: ')
+    print(my_discard_pile.colored_compact_chronological())
+    print('\nCompact ordered: ')
+    print(my_discard_pile.colored_compact_ordered())
+    print('\nMulti-line compact: ')
+    print(my_discard_pile.colored_multi_line_compact())
+    print('\nMulti-line: ')
+    print(my_discard_pile.colored_multi_line())
     print('\nAs an array: ')
-    print(my_discard_pile.str_as_array())
-    print()
     print(my_discard_pile.colored_as_array())
-
-    print('\nAs an ordered list: ')
-    print(my_discard_pile.str_as_list_ordered())
-    print(my_discard_pile.colored_as_list_ordered())
-
-    print('\nAs a chronological list: ')
-    print(my_discard_pile.str_as_chronological())
-    print(my_discard_pile.colored_as_chronological())
 
     import doctest
     doctest.testmod()
