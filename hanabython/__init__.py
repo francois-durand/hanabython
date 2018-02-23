@@ -37,4 +37,4 @@ from .Modules.PlayerBase import PlayerBase
 from .Modules.PlayerHumanText import PlayerHumanText
 from .Modules.PlayerPuppet import PlayerPuppet
 from .Modules.StringAnsi import StringAnsi
-from .Modules.StringUtils import uncolor, title
+from .Modules.StringUtils import uncolor, title, str_from_iterable

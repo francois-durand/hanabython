@@ -8,9 +8,11 @@ Manipulation of strings
 .. autoclass:: hanabython.StringAnsi
     :members:
 
-.. autofunction:: hanabython.uncolor
+.. autofunction:: hanabython.str_from_iterable
 
 .. autofunction:: hanabython.title
+
+.. autofunction:: hanabython.uncolor
 
 .. autoclass:: hanabython.Colored
     :members:
