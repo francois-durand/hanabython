@@ -67,10 +67,10 @@ class HandPublic(Colored, list):
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=Clue(5), bool_list=[True, True, False, False])
         >>> print(hand)
-        [BGRWY     5, BGRWY     5, BGRWY 1234 , BGRWY 1234 ]
+        [  BGRWY 5  ,   BGRWY 5  , BGRWY 1234 , BGRWY 1234 ]
         >>> hand.receive()
         >>> print(hand)
-        [BGRWY 12345, BGRWY     5, BGRWY     5, BGRWY 1234 , BGRWY 1234 ]
+        [BGRWY 12345,   BGRWY 5  ,   BGRWY 5  , BGRWY 1234 , BGRWY 1234 ]
         """
         self.insert(0, CardPublic(self.cfg))
 
@@ -86,10 +86,10 @@ class HandPublic(Colored, list):
         >>> hand.match(clue=Clue(5), bool_list=[False, True, False, False])
         >>> hand.match(clue=Clue(4), bool_list=[True, False, False, False])
         >>> print(hand)
-        [BGRWY    4 , BGRWY     5, BGRWY 123  , BGRWY 123  ]
+        [  BGRWY 4  ,   BGRWY 5  ,  BGRWY 123 ,  BGRWY 123 ]
         >>> hand.give(1)
         >>> print(hand)
-        [BGRWY    4 , BGRWY 123  , BGRWY 123  ]
+        [  BGRWY 4  ,  BGRWY 123 ,  BGRWY 123 ]
         """
         self.pop(k)
 
@@ -106,11 +106,11 @@ class HandPublic(Colored, list):
         >>> hand = HandPublic(cfg=Configuration.STANDARD, n_cards=4)
         >>> hand.match(clue=Clue(3), bool_list=[False, True, False, False])
         >>> print(hand)
-        [BGRWY 12 45, BGRWY   3  , BGRWY 12 45, BGRWY 12 45]
+        [BGRWY 1245 ,   BGRWY 3  , BGRWY 1245 , BGRWY 1245 ]
         >>> hand.match(clue=Clue(ColorBook.RED),
         ...            bool_list=[False, True, False, False])
         >>> print(hand)
-        [BG WY 12 45,   R     3  , BG WY 12 45, BG WY 12 45]
+        [ BGWY 1245 ,     R3     ,  BGWY 1245 ,  BGWY 1245 ]
         """
         for i, card in enumerate(self):
             card.match(clue=clue, b=bool_list[i])

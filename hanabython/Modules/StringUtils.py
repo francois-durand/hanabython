@@ -64,7 +64,6 @@ def title(s: str, width: int) -> str:
     right = width - len(s) - left
     return '*' * (left - 1) + ' ' + s + ' ' + '*' * (right - 1)
 
-
 def str_from_iterable(l: Iterable) -> str:
     """
     Convert a list to a simple string.

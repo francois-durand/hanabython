@@ -217,7 +217,7 @@ class DiscardPile(Colored):
         >>> discard_pile.receive(Card('R4'))
         >>> discard_pile.receive(Card('B1'))
         >>> print(discard_pile.str_compact_factorized())
-        B 1 3 R 4
+        B 1 3  R 4
         """
         return uncolor(self.colored_compact_factorized())
 

@@ -59,10 +59,42 @@ class CardPublic(Colored):
         self.yes_clued_v = np.zeros(cfg.n_values, dtype=bool)   # type: np.array
 
     def colored(self) -> str:
+        s_c = ''
+        w_c = 0
+        for i, c in enumerate(self.cfg.colors):
+            if self.yes_clued_c[i]:
+                s_c += StringAnsi.STYLE_REVERSE_VIDEO + c.color_str(c.symbol)
+                w_c += 1
+            elif self.can_be_c[i]:
+                s_c += c.color_str(c.symbol)
+                w_c += 1
+        s_v = ''
+        w_v = 0
+        for i, v in enumerate(self.cfg.values):
+            if self.yes_clued_v[i]:
+                s_v += StringAnsi.STYLE_REVERSE_VIDEO + str(
+                    v) + StringAnsi.RESET
+                w_v += 1
+            elif self.can_be_v[i]:
+                s_v += str(v)
+                w_v += 1
+        if w_c == 1 and w_v == 1:
+            s = s_c + s_v
+            w = 2
+        else:
+            s = s_c + ' ' + s_v
+            w = w_c + w_v + 1
+        # Note: s.center(...) would not work because of the ANSI escape codes.
+        display_width = self.cfg.n_colors + self.cfg.n_values + 1
+        left = (display_width - w) // 2
+        right = display_width - w - left
+        return ' ' * left + s + ' ' * right
+
+    def colored_old(self) -> str:
         s = ''
         for i, c in enumerate(self.cfg.colors):
             if self.yes_clued_c[i]:
-                s += "\033[7m" + c.color_str(c.symbol)
+                s += StringAnsi.STYLE_REVERSE_VIDEO + c.color_str(c.symbol)
             elif self.can_be_c[i]:
                 s += c.color_str(c.symbol)
             else:
@@ -70,7 +102,7 @@ class CardPublic(Colored):
         s += ' '
         for i, v in enumerate(self.cfg.values):
             if self.yes_clued_v[i]:
-                s += "\033[7m" + str(v) + StringAnsi.RESET
+                s += StringAnsi.STYLE_REVERSE_VIDEO + str(v) + StringAnsi.RESET
             elif self.can_be_v[i]:
                 s += str(v)
             else:
@@ -125,11 +157,11 @@ class CardPublic(Colored):
         >>> print(card)
         BGRWYPMC 12345
         >>> card.match(clue=Clue(ColorBook.RED), b=False)
-        >>> print(card)
-        BG WYP C 12345
+        >>> print(card)  #doctest: +NORMALIZE_WHITESPACE
+        BGWYPC 12345
         >>> card.match(clue=Clue(ColorBook.BLUE), b=True)
-        >>> print(card)
-        B        12345
+        >>> print(card)  #doctest: +NORMALIZE_WHITESPACE
+        B 12345
 
         Let us try with the clues in the opposite order:
 
@@ -138,11 +170,11 @@ class CardPublic(Colored):
         >>> print(card)
         BGRWYPMC 12345
         >>> card.match(clue=Clue(ColorBook.BLUE), b=True)
-        >>> print(card)
-        B     M  12345
+        >>> print(card)  #doctest: +NORMALIZE_WHITESPACE
+        BM 12345
         >>> card.match(clue=Clue(ColorBook.RED), b=False)
-        >>> print(card)
-        B        12345
+        >>> print(card)  #doctest: +NORMALIZE_WHITESPACE
+        B 12345
 
         Now with clues by value:
 
@@ -151,11 +183,11 @@ class CardPublic(Colored):
         >>> print(card)
         BGRWYPMC 12345
         >>> card.match(clue=Clue(3), b=False)
-        >>> print(card)
-        BGRWYPMC 12 45
+        >>> print(card)  #doctest: +NORMALIZE_WHITESPACE
+        BGRWYPMC 1245
         >>> card.match(clue=Clue(5), b=True)
-        >>> print(card)
-        BGRWYPMC     5
+        >>> print(card)  #doctest: +NORMALIZE_WHITESPACE
+        BGRWYPMC 5
         """
         if clue.category == Clue.VALUE:
             self._match_v(clue.x, b)

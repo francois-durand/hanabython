@@ -159,11 +159,11 @@ class PlayerBase(Player):
         >>> from hanabython import uncolor
         >>> print(uncolor(antoine.colored_hands()))
         Antoine
-        [BGRWY 12345, BGRWY  2345, BGRWY 1    , BGRWY 1    , BGRWY  2345]
+        [BGRWY 12345, BGRWY 2345 ,   BGRWY 1  ,   BGRWY 1  , BGRWY 2345 ]
         <BLANKLINE>
         Donald X
         [    Y2     ,     R1     ,     R3     ,     G3     ,     Y4     ]
-        [BGRWY  2345, BGRWY 1    , BGRWY  2345, BGRWY  2345, BGRWY  2345]
+        [BGRWY 2345 ,   BGRWY 1  , BGRWY 2345 , BGRWY 2345 , BGRWY 2345 ]
         <BLANKLINE>
         Uwe
         [    G4     ,     B4     ,     W4     ,     G5     ,     W1     ]
@@ -586,7 +586,7 @@ class PlayerBase(Player):
         ...     i_active=0, i_clued=1, clue=Clue(1),
         ...     bool_list=[False, True, True, False, True])
         >>> print(antoine.hands_public[1])
-        [BGRWY  2345, BGRWY 1    , BGRWY 1    , BGRWY  2345, BGRWY 1    ]
+        [BGRWY 2345 ,   BGRWY 1  ,   BGRWY 1  , BGRWY 2345 ,   BGRWY 1  ]
         >>> antoine.n_clues
         7
         """
