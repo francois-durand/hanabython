@@ -558,7 +558,7 @@ class Game(Colored):
         card = self.hands[self.i_active].give(k)
         success = self.board.try_to_play(card)
         if success:
-            if card.v == self.cfg.highest[self.cfg.i_from_c(card.c)]:
+            if card.v == self.cfg.highest[card.c]:
                 self.n_clues = min(self.n_clues + 1, self.cfg.n_clues)
             if self.board.score == self.cfg.max_score:
                 self.b_win = True

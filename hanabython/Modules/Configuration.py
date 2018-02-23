@@ -20,6 +20,7 @@ This file is part of Hanabython.
 """
 import numpy as np
 from typing import List, Dict
+from collections import OrderedDict
 from hanabython.Modules.Colored import Colored
 from hanabython.Modules.Color import Color
 from hanabython.Modules.Colors import Colors
@@ -52,8 +53,8 @@ class Configuration(Colored):
     :var list colors: a list of Color objects. It is the list of keys
         of :attr:`deck`.
     :var int n_colors: the number of colors.
-    :var list highest: For each color from :attr:`colors`, it gives the number
-        on the highest card in that color.
+    :var OrderedDict highest: For each color from :attr:`colors`, it gives the
+        number on the highest card in that color.
     :var int n_values: the number on the highest card in the whole deck.
     :var list values: the list of possible values (from 1 to :attr:`n_values`).
     :var np.array deck_array: a numpy array of size :attr:`n_colors` *
@@ -83,7 +84,8 @@ class Configuration(Colored):
     >>> print(cfg.n_colors)
     6
     >>> print(cfg.highest)
-    [5, 5, 5, 5, 5, 5]
+    OrderedDict([(<Color: B>, 5), (<Color: G>, 5), (<Color: R>, 5), \
+(<Color: W>, 5), (<Color: Y>, 5), (<ColorMulticolor: M>, 5)])
     >>> print(cfg.n_values)
     5
     >>> print(cfg.values)
@@ -145,15 +147,17 @@ class Configuration(Colored):
         # Other attributes
         self.colors = list(deck.keys())                     # type: List[Color]
         self.n_colors = len(self.colors)                    # type: int
-        self.highest = [len(deck[c]) for c in self.colors]  # type: List[int]
-        self.n_values = max(self.highest)                   # type: int
+        self.highest = OrderedDict([
+            (c, len(deck[c])) for c in self.colors
+        ])                                      # type: OrderedDict[Color, int]
+        self.n_values = max(self.highest.values())          # type: int
         self.values = list(range(1, self.n_values + 1))     # type: List[int]
         self.deck_array = np.array([
             deck[c] + [0] * (self.n_values - len(deck[c]))
             for c in self.colors
         ])                                                  # type: np.array
         self.n_cards = np.sum(self.deck_array)              # type: int
-        self.max_score = sum(self.highest)                  # type: int
+        self.max_score = sum(self.highest.values())         # type: int
         # Conversion
         self._i_from_c_name = {
             c.name: i for i, c in enumerate(self.colors)

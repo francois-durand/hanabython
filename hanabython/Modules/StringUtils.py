@@ -66,7 +66,7 @@ def title(s: str, width: int) -> str:
 
 def str_from_iterable(l: Iterable) -> str:
     """
-    Convert a list to a simple string.
+    Convert an iterable to a simple string.
 
     There are two differences with the standard implementation of str:
 

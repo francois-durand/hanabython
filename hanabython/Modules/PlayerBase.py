@@ -555,7 +555,7 @@ class PlayerBase(Player):
         if success:
             self.log('%s plays %s' % (
                 self.player_names[i_active], card.colored()))
-            if (card.v == self.cfg.highest[self.cfg.i_from_c(card.c)]
+            if (card.v == self.cfg.highest[card.c]
                     and self.n_clues < self.cfg.n_clues):
                 self.n_clues += 1
                 self.log(' and regains a clue.\n')
