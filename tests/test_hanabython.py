@@ -7,7 +7,7 @@
 import unittest
 from click.testing import CliRunner
 
-from hanabython import hanabython
+import hanabython
 from hanabython import cli
 
 
