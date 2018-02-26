@@ -12,6 +12,8 @@ To use Hanabython in a project::
 Getting started (in a terminal)
 -------------------------------
 
+::
+
     from hanabython import Game, Configuration, PlayerHumanText
     Game(players=[
         PlayerHumanText('Antoine'),
@@ -21,6 +23,8 @@ Getting started (in a terminal)
 
 Getting started (in a notebook)
 -------------------------------
+
+::
 
     from hanabython import Game, Configuration, PlayerHumanText
     Game(players=[
