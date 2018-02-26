@@ -104,9 +104,11 @@ class Configuration(Colored):
 
     Design a configuration manually:
 
-    >>> from hanabython import ConfigurationDeck
-    >>> from hanabython import ConfigurationColorContents
-    >>> from hanabython import ConfigurationEmptyClueRule
+    >>> from hanabython.Modules.ConfigurationDeck import ConfigurationDeck
+    >>> from hanabython.Modules.ConfigurationColorContents import (
+    ...     ConfigurationColorContents)
+    >>> from hanabython.Modules.ConfigurationEmptyClueRule import (
+    ...     ConfigurationEmptyClueRule)
     >>> cfg = Configuration(
     ...     deck=ConfigurationDeck(contents=[
     ...         (Colors.BLUE, ConfigurationColorContents([3, 2, 1, 1])),

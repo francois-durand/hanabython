@@ -107,7 +107,7 @@ class Card(Colored):
 
         :return: whether the card should be pointed when giving this clue.
 
-        >>> from hanabython import Colors
+        >>> from hanabython.Modules.Colors import Colors
         >>> card_blue = Card('B3')
         >>> card_blue.match(Clue(Colors.BLUE))
         True

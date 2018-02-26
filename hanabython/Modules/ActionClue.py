@@ -21,6 +21,7 @@ This file is part of Hanabython.
 from hanabython.Modules.Action import Action
 from hanabython.Modules.Clue import Clue
 
+
 class ActionClue(Action):
     """
     An action of a player: give a clue.

@@ -156,7 +156,7 @@ class PlayerBase(Player):
 
         >>> antoine = PlayerBase('Antoine')
         >>> antoine.demo_game()
-        >>> from hanabython import uncolor
+        >>> from hanabython.Modules.StringUtils import uncolor
         >>> print(uncolor(antoine.colored_hands()))  \
 #doctest: +NORMALIZE_WHITESPACE
         Antoine
@@ -198,7 +198,8 @@ class PlayerBase(Player):
 
         :return: the large string.
 
-        >>> from hanabython import Card, CardPublic
+        >>> from hanabython.Modules.Card import Card
+        >>> from hanabython.Modules.CardPublic import CardPublic
         >>> antoine = PlayerBase('Antoine')
         >>> antoine.receive_init(cfg=Configuration.STANDARD,
         ...                      player_names=['Antoine', 'Donald X'])
@@ -693,7 +694,7 @@ class PlayerBase(Player):
 
         This method is meant to be used for tests and examples.
 
-        >>> from hanabython import uncolor
+        >>> from hanabython.Modules.StringUtils import uncolor
         >>> antoine = PlayerBase('Antoine')
         >>> antoine.demo_game()
         >>> print(uncolor(antoine.recent_events))

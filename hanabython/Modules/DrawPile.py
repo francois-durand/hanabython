@@ -39,7 +39,7 @@ class DrawPile(Colored, list):
     but it could have an influence someday in some not-yet-implemented
     non-official variants).
 
-    >>> from hanabython import Configuration
+    >>> from hanabython.Modules.Configuration import Configuration
     >>> draw_pile = DrawPile(Configuration.STANDARD)
     """
 
@@ -61,7 +61,7 @@ class DrawPile(Colored, list):
 
         :return: the number of cards.
 
-        >>> from hanabython import Configuration
+        >>> from hanabython.Modules.Configuration import Configuration
         >>> draw_pile = DrawPile(Configuration.STANDARD)
         >>> draw_pile.n_cards
         50
@@ -74,7 +74,7 @@ class DrawPile(Colored, list):
 
         :return: the card drawn. If the pile is empty, return None.
 
-        >>> from hanabython import Configuration
+        >>> from hanabython.Modules.Configuration import Configuration
         >>> draw_pile = DrawPile(cfg=Configuration.STANDARD)
         >>> card = draw_pile.give()
         >>> type(card)
