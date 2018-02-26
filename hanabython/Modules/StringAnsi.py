@@ -37,7 +37,7 @@ class StringAnsi:
     WHITE_NOT_BRIGHT = "\033[30m"
     WHITE_BRIGHT = "\033[90m"
     #: This should be white on black background, and vice-versa.
-    WHITE = WHITE_NOT_BRIGHT
+    WHITE = ""
 
     RED_NOT_BRIGHT = "\033[31m"
     RED_BRIGHT = "\033[91m"
