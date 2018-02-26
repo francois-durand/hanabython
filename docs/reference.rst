@@ -5,7 +5,7 @@ Reference
 Manipulation of strings
 -----------------------
 
-.. autoclass:: hanabython.Modules.StringAnsi.StringAnsi
+.. autoclass:: StringAnsi
     :members:
 
 .. autofunction:: hanabython.Modules.StringUtils.str_from_iterable
