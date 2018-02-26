@@ -5,12 +5,12 @@ Reference
 Manipulation of strings
 -----------------------
 
-.. autoclass:: StringAnsi
+.. autoclass:: hanabython.StringAnsi
     :members:
 
-.. autofunction:: hanabython.Modules.StringUtils.str_from_iterable
+.. autofunction:: hanabython.str_from_iterable
 
-.. autofunction:: hanabython.Modules.StringUtils.title
+.. autofunction:: hanabython.title
 
 .. autofunction:: hanabython.Modules.StringUtils.uncolor
 
