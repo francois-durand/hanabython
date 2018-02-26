@@ -5,135 +5,135 @@ Reference
 Manipulation of strings
 -----------------------
 
-.. autoclass:: hanabython.StringAnsi
+.. autoclass:: hanabython.Modules.StringAnsi
     :members:
 
-.. autofunction:: hanabython.str_from_iterable
+.. autofunction:: hanabython.Modules.StringUtils.str_from_iterable
 
-.. autofunction:: hanabython.title
+.. autofunction:: hanabython.Modules.StringUtils.title
 
-.. autofunction:: hanabython.uncolor
+.. autofunction:: hanabython.Modules.StringUtils.uncolor
 
-.. autoclass:: hanabython.Colored
+.. autoclass:: hanabython.Modules.Colored
     :members:
 
 Colors
 ------
 
-.. autoclass:: hanabython.Color
+.. autoclass:: hanabython.Modules.Color
     :members:
 
-.. autoclass:: hanabython.ColorMulticolor
+.. autoclass:: hanabython.Modules.ColorMulticolor
     :members:
 
-.. autoclass:: hanabython.ColorColorless
+.. autoclass:: hanabython.Modules.ColorColorless
     :members:
 
-.. autoclass:: hanabython.ColorBook
+.. autoclass:: hanabython.Modules.ColorBook
     :members:
 
 Configuration
 -------------
 
-.. autoclass:: hanabython.ConfigurationColorContents
+.. autoclass:: hanabython.Modules.ConfigurationColorContents
     :members:
 
-.. autoclass:: hanabython.ConfigurationDeck
+.. autoclass:: hanabython.Modules.ConfigurationDeck
     :members:
 
-.. autoclass:: hanabython.ConfigurationEmptyClueRule
+.. autoclass:: hanabython.Modules.ConfigurationEmptyClueRule
     :members:
 
-.. autoclass:: hanabython.ConfigurationEndRule
+.. autoclass:: hanabython.Modules.ConfigurationEndRule
     :members:
 
-.. autoclass:: hanabython.ConfigurationHandSize
+.. autoclass:: hanabython.Modules.ConfigurationHandSize
     :members:
 
-.. autoclass:: hanabython.Configuration
+.. autoclass:: hanabython.Modules.Configuration
     :members:
 
 Clues
 -----
 
-.. autoclass:: hanabython.Clue
+.. autoclass:: hanabython.Modules.Clue
     :members:
 
 Cards
 -----
 
-.. autoclass:: hanabython.Card
+.. autoclass:: hanabython.Modules.Card
     :members:
 
-.. autoclass:: hanabython.CardPublic
+.. autoclass:: hanabython.Modules.CardPublic
     :members:
 
 Hands
 -----
 
-.. autoclass:: hanabython.Hand
+.. autoclass:: hanabython.Modules.Hand
     :members:
 
-.. autoclass:: hanabython.HandPublic
+.. autoclass:: hanabython.Modules.HandPublic
     :members:
 
 Draw Pile
 ---------
 
-.. autoclass:: hanabython.DrawPile
+.. autoclass:: hanabython.Modules.DrawPile
     :members:
 
-.. autoclass:: hanabython.DrawPilePublic
+.. autoclass:: hanabython.Modules.DrawPilePublic
     :members:
 
 Discard Pile
 ------------
 
-.. autoclass:: hanabython.DiscardPile
+.. autoclass:: hanabython.Modules.DiscardPile
     :members:
 
 Board
 -----
 
-.. autoclass:: hanabython.Board
+.. autoclass:: hanabython.Modules.Board
     :members:
 
 Actions
 -------
 
-.. autoclass:: hanabython.Action
+.. autoclass:: hanabython.Modules.Action
     :members:
 
-.. autoclass:: hanabython.ActionDiscard
+.. autoclass:: hanabython.Modules.ActionDiscard
     :members:
 
-.. autoclass:: hanabython.ActionPlay
+.. autoclass:: hanabython.Modules.ActionPlay
     :members:
 
-.. autoclass:: hanabython.ActionClue
+.. autoclass:: hanabython.Modules.ActionClue
     :members:
 
-.. autoclass:: hanabython.ActionForfeit
+.. autoclass:: hanabython.Modules.ActionForfeit
     :members:
 
 Players
 -------
 
-.. autoclass:: hanabython.Player
+.. autoclass:: hanabython.Modules.Player
     :members:
 
-.. autoclass:: hanabython.PlayerPuppet
+.. autoclass:: hanabython.Modules.PlayerPuppet
     :members:
 
-.. autoclass:: hanabython.PlayerBase
+.. autoclass:: hanabython.Modules.PlayerBase
     :members:
 
-.. autoclass:: hanabython.PlayerHumanText
+.. autoclass:: hanabython.Modules.PlayerHumanText
     :members:
 
 Game
 ----
 
-.. autoclass:: hanabython.Game
+.. autoclass:: hanabython.Modules.Game
     :members:
 
