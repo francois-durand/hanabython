@@ -28,13 +28,14 @@ test_requirements = [
 
 setup(
     name='hanabython',
-    version='0.1.3',
+    version='0.1.4',
     description="A Python implementation of Hanabi, a game by Antoine Bauza",
     long_description=readme + '\n\n' + history,
     author="François Durand",
     author_email='fradurand@gmail.com',
     url='https://github.com/francois-durand/hanabython',
-    packages=find_packages(include=['hanabython']),
+    # packages=find_packages(include=['hanabython']),
+    packages=find_packages(),
     entry_points={
         'console_scripts': [
             'hanabython=hanabython.cli:main',
