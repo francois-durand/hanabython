@@ -14,7 +14,7 @@ Getting started (in a terminal)
 
 ::
 
-    from hanabython import Game, Configuration, PlayerHumanText
+    from hanabython import Game, PlayerHumanText
     Game(players=[
         PlayerHumanText('Antoine'),
         PlayerHumanText('Donald X'),
@@ -26,7 +26,7 @@ Getting started (in a notebook)
 
 ::
 
-    from hanabython import Game, Configuration, PlayerHumanText
+    from hanabython import Game, PlayerHumanText
     Game(players=[
         PlayerHumanText('Antoine', ipython=True),
         PlayerHumanText('Donald X', ipython=True),
