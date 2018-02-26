@@ -15,6 +15,7 @@ requirements = [
     'Click>=6.0',
     'numpy',
     'IPython',
+    'typing',
     # TODO: Put package requirements here
 ]
 
@@ -28,7 +29,7 @@ test_requirements = [
 
 setup(
     name='hanabython',
-    version='0.1.4',
+    version='0.1.5',
     description="A Python implementation of Hanabi, a game by Antoine Bauza",
     long_description=readme + '\n\n' + history,
     author="François Durand",
