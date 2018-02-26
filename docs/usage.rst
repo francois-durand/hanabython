@@ -19,7 +19,7 @@ Getting started (in a terminal)
         PlayerHumanText('Antoine'),
         PlayerHumanText('Donald X'),
         PlayerHumanText('Uwe')
-    ]).play();
+    ]).play()
 
 Getting started (in a notebook)
 -------------------------------
