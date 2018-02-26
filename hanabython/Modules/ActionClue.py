@@ -21,7 +21,6 @@ This file is part of Hanabython.
 from hanabython.Modules.Action import Action
 from hanabython.Modules.Clue import Clue
 
-
 class ActionClue(Action):
     """
     An action of a player: give a clue.
@@ -30,7 +29,7 @@ class ActionClue(Action):
         (i.e. 1 for next player, 2 for second next player, etc.).
     :param clue: the clue.
 
-    >>> from hanabython import Clue, Colors
+    >>> from hanabython.Modules.Colors import Colors
     >>> action = ActionClue(i=1, clue=Clue(2))
     >>> print(action)
     Clue 2 to player in relative position 1
