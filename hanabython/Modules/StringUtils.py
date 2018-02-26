@@ -30,7 +30,7 @@ def uncolor(s: str) -> str:
 
     :return: the same string without its ANSI escape codes.
 
-    >>> from hanabython.Modules.StringAnsi import StringAnsi
+    >>> from hanabython import StringAnsi
     >>> s = (StringAnsi.RED + "Hanabi" + StringAnsi.RESET + ', a game by '
     ...      + StringAnsi.BLUE + 'Antoine Bauza' + StringAnsi.RESET)
     >>> uncolor(s)

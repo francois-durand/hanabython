@@ -46,7 +46,7 @@ class CardPublic(Colored):
     :var np.array yes_clued_v: a coefficient is True iff the card was
         explicitly clued as value v.
 
-    >>> from hanabython.Modules.Configuration import Configuration
+    >>> from hanabython import Configuration
     >>> card = CardPublic(Configuration.EIGHT_COLORS)
     >>> print(card)
     BGRWYPMC 12345
@@ -151,7 +151,7 @@ class CardPublic(Colored):
         :param clue: the clue.
         :param b: whether the card matches or not.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> cfg = Configuration.EIGHT_COLORS
         >>> card = CardPublic(cfg)
         >>> print(card)
@@ -165,7 +165,7 @@ class CardPublic(Colored):
 
         Let us try with the clues in the opposite order:
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> card = CardPublic(Configuration.EIGHT_COLORS)
         >>> print(card)
         BGRWYPMC 12345
@@ -178,7 +178,7 @@ class CardPublic(Colored):
 
         Now with clues by value:
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> card = CardPublic(Configuration.EIGHT_COLORS)
         >>> print(card)
         BGRWYPMC 12345

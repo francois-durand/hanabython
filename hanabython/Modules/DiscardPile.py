@@ -47,18 +47,15 @@ class DiscardPile(Colored):
         G5 are not "scorable". Note that a 1 always is considered "scorable",
         whether it is on the board or not.
 
-    >>> from hanabython.Modules.Configuration import Configuration
+    >>> from hanabython import Configuration
     >>> discard_pile = DiscardPile(Configuration.STANDARD)
     >>> print(discard_pile)
     No card discarded yet
 
     Check that scorable cards are counted correctly with unusual configurations:
 
-    >>> from hanabython.Modules.Configuration import Configuration
-    >>> from hanabython.Modules.ConfigurationDeck import ConfigurationDeck
-    >>> from hanabython.Modules.Colors import Colors
-    >>> from hanabython.Modules.ConfigurationColorContents import (
-    ...     ConfigurationColorContents)
+    >>> from hanabython import Configuration, ConfigurationDeck
+    >>> from hanabython import Colors, ConfigurationColorContents
     >>> discard_pile = DiscardPile(Configuration(
     ...     deck=ConfigurationDeck(contents=[
     ...         (Colors.BLUE, ConfigurationColorContents([3, 2, 1, 1])),
@@ -112,7 +109,7 @@ class DiscardPile(Colored):
             one used for the standard method :meth:`__str__` (this behavior
             might be modified in the future).
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -145,7 +142,7 @@ class DiscardPile(Colored):
 
         :return: a representation of the discard pile.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -180,7 +177,7 @@ class DiscardPile(Colored):
 
         :return: a representation of the discard pile.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -214,7 +211,7 @@ class DiscardPile(Colored):
 
         :return: a representation of the discard pile.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -246,7 +243,7 @@ class DiscardPile(Colored):
 
         :return: a representation of the discard pile.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -271,7 +268,7 @@ class DiscardPile(Colored):
 
         :return: a representation of the discard pile.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -298,7 +295,7 @@ class DiscardPile(Colored):
         :return: the list of discarded cards, by lexicographic order. The order
             on the colors is the one specified in :attr:`cfg`.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('R4'))
@@ -320,7 +317,7 @@ class DiscardPile(Colored):
 
         Update the internal variables of the discard pile.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> discard_pile = DiscardPile(Configuration.STANDARD)
         >>> discard_pile.receive(Card('B3'))
         >>> discard_pile.receive(Card('B2'))

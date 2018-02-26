@@ -37,7 +37,7 @@ class Board(Colored):
         of the highest card played in color ``c``. The correspondence between
         colors and indexes is the one provided by :attr:`cfg`.
 
-    >>> from hanabython.Modules.Configuration import Configuration
+    >>> from hanabython import Configuration
     >>> board = Board(Configuration.STANDARD)
     >>> print(board.altitude)
     [0 0 0 0 0]
@@ -59,7 +59,7 @@ class Board(Colored):
 
         :return: a representation of the board.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -86,7 +86,7 @@ class Board(Colored):
 
         :return: a representation of the board.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -111,7 +111,7 @@ class Board(Colored):
 
         :return: a representation of the board.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -139,7 +139,7 @@ class Board(Colored):
 
         :return: a representation of the board.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
         ...     _ = board.try_to_play(Card(s))
@@ -171,7 +171,7 @@ class Board(Colored):
 
         :return: a representation of the cards played in this color.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
@@ -195,7 +195,7 @@ class Board(Colored):
 
         :return: a representation of the cards played in this color.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:
@@ -218,8 +218,7 @@ class Board(Colored):
         :return: True if the card is successfully played on the board, False
             otherwise (i.e. if it leads to a misfire).
 
-        >>> from hanabython.Modules.Configuration import Configuration
-        >>> from hanabython.Modules.Card import Card
+        >>> from hanabython import Configuration, Card
         >>> board = Board(Configuration.STANDARD)
         >>> for s in ['B1', 'B2', 'Y1', 'Y3', 'B1']:
         ...     board.try_to_play(Card(s))
@@ -245,7 +244,7 @@ class Board(Colored):
 
         :return: the sum of the altitudes reached in all colors.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> cfg = Configuration.STANDARD
         >>> board = Board(cfg)
         >>> for s in ['G1', 'G2', 'Y1', 'Y2', 'Y3', 'Y4', 'Y5']:

@@ -38,7 +38,7 @@ class PlayerPuppet(Player):
     :var Action next_action: this variable makes it possible to control
         this player's action.
 
-    >>> from hanabython.Modules.ActionThrow import ActionThrow
+    >>> from hanabython import ActionThrow
     >>> antoine = PlayerPuppet('Antoine', speak=True)
     >>> antoine.next_action = ActionThrow(k=4)
     >>> _ = antoine.choose_action()

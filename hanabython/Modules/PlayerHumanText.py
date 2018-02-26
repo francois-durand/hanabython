@@ -126,7 +126,7 @@ class PlayerHumanText(PlayerBase):
         """
         We forget the previous events.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> antoine = PlayerHumanText('Antoine')
         >>> antoine.receive_init(Configuration.STANDARD,
         ...                      player_names=['Antoine', 'Donald X'])
@@ -162,7 +162,7 @@ class PlayerHumanText(PlayerBase):
         """
         We print and forget the recent (unfortunate) events.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> antoine = PlayerHumanText('Antoine')
         >>> antoine.receive_init(Configuration.STANDARD,
         ...                      player_names=['Antoine', 'Donald X'])
@@ -182,7 +182,7 @@ class PlayerHumanText(PlayerBase):
         """
         We print and forget the recent events.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> antoine = PlayerHumanText('Antoine')
         >>> antoine.receive_init(Configuration.STANDARD,
         ...                      player_names=['Antoine', 'Donald X'])
@@ -202,7 +202,7 @@ class PlayerHumanText(PlayerBase):
         """
         We print and forget the recent (cheerful) events.
 
-        >>> from hanabython.Modules.Configuration import Configuration
+        >>> from hanabython import Configuration
         >>> antoine = PlayerHumanText('Antoine')
         >>> antoine.receive_init(Configuration.STANDARD,
         ...                      player_names=['Antoine', 'Donald X'])
