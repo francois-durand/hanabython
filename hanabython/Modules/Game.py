@@ -844,10 +844,16 @@ if __name__ == '__main__':
     #     (Colors.RED, ConfigurationColorContents([3, 2, 2])),
     # ]), end_rule=ConfigurationEndRule.CROWNING_PIECE)
 
+    from hanabython import ConfigurationDeck
+
+    cfg = Configuration(
+        deck=ConfigurationDeck.EIGHT_COLORS,
+        end_rule=ConfigurationEndRule.CROWNING_PIECE
+    )
+
     fanfan = PlayerHumanText(name='Fanfan')
     emilie = PlayerHumanText(name='Emilie')
-    pek = PlayerHumanText(name='PEK')
-    game = Game([fanfan, emilie])
+    game = Game([fanfan, emilie], cfg)
     # game.test_str()
     game.play()
 
