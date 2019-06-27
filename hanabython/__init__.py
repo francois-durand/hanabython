@@ -4,7 +4,7 @@
 
 __author__ = """François Durand"""
 __email__ = 'fradurand@gmail.com'
-__version__ = '0.1.10'
+__version__ = '0.1.11'
 
 from .Modules.Action import Action
 from .Modules.ActionClue import ActionClue

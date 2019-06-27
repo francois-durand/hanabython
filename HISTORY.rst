@@ -2,6 +2,16 @@
 History
 =======
 
+0.1.11 (2019-06-27)
+-------------------
+
+* Test release for PyPI deployment.
+
+0.1.10 (2018-02-26)
+-------------------
+
+* Correct a display bug of white cards on some terminals.
+
 0.1.9 (2018-02-26)
 ------------------
 
@@ -11,7 +21,3 @@ History
 
 * Patch import problems from previous versions 0.1.*.
 
-0.1.10 (2018-02-26)
--------------------
-
-* Correct a display bug of white cards on some terminals.
