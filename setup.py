@@ -29,7 +29,7 @@ test_requirements = [
 
 setup(
     name='hanabython',
-    version='0.1.11',
+    version='0.1.12',
     description="A Python implementation of Hanabi, a game by Antoine Bauza",
     long_description=readme + '\n\n' + history,
     author="François Durand",
