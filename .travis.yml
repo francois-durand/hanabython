@@ -19,7 +19,7 @@ deploy:
       RC85YmFOVmtMREhyeFZTZFBkRHBtS0wxSW55b2xLVy9iUHZZODEyc3F1ellFVmpiY1VSbURsS1Ex
       TXlabUFCVGNYMWc4aXowZXhWNGRHaXg1eklHamE2MHJCZ2k4RkZDeDRyM3NsK0M1cVZ3bng4WEk9
   true:
-    python: 2.7
+    python: 3.6
     repo: francois-durand/hanabython
     tags: true
 install: pip install -U tox-travis
